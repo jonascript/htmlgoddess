@@ -3,6 +3,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const glob = require('glob');
+const htmlFiles = glob.sync('src/**/*.htm');
+
+const htmlCompilers = htmlFiles.map((file) => {
+  console.log('file', file);
+  return new HtmlWebpackPlugin({
+    filename: file.replace('src/', ''),
+    template: file,
+  });
+});
+
+console.log('htmlCompilers', htmlCompilers);
 
 module.exports = {
   entry: './src/css/index.css',
@@ -43,12 +55,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-    }),
+    ...htmlCompilers,
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({
-      patterns: [{ from: './src/css/index.css', to: './css' }],
+      patterns: [{ from: './src/css/*.css', to: 'css' }],
     }),
   ],
 };

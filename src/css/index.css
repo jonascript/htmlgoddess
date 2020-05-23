@@ -1,3 +1,20 @@
+:root {
+  --background-color: green;
+  --color: white;
+  --font-family:"Lucida Console", Monaco, monospace;
+  --font-weight: normal;
+  --font-size: 20px;
+  --line-height: 1.5em;
+  letter-spacing: .01px;
+}
+
+a {
+  --color: gold;
+}
+
+p {
+  margin: 3rem 0;
+}
 
 /* I have attempted to list all the pertinent properties to override defaults in the user agent css  */
 body {
@@ -12,7 +29,7 @@ body {
     width: auto;
     
     background-color: var(--background-color);
-    color: var(--color); /* text color */
+    color: var(--color);
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-size: var(--font-size);
@@ -107,7 +124,6 @@ body {
   input[type=text], input[type=email], input[type=tel], textarea {
     box-sizing : border-box; /* without this, the width: 100% will be too big (major hassel) */
     width: 100%;
-    color: magenta;
     font-weight: 500;
     font-size: 18px;
     font-family: arial,verdana,helvetica,sans-serif; /* avoid user-agent overwrite of body */
@@ -220,8 +236,7 @@ body {
     }
     
   a {
-    color: magenta;
-    font-weight: 600;
+    color: var(--color);
     }
   
   a.plain-link {
