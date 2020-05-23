@@ -4,7 +4,8 @@ const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const glob = require('glob');
-const htmlFiles = glob.sync('src/**/*.htm');
+const htmlFiles = glob.sync('src/**/+(*.htm|*.html)');
+const path = require('path');
 
 const htmlCompilers = htmlFiles.map((file) => {
   console.log('file', file);
@@ -58,7 +59,9 @@ module.exports = {
     ...htmlCompilers,
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({
-      patterns: [{ from: './src/css/*.css', to: 'css' }],
+      patterns: [
+        { flatten: true, toType: 'dir', from: './src/css/*.css', to: 'css' },
+      ],
     }),
   ],
 };
