@@ -1,3 +1,4 @@
+const PACKAGE = require('./package.json');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
@@ -8,19 +9,15 @@ const htmlFiles = glob.sync('src/**/+(*.htm|*.html)');
 const path = require('path');
 
 const htmlCompilers = htmlFiles.map((file) => {
-  console.log('file', file);
   return new HtmlWebpackPlugin({
     filename: file.replace('src/', ''),
     template: file,
   });
 });
-
-console.log('htmlCompilers', htmlCompilers);
-
 module.exports = {
   entry: './src/css/index.css',
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + PACKAGE.htmlgoddess.output,
   },
   mode: 'development',
   module: {
