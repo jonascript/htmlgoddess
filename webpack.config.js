@@ -5,15 +5,35 @@ const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const glob = require('glob');
-const htmlFiles = glob.sync('src/**/+(*.htm|*.html)');
+const htmlFiles = glob.sync('src/content/**/*+(*.htm|*.html)');
 const path = require('path');
+const htmlPartialFiles = glob.sync('src/templates/partials/+(*.htm|*.html)');
+const fs = require('fs');
+const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
+const HtmlBeautifyPlugin = require('html-beautify-webpack-plugin');
+const MyPlugin = require('./plugin');
+const plugins = [];
 
-const htmlCompilers = htmlFiles.map((file) => {
-  return new HtmlWebpackPlugin({
-    filename: file.replace('src/', ''),
-    template: file,
-  });
-});
+for (let x = 0; x < htmlFiles.length; x++) {
+  const pathObj = path.parse(htmlFiles[x]);
+  let templatePath = htmlFiles[x].replace('src/content/', '');
+
+  let templateName = 'index.html';
+  if (fs.existsSync('src/templates/' + path.dirname(templatePath) + '.html')) {
+    templateName = path.dirname(templatePath) + '.html';
+  }
+
+  plugins.push(
+    new HtmlWebpackPlugin({
+      filename: templatePath,
+      templateParameters: {
+        templatePath: htmlFiles[x],
+      },
+      template: 'src/templates/' + templateName,
+    })
+  );
+}
+
 module.exports = {
   entry: './src/css/index.css',
   output: {
@@ -52,8 +72,9 @@ module.exports = {
     ],
   },
   plugins: [
+    ...plugins,
+    new MyPlugin({ options: '' }),
     new CleanWebpackPlugin(),
-    ...htmlCompilers,
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({
       patterns: [
