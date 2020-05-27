@@ -20,9 +20,6 @@ for (let x = 0; x < htmlFiles.length; x++) {
   let templatePath = htmlFiles[x].replace('src/content/', '');
 
   let templateName = 'index.html';
-
-  console.log('pathObj', 'src/templates/', path.dirname(templatePath));
-
   if (fs.existsSync('src/templates/' + path.dirname(templatePath) + '.html')) {
     templateName = path.dirname(templatePath) + '.html';
   }
@@ -36,48 +33,7 @@ for (let x = 0; x < htmlFiles.length; x++) {
       template: 'src/templates/' + templateName,
     })
   );
-
-  // let z = 0;
-
-  // plugins.push(
-  //   new HtmlReplaceWebpackPlugin([
-  //     {
-  //       pattern: /(<main \/>)/g,
-  //       replacement: function (match, $1, type) {
-  //         // $1==='@@' <--EQ--> $4===undefined
-  //         return '<plain' + z + ' />';
-  //       },
-  //     },
-  //   ])
-  // );
 }
-
-// const htmlReplacements = htmlPartialFiles.map((file) => {
-//   console.log(`<${path.basename(file, '.html')} />`);
-//   return {
-//     pattern: new RegExp(`<${path.basename(file, '.html')} />`, 'i'),
-//     replacement: fs.readFileSync(file, 'utf-8'),
-//   };
-// });
-
-// for (let x = 0; x < htmlFiles.length; x++) {
-//   plugins.push(
-//     new HtmlWebpackPlugin({
-//       filename: path.basename(htmlFiles[x]),
-//       template: 'src/templates/index.html',
-//     })
-//   );
-
-//   plugins.push(
-//     new HtmlReplaceWebpackPlugin([
-//       ...htmlReplacements,
-//       {
-//         pattern: new RegExp(`<main />`, 'g'),
-//         replacement: fs.readFileSync(htmlFiles[x], 'utf-8'),
-//       },
-//     ])
-//   );
-// }
 
 module.exports = {
   entry: './src/css/index.css',
