@@ -12,7 +12,6 @@ const fs = require('fs');
 const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const HtmlBeautifyPlugin = require('html-beautify-webpack-plugin');
 const MyPlugin = require('./plugin');
-
 const plugins = [];
 
 for (let x = 0; x < htmlFiles.length; x++) {
