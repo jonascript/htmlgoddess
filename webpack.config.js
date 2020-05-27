@@ -5,15 +5,80 @@ const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const glob = require('glob');
-const htmlFiles = glob.sync('src/**/+(*.htm|*.html)');
+const htmlFiles = glob.sync('src/content/**/*+(*.htm|*.html)');
 const path = require('path');
+const htmlPartialFiles = glob.sync('src/templates/partials/+(*.htm|*.html)');
+const fs = require('fs');
+const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
+const HtmlBeautifyPlugin = require('html-beautify-webpack-plugin');
+const MyPlugin = require('./plugin');
 
-const htmlCompilers = htmlFiles.map((file) => {
-  return new HtmlWebpackPlugin({
-    filename: file.replace('src/', ''),
-    template: file,
-  });
-});
+const plugins = [];
+
+for (let x = 0; x < htmlFiles.length; x++) {
+  const pathObj = path.parse(htmlFiles[x]);
+  let templatePath = htmlFiles[x].replace('src/content/', '');
+
+  let templateName = 'index.html';
+
+  console.log('pathObj', 'src/templates/', path.dirname(templatePath));
+
+  if (fs.existsSync('src/templates/' + path.dirname(templatePath) + '.html')) {
+    templateName = path.dirname(templatePath) + '.html';
+  }
+
+  plugins.push(
+    new HtmlWebpackPlugin({
+      filename: templatePath,
+      templateParameters: {
+        templatePath: htmlFiles[x],
+      },
+      template: 'src/templates/' + templateName,
+    })
+  );
+
+  // let z = 0;
+
+  // plugins.push(
+  //   new HtmlReplaceWebpackPlugin([
+  //     {
+  //       pattern: /(<main \/>)/g,
+  //       replacement: function (match, $1, type) {
+  //         // $1==='@@' <--EQ--> $4===undefined
+  //         return '<plain' + z + ' />';
+  //       },
+  //     },
+  //   ])
+  // );
+}
+
+// const htmlReplacements = htmlPartialFiles.map((file) => {
+//   console.log(`<${path.basename(file, '.html')} />`);
+//   return {
+//     pattern: new RegExp(`<${path.basename(file, '.html')} />`, 'i'),
+//     replacement: fs.readFileSync(file, 'utf-8'),
+//   };
+// });
+
+// for (let x = 0; x < htmlFiles.length; x++) {
+//   plugins.push(
+//     new HtmlWebpackPlugin({
+//       filename: path.basename(htmlFiles[x]),
+//       template: 'src/templates/index.html',
+//     })
+//   );
+
+//   plugins.push(
+//     new HtmlReplaceWebpackPlugin([
+//       ...htmlReplacements,
+//       {
+//         pattern: new RegExp(`<main />`, 'g'),
+//         replacement: fs.readFileSync(htmlFiles[x], 'utf-8'),
+//       },
+//     ])
+//   );
+// }
+
 module.exports = {
   entry: './src/css/index.css',
   output: {
@@ -52,8 +117,9 @@ module.exports = {
     ],
   },
   plugins: [
+    ...plugins,
+    new MyPlugin({ options: '' }),
     new CleanWebpackPlugin(),
-    ...htmlCompilers,
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({
       patterns: [
