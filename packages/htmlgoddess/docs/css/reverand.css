@@ -3,11 +3,11 @@ body {
   position: static;
   visibility: visible;
   vertical-align: baseline;
-  margin: 0;
+  margin: 0 auto;
   border: 0;
   padding: 0;
   height: auto;
-  width: auto;
+  width: 1000px;
 
   background-color: rgb(225, 242, 251);
   color: rgb(47, 0, 152); /* text color */
@@ -166,7 +166,24 @@ hr {
 }
 
 
+@media screen and (max-width: 1024px) {
+  /* wide screens */
+  body {
+    /* background-color:  lightgreen; /* for test purposes */
+    padding: 0 5%;
+    width: 90%;
+  }
+}
+
+
+
 @media screen and (max-width: 768px) {
+
+  body {
+    /* background-color:  lightgreen; /* for test purposes */
+    padding: 0 5%;
+    width: 90%;
+  }
   /* phones */
   ul,
   ol {
@@ -179,13 +196,5 @@ hr {
   input[type="file"],
   button {
     width: 90%;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  /* wide screens */
-  body {
-    /* background-color:  lightgreen; /* for test purposes */
-    padding: 20px;
   }
 }
