@@ -1,4 +1,4 @@
-const plugin = require('../plugin');
+const plugin = require('../html-goddess-webpack-plugin');
 const fs = require('fs');
 
 describe('plugin', () => {

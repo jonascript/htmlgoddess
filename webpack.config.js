@@ -11,7 +11,7 @@ const htmlPartialFiles = glob.sync('src/templates/partials/+(*.htm|*.html)');
 const fs = require('fs');
 const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const HtmlBeautifyPlugin = require('html-beautify-webpack-plugin');
-const MyPlugin = require('./plugin');
+const HtmlGoddessPlugin = require('./html-goddess-webpack-plugin');
 const plugins = [];
 
 for (let x = 0; x < htmlFiles.length; x++) {
@@ -73,7 +73,7 @@ module.exports = {
   },
   plugins: [
     ...plugins,
-    new MyPlugin({ options: '' }),
+    new HtmlGoddessPlugin({ options: '' }),
     new CleanWebpackPlugin(),
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({

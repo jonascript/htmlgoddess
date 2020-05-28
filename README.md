@@ -5,7 +5,9 @@
 This is a minimalist framework for creating a website like it's 1999. 
 
 ## Requirements
+1. A computer with the internet, a text editor, and a web browser
 1. npm
+1. 
 
 ## How to use
 
