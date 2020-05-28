@@ -1,6 +1,6 @@
 # htmlgoddess
 
-## This is Alpha. Use at your own risk.
+## This is Alpha. Use at your own risk. Feedback Welcome 
 
 This is a minimalist framework for creating a website like it's 1999. 
 
@@ -26,7 +26,7 @@ This is a minimalist framework for creating a website like it's 1999.
 
 ## How it works
 1. The src file contains all the source files and content for the site.
-1. These get compipled into the "docs" folder which will be 
+1. These get compiled into the "docs" folder which will be 
 where your website is served from
 1. src/templates folder has templates.
 1. src/content folder has content, which gets populated with the templates.
@@ -37,6 +37,7 @@ where your website is served from
 1. When you are ready to deploy your site, just do 
 ``` npm run save && npm run publish```
 1. You can then point your webserver to "docs" whether it be apache, gitpages, nginx, or anything.
+1. You can add any stylesheet that targets plain HTML elements and it should work :)
 
 ## Constraints
 1. No JS
