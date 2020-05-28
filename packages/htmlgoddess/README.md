@@ -5,47 +5,63 @@
 This is a minimalist framework for creating a website like it's 1999. 
 
 ## Requirements
-1. A computer with the internet, a text editor, and a web browser
-1. npm
+- A computer with the internet, a text editor, and a web browser
+- npm
 
 ## Getting Started
-1. Open terminal
-1. ``` git clone https://github.com/jonascript/htmlgoddess path/to/site ```
-1. ``` cd path/to/site ```
-1. ``` npm install ```
-1. ``` npm start ```
-1. The menu will give you options which should be self explanatory
+- Open terminal
+- ``` git clone https://github.com/jonascript/htmlgoddess path/to/site ```
+- ``` cd path/to/site ```
+- ``` npm install ```
+- ``` npm start ```
+- The menu will give you options which should be self explanatory
 
-## Menu Options
-1. start - loads the command menu
-1. print - prints out your static site to docs folder
-1. save - Saves and commits files
-1. publish - pushes commits to origin in git
-1. format - formats files in source
-1. test - for unit tests
+## Commandline Menu
+When you run npm start it will give you the following options.
+``` npm start ```
+
+- start - loads the command menu
+- print - prints out your static site to docs folder
+- save - Saves and commits files
+- publish - pushes commits to origin in git
+- format - formats files in source
+- test - for unit tests
 
 ## How it works
-1. The src file contains all the source files and content for the site.
-1. These get compiled into the "docs" folder which will be 
-where your website is served from
-1. src/templates folder has templates.
-1. src/content folder has content, which gets populated with the templates.
-1. The ```<content/>``` tag is special and will either pull in a template as the same name of the file (with dir) or the main template.
-1. Templates are self organizing via folders. 
-1. Create the pages you want in the content dir. Directories relative to there will show up in your site with the same path
-1. When you are done editing your content, run ```npm run print``` (or via command menu) which will reprint out your site to the "docs" folder. (NOTE: Everything in docs gets overwritten!)
-1. When you are ready to deploy your site, just do 
+- Files in "src" folder are compiled (printed) to static HTML files in the "docs" folder. 
+- ``` src/templates ``` folder contains the templates. These are compiled with the content folder to generate your static HTML pages.
+- ``` src/content ``` folder contains your site content, which is kept in html files that are chunks of HTML code. 
+- When you run ``` npm run print ``` (or select print from terminal menu), it will compile your content and templates into static HTML files and recreate the docs folder. (NOTE: Everything in docs gets overwritten so only save content in your src directory!)
+- You can test your site locally by running the "serve" command from the menu.
+- When you are ready to deploy your site, just do 
 ``` npm run save && npm run publish```
-1. You can then point your webserver to "docs" whether it be apache, gitpages, nginx, or anything.
-1. You can add any stylesheet that targets plain HTML elements and it should work :)
+- You can then point your webserver to "docs" whether it be apache, gitpages, nginx, or anything.
+- You can add any stylesheet that targets plain HTML elements and it should work :)
+
+## Templates
+- Tags in the template that are self closing like `<head />` or `<main />` will search for template files matching that same name; either a directory with an index html like ```main/index.html``` or simply a file ```main.html```
+    - Tags do not have to be standard HTML. If you make a template foo.html in the templates folder, you can include a `` <foo /> `` tag and it will replace with the contents of foo.
+    - The template compiling is recursive so you can use templates within templates, however, the nested templates need to be files need to be files contained within or adjacent to the parent template. Otherwise it will just be ignored.
+- The ```<content/>```tag is special and will either pull in a template as the same name of the file (with dir) or the main template ('templates/index.html).
+- When you create the pages you want in the content dir. Directories relative to there will show up in your site with the same path. This structure allows for self organizing folders and urls.
 
 ## Constraints
-1. No JS
-1. No attributes except basic href etc.
-1. No classes. This is what allows you to add any stylesheet that targets vanilla css
-1. No SASS/SCSS/LESS. This should not be necessary with simple HTML elements
-1. No React, Angular, or anything else.
-1. Or not, you can hack anything you want.
+- No JS
+- No attributes except basic href etc.
+- No classes. This is what allows you to add any stylesheet that targets vanilla css
+- No SASS/SCSS/LESS. This should not be necessary with simple HTML elements
+- No React, Angular, or anything else.
+- Or not, you can hack anything you want.
+
+## Philosophy
+HTML was designed to be simple, and for ordinary people to create and consume things on the internet. The web is pretty awesome today but also has gotten pretty complex and its leaving a lot of people behind. This CMS gets back to basics to give people a way to express themselves freely and easily.
+
+- The framework tries to leverage as much existing technology and standards as it can.
+- HTML is used for everything instead of proprietary template tags and other special syntax. The templating system searches for self closing HTML tags are replaces them with associated templates or content.
+- The file system is leveraged for both finding/naming templates and url routing.
+- Tags are intended not to need classes or attributes. This allows new themes to be seamless dropped in.
+- JavaScript is also discouraged. 
+
 
 
 
