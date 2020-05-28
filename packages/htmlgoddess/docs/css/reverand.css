@@ -54,21 +54,11 @@ li {
   padding-left: 0px; /* this minimumizes the displacement of the number/bullet to the left of the li */
 }
 
-li.tight-list {
-  margin-top: 0.3em;
-  margin-bottom: 0.3em;
-}
-
 h1 {
   margin-top: 1em;
   font-weight: 800;
   font-size: 25px;
   text-align: left;
-}
-
-h1.centered-heading {
-  text-align: center;
-  text-align-last: center;
 }
 
 input,
