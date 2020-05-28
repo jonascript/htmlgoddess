@@ -142,3 +142,6 @@ dist
 .pnp.*
 
 .DS_Store
+
+# For github pages to point to work with custom domain 
+CNAME
