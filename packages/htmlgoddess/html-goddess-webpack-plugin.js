@@ -65,10 +65,10 @@ const compileTemplate = (html, basePath = '') => {
 
 class HtmlGoddessPlugin {
   apply(compiler) {
-    compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
+    compiler.hooks.compilation.tap('HtmlGoddessPlugin', (compilation) => {
       console.log('The compiler is starting a new compilation...');
       HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
-        'MyPlugin', // <-- Set a meaningful name here for stacktraces
+        'HtmlGoddessPlugin', // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
           const { templatePath } = data.plugin.options.templateParameters;
 
