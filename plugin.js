@@ -20,7 +20,6 @@ const compileTemplate = (html, basePath = '') => {
   for (let x = 0; x < matches.length; x++) {
     // look for footer.html or footer directory
     templateFilename = matches[x].replace('<', '').replace(/\s?\/>/, '');
-
     try {
       if (
         fs.existsSync(
@@ -92,10 +91,6 @@ class MyPlugin {
           const { templatePath } = data.plugin.options.templateParameters;
 
           data.html = compileTemplate(data.html);
-          // data.html = data.html.replace(
-          //   matches[x],
-          //   fs.readFileSync(data.outputName, 'utf-8')
-          // );
 
           let mainRegExp = /<(content+) \/>/i;
           data.html = data.html.replace(
