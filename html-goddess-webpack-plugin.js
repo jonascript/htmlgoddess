@@ -6,7 +6,6 @@ var pretty = require('pretty');
 
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:
-
 const compileTemplate = (html, basePath = '') => {
   let output = html;
   const regex = /<([^\/>]+)\/>/gi;
@@ -64,30 +63,13 @@ const compileTemplate = (html, basePath = '') => {
   return output;
 };
 
-class MyPlugin {
+class HtmlGoddessPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
       console.log('The compiler is starting a new compilation...');
-      // Static Plugin interface |compilation |HOOK NAME | register listener
-      //   HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(
-      //     'MyPlugin', // <-- Set a meaningful name here for stacktraces
-      //     (data, cb) => {
-      //       console.log(data);
-      //       // Manipulate the content
-      //       data.html += 'The Magic Footer';
-      //       // Tell webpack to move on
-      //       cb(null, data);
-      //     }
-      //   );
-
       HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
         'MyPlugin', // <-- Set a meaningful name here for stacktraces
         (data, cb) => {
-          //   console.log('data', data);
-          // Manipulate the content
-
-          console.log('data.outputName', data.outputName, data.plugin.options);
-
           const { templatePath } = data.plugin.options.templateParameters;
 
           data.html = compileTemplate(data.html);
@@ -97,8 +79,6 @@ class MyPlugin {
             mainRegExp,
             fs.readFileSync(templatePath, 'utf-8')
           );
-
-          // Tell webpack to move on
           data.html = pretty(data.html);
           cb(null, data);
         }
@@ -107,5 +87,5 @@ class MyPlugin {
   }
 }
 
-MyPlugin.compileTemplate = compileTemplate;
-module.exports = MyPlugin;
+HtmlGoddessPlugin.compileTemplate = compileTemplate;
+module.exports = HtmlGoddessPlugin;
