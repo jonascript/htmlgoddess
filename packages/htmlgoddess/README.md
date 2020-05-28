@@ -16,7 +16,7 @@ This is a minimalist framework for creating a website like it's 1999.
 - ``` npm start ```
 - The menu will give you options which should be self explanatory
 
-## Commandline Menu
+## Command Line Menu
 When you run npm start it will give you the following options.
 ``` npm start ```
 
