@@ -4,12 +4,12 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "jest",
     "print": "webpack",
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
+    "serve": "serve docs/",
     "format": "prettier src/ --write",
-    "serve": "serve docs/"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
