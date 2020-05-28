@@ -41,7 +41,7 @@ When you run npm start it will give you the following options.
 ## Templates
 - Tags in the template that are self closing like `<head />` or `<main />` will search for template files matching that same name; either a directory with an index html like ```main/index.html``` or simply a file ```main.html```
     - Tags do not have to be standard HTML. If you make a template foo.html in the templates folder, you can include a `` <foo /> `` tag and it will replace with the contents of foo.
-    - The template compiling is recursive so you can use templates within templates, however, the nested templates need to be files need to be files contained within or adjacent to the parent template. Otherwise it will just be ignored.
+    - The template compiling is recursive so you can use templates within templates, however, the nested templates need to be files contained within or adjacent to the parent template. Otherwise it will just be ignored.
 - The ```<content/>```tag is special and will either pull in a template as the same name of the file (with dir) or the main template ('templates/index.html).
 - When you create the pages you want in the content dir. Directories relative to there will show up in your site with the same path. This structure allows for self organizing folders and urls.
 
