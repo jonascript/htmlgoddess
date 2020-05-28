@@ -54,7 +54,7 @@ When you run npm start it will give you the following options.
 - Or not, you can hack anything you want.
 
 ## Philosophy
-HTML was designed to be simple, and for ordinary people to create and consume things on the internet. The web is pretty awesome today but also has gotten pretty complex and its leaving a lot of people behind. This CMS gets back to basics to give people a way to express themselves freely and easily.
+HTML was designed to be simple, and for ordinary people to create and consume things on the internet. The web is pretty awesome today but also has gotten pretty complex and it's leaving a lot of people behind. This CMS gets back to basics to give people a way to express themselves freely and easily.
 
 - The framework tries to leverage as much existing technology and standards as it can.
 - HTML is used for everything (as the HTML Goddess has commanded) instead of proprietary template tags and other special syntax. The templating system searches for self closing HTML tags are replaces them with associated templates or content.
@@ -62,7 +62,7 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - Git serves as the actual database for the CMS along with the HTML files in content and templates.
 - The site "prints" to the "docs" folder, and then you "publish" to git, where you can setup [github pages](https://pages.github.com/). It's agnostic of the webserver so you can actually take the files in the docs folder and plunk them anywhere you want and point a web server at them.
 - Tags are intended not to need classes or attributes. This allows new themes to be seamless dropped in. You can think of vanilla HTML as the interface for applying styling. 
-- Using JavaScript is discouraged as it should be unnecessary, though there's nothing in the framework that prevents you using it. 
+- Using JavaScript is discouraged as it shouldn't be unnecessary, though there's nothing in the framework that prevents you using it. 
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
 
