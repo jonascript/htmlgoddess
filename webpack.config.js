@@ -74,7 +74,7 @@ module.exports = {
   plugins: [
     ...plugins,
     new HtmlGoddessPlugin({ options: '' }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['!CNAME'] }),
     new FixStyleOnlyEntriesPlugin(),
     new CopyPlugin({
       patterns: [
