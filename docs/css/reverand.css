@@ -30,25 +30,6 @@ div {
   display: block;
 }
 
-div.main-text-area {
-  margin-left: 2em;
-  margin-right: 2em;
-  height: auto;
-}
-
-div.indent {
-  margin-left: 2em;
-  height: auto;
-}
-
-div.item {
-  margin-bottom: 1.5em;
-}
-
-div.select-group {
-  display: block;
-}
-
 p,
 h1,
 ol,
@@ -183,52 +164,10 @@ option {
   opacity: 1;
 }
 
-img.page-main-photo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1em;
-  width: 80%;
-}
-
-img.non-photo {
-  width: 60%;
-}
-
-img.thumb-image {
-  /* "thumb-image" is output from js */
-  border: 0;
-  display: block;
-  max-width: 150px;
-  padding: 10px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-div.video-frame {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80% !important;
-}
-
-p.photo-date {
-  text-align: center;
-  text-align-last: center;
-  font-size: 14px;
-}
-
-p.footer {
-  font-size: 13px;
-}
 
 a {
   color: magenta;
   font-weight: 600;
-}
-
-a.plain-link {
-  color: rgb(47, 0, 152);
 }
 
 hr {
@@ -236,37 +175,9 @@ hr {
   width: 50%;
 }
 
-.red {
-  color: #ff0000;
-}
 
-div.error,
-p.error {
-  font-size: 20px;
-  font-weight: 900;
-  color: rgb(255, 0, 0);
-}
-
-div.success,
-p.success {
-  font-size: 20px;
-  font-weight: 900;
-  color: rgb(0, 135, 0);
-}
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
   /* phones */
-  body {
-    /* background-color:  pink; /* for test purposes */
-    text-align: left;
-  }
-  div.indent {
-    margin-left: 0.5em;
-  }
-  div.main-text-area {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
   ul,
   ol {
     padding-left: 15px;
@@ -275,28 +186,16 @@ p.success {
   li {
     margin-left: 15px;
   }
-  img.page-main-photo {
-    margin-top: 5px;
-    width: 95%;
-  }
-  div.video-frame {
-    width: 100% !important;
-  }
   input[type="file"],
   button {
     width: 90%;
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (max-width: 1024px) {
   /* wide screens */
   body {
     /* background-color:  lightgreen; /* for test purposes */
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  div.video-frame {
-    width: 60% !important;
+    padding: 20px;
   }
 }
