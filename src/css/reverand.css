@@ -15,7 +15,8 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.2;
-  text-decoration: none;
+  text-decoration: normal;
+  font-weight: normal;
 
   text-align: justify;
   text-justify: auto;

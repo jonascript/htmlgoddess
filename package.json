@@ -11,7 +11,8 @@
     "publish": "git push origin",
     "serve": "serve docs/",
     "format": "prettier src/ --write",
-    "test": "jest"
+    "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
+    "dev": "webpack --watch"
   },
   "repository": {
     "type": "git",
