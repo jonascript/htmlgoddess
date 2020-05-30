@@ -87,7 +87,7 @@ class HtmlGoddessPlugin {
 
           data.html = pretty(data.html);
 
-          const results = await engine.executeOnFiles([contentPath], '.html');
+          const results = await engine.executeOnFiles([contentPath]);
           // console.log(engine);
           if (engine.isErrorResults(results)) {
             // console.log(results[0].messages, text);
