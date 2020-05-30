@@ -7,6 +7,7 @@ const htmlToText = require('html-to-text');
 const writeGood = require('write-good');
 // const Proofreader = require('proofreader');
 const TextLintEngine = require('textlint').TextLintEngine;
+const engine = new TextLintEngine();
 
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:
@@ -70,38 +71,30 @@ const compileTemplate = (html, basePath = '') => {
 class HtmlGoddessPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap('HtmlGoddessPlugin', (compilation) => {
-      console.log('The compiler is starting a new compilation...');
+      console.log('The HtmlGoddessPlugin is starting a new compilation...');
       HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
         'HtmlGoddessPlugin', // <-- Set a meaningful name here for stacktraces
         async (data, cb) => {
-          const { templatePath } = data.plugin.options.templateParameters;
+          const { contentPath } = data.plugin.options.templateParameters;
 
           data.html = compileTemplate(data.html);
 
           let mainRegExp = /<(content+) \/>/i;
           data.html = data.html.replace(
             mainRegExp,
-            fs.readFileSync(templatePath, 'utf-8')
+            fs.readFileSync(contentPath, 'utf-8')
           );
 
           data.html = pretty(data.html);
-          const text = htmlToText.fromString(data.html);
-          var options = {
-            plugins: ['html'],
-            // load rules from [../rules]
-            rules: ['textlint-rule-spellchecker'],
-          };
-          var engine = new TextLintEngine(options);
 
-          const results = await engine.execute(data.html);
-
+          const results = await engine.executeOnFiles([contentPath], '.html');
           // console.log(engine);
           if (engine.isErrorResults(results)) {
-            console.log(results[0].messages);
+            // console.log(results[0].messages, text);
             var output = engine.formatResults(results);
             console.log(output);
           } else {
-            console.log('All Passed!');
+            console.log('textlint Passed', contentPath);
           }
 
           cb(null, data);
