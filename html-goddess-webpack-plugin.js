@@ -93,7 +93,7 @@ class HtmlGoddessPlugin {
           };
           var engine = new TextLintEngine(options);
 
-          const results = await engine.executeOnText(data.html);
+          const results = await engine.execute(data.html);
 
           // console.log(engine);
           if (engine.isErrorResults(results)) {
