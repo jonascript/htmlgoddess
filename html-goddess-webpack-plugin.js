@@ -2,7 +2,11 @@ const fs = require('fs');
 const path = require('path');
 // If your plugin is direct dependent to the html webpack plugin:
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-var pretty = require('pretty');
+const pretty = require('pretty');
+const htmlToText = require('html-to-text');
+const writeGood = require('write-good');
+// const Proofreader = require('proofreader');
+const TextLintEngine = require('textlint').TextLintEngine;
 
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:
@@ -69,7 +73,7 @@ class HtmlGoddessPlugin {
       console.log('The compiler is starting a new compilation...');
       HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
         'HtmlGoddessPlugin', // <-- Set a meaningful name here for stacktraces
-        (data, cb) => {
+        async (data, cb) => {
           const { templatePath } = data.plugin.options.templateParameters;
 
           data.html = compileTemplate(data.html);
@@ -79,7 +83,27 @@ class HtmlGoddessPlugin {
             mainRegExp,
             fs.readFileSync(templatePath, 'utf-8')
           );
+
           data.html = pretty(data.html);
+          const text = htmlToText.fromString(data.html);
+          var options = {
+            plugins: ['html'],
+            // load rules from [../rules]
+            rules: ['textlint-rule-spellchecker'],
+          };
+          var engine = new TextLintEngine(options);
+
+          const results = await engine.executeOnText(data.html);
+
+          // console.log(engine);
+          if (engine.isErrorResults(results)) {
+            console.log(results[0].messages);
+            var output = engine.formatResults(results);
+            console.log(output);
+          } else {
+            console.log('All Passed!');
+          }
+
           cb(null, data);
         }
       );
