@@ -8,7 +8,7 @@
     <meta name="Description" content="" />
     <meta name="Keywords" content="" />
     <link rel="icon" href="/img/favicon.ico?q=0" />
-    <link rel="stylesheet" href="/css/latex.css" />
+    <link rel="stylesheet" href="/css/sakura.css" />
   </head>
 
   <body>
@@ -20,15 +20,15 @@
         webpack to do what seems like it should be relatively simple thing, whenever
         an HTML page in the src folder is edited, recompile the templates and live
         reload the browser. At each step of the way, I've run into difficulties
-        become the use case for webpack's built-in "live-reload" functionality was
-        not designed with this in mind. Webpack was actually not really intended to
-        be an HTML compiler at all, which while I respect is unfortunate.
+        because webpack's built-in "live-reload" functionality was
+        not designed with HTML in mind. Webpack was actually not really intended to
+        be an HTML compiler at all, but a JS & CSS, which while I respect is unfortunate in this case.
       </p>
       <p>
         So I've had to call in reinforcements. I'll be rolling my own watcher,
         compiler & browser reloader. For the job I'm going to try prettier,
         onchange, and an npm lib called "open", which I found by digging into the
-        webpack-dev-server internals.
+        webpack-dev-server internals. I've used prettier and onchange so I have a good idea of how those work.
       </p>
       <p>
         In general I don't like to rebuild the wheel but it's obvious at this point
@@ -40,9 +40,18 @@
 
 
     <footer>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="https://github.com/jonascript/htmlgoddess">Git</a></li>
+        </ul>
+      </nav>
+
       <small>Copyright &copy; 2020, all rights reserved.</small>
     </footer>
 
+    <template.head />
   <script src="../../main.js"></script></body>
 
 </html>

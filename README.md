@@ -65,7 +65,9 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - Using JavaScript is discouraged as it shouldn't be unnecessary, though there's nothing in the framework that prevents you using it. 
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
-
-
-
-
+## To Do
+- Spell Checker
+- Live Reload
+- GUI
+- Link Checker
+- Accesibility Validation
