@@ -10,7 +10,7 @@
     "publish": "git push origin",
     "serve": "serve docs/",
     "format": "prettier src/ --write",
-    "proofread": "textlint src/**/*.html",
+    "proofread": "textlint src/**/*.htm",
     "test": "jest"
   },
   "repository": {
@@ -49,7 +49,7 @@
           "error"
         ]
       },
-      "textlint-rule-spellchecker": false
+      "textlint-rule-spellchecker": true
     }
   },
   "homepage": "https://github.com/jonascript/htmlgoddess#readme",
