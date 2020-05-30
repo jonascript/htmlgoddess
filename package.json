@@ -42,6 +42,7 @@
           "sentence:uppercase",
           "weasel"
         ],
+        "severity": "warning",
         "showLevels": [
           "suggestion",
           "warning",
