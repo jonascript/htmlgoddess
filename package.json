@@ -10,7 +10,7 @@
     "publish": "git push origin",
     "serve": "serve docs/",
     "format": "prettier src/ --write",
-    "proofread": "textlint src/**/*.html src/**/*.htm",
+    "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
     "test": "jest"
   },
   "repository": {
@@ -35,7 +35,8 @@
     "rules": {
       "@textlint-rule/no-dead-link": {
         "checkRelative": true,
-        "baseURI": ""
+        "baseURI": "",
+        "severity": "warning"
       },
       "textlint-rule-rousseau": {
         "ignoreTypes": [
@@ -49,7 +50,9 @@
           "error"
         ]
       },
-      "textlint-rule-spellchecker": true
+      "textlint-rule-spellchecker": {
+        "severity": "warning"
+      }
     }
   },
   "homepage": "https://github.com/jonascript/htmlgoddess#readme",
@@ -80,7 +83,9 @@
     "write-good": "1.0.2"
   },
   "dependencies": {
+    "nodehun": "3.0.1",
     "postcss-loader": "3.0.0",
-    "serve": "11.3.1"
+    "serve": "11.3.1",
+    "spellchecker": "3.7.0"
   }
 }
