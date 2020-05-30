@@ -10,11 +10,7 @@
     "publish": "git push origin",
     "serve": "serve docs/",
     "format": "prettier src/ --write",
-<<<<<<< HEAD
-    "proofread": "textlint src/**/*.htm",
-=======
-    "proofread": "textlint src/**/*.html",
->>>>>>> master
+    "proofread": "textlint src/**/*.html src/**/*.htm",
     "test": "jest"
   },
   "repository": {
