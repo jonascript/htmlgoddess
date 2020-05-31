@@ -38,7 +38,7 @@
     "rules": {
       "@textlint-rule/no-dead-link": {
         "checkRelative": true,
-        "baseURI": "",
+        "baseURI": "http://localhost:3000",
         "severity": "warning"
       },
       "textlint-rule-rousseau": {
@@ -86,7 +86,6 @@
     "write-good": "1.0.2"
   },
   "dependencies": {
-    "nodehun": "3.0.1",
     "postcss-loader": "3.0.0",
     "serve": "11.3.1",
     "spellchecker": "3.7.0"
