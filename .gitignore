@@ -145,3 +145,5 @@ dist
 
 # For github pages to point to work with custom domain 
 CNAME
+
+.vscode/

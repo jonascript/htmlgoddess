@@ -154,7 +154,6 @@ option {
   opacity: 1;
 }
 
-
 a {
   color: magenta;
   font-weight: 600;
@@ -165,7 +164,6 @@ hr {
   width: 50%;
 }
 
-
 @media screen and (max-width: 1024px) {
   /* wide screens */
   body {
@@ -175,10 +173,7 @@ hr {
   }
 }
 
-
-
 @media screen and (max-width: 768px) {
-
   body {
     /* background-color:  lightgreen; /* for test purposes */
     padding: 0 5%;

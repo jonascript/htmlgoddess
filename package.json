@@ -45,8 +45,6 @@
         ],
         "severity": "warning",
         "showLevels": [
-          "suggestion",
-          "warning",
           "error"
         ]
       },
