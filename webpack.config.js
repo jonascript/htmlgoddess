@@ -36,8 +36,8 @@ for (let x = 0; x < htmlFiles.length; x++) {
 }
 
 module.exports = {
-  //entry: './src/css/index.css',
-  entry: './src/content/index.html',
+  entry: './src/css/index.css',
+  // entry: './src/content/index.html',
   context: path.resolve(__dirname, ''),
   output: {
     path: __dirname + PACKAGE.htmlgoddess.output,
