@@ -16,6 +16,9 @@ This is a minimalist framework for creating a website like it's 1999.
 - ``` npm start ```
 - The menu will give you options which should be self explanatory
 
+# I don't know any HTML
+That's ok. Check out [this video](https://www.youtube.com/watch?v=3RXlQPkJzCM) to get started.
+
 ## Command Line Menu
 When you run ``` npm start ``` and it will give you the following options.
 
@@ -66,8 +69,6 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
 ## To Do
-- Spell Checker
 - Live Reload
 - GUI
-- Link Checker
 - Accesibility Validation
