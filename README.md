@@ -17,14 +17,14 @@ This is a minimalist framework for creating a website like it's 1999.
 - The menu will give you options which should be self explanatory
 
 ## Command Line Menu
-When you run npm start it will give you the following options.
-``` npm start ```
+When you run ``` npm start ``` and it will give you the following options.
 
 - start - loads the command menu
 - print - prints out your static site to docs folder
 - save - Saves and commits files
 - publish - pushes commits to origin in git
 - format - formats files in source
+- proofread - Runs a grammar checker on all your src html files
 - test - for unit tests
 
 ## How it works

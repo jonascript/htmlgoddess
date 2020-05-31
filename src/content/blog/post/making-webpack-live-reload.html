@@ -6,20 +6,22 @@
     webpack to do what seems like it should be relatively simple thing, whenever
     an HTML page in the src folder is edited, recompile the templates and live
     reload the browser. At each step of the way, I've run into difficulties
-    because webpack's built-in "live-reload" functionality was
-    not designed with HTML in mind. Webpack was actually not really intended to
-    be an HTML compiler at all, but a JS & CSS, which while I respect is unfortunate in this case.
+    because webpack's built-in "live-reload" functionality was not designed with
+    HTML in mind. Webpack was actually not really intended to be an HTML
+    compiler at all, but a JS & CSS, which while I respect is unfortunate in
+    this case.
   </p>
   <p>
     So I've had to call in reinforcements. I'll be rolling my own watcher,
     compiler & browser reloader. For the job I'm going to try prettier,
     onchange, and an npm lib called "open", which I found by digging into the
-    webpack-dev-server internals. I've used prettier and onchange so I have a good idea of how those work.
+    webpack-dev-server internals. I've used prettier and onchange so I have a
+    good idea of how those work.
   </p>
   <p>
     In general I don't like to rebuild the wheel but it's obvious at this point
     that I'm running askew of the original use case of webpack-dev-server so it
     will have to do. In this case I think it will be ok as long as I'm not
-    techincally "hacking" anything in webpack.
+    technically "hacking" anything in webpack.
   </p>
 </main>

@@ -28,7 +28,7 @@ for (let x = 0; x < htmlFiles.length; x++) {
     new HtmlWebpackPlugin({
       filename: templatePath,
       templateParameters: {
-        templatePath: htmlFiles[x],
+        contentPath: htmlFiles[x],
       },
       template: 'src/templates/' + templateName,
     })

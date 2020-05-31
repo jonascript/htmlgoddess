@@ -194,3 +194,19 @@ hr {
     width: 90%;
   }
 }
+
+nav {
+  display: block;
+  width: 100%;
+}
+
+nav ul {
+  display: inline-flex;
+  width: 100%;
+}
+
+nav li {
+  display: flex;
+  flex-grow: 1;
+  text-transform: lowercase;
+}

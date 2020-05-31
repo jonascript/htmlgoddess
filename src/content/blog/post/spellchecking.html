@@ -1,0 +1,40 @@
+<main>
+  <h1>
+    Spellchecking
+  </h1>
+  <p>
+    When I pushed this site live, one of the things I didn't do so well was make
+    sure there were no typos. This was sort of a calculated risk in that I only
+    had so much time and resources and I wanted to get something out that was
+    "good enough" as opposed to "polished".
+  </p>
+  <p>
+    Looking back now at what went well and what could be improved, it occurred
+    to me that adding a simple spell checker would've been a useful thing to
+    have. Every decent word processor has one, and this is something that
+    computers are much better at than humans.
+  </p>
+  <p>
+    So today I spent a few hours adding one in. I found a npm module called
+    "textlint" that looks well supported and has a lot of plugins. The nice
+    thing about textlint is that it's un-opinionated to what the rules are so I
+    can use the exact plugins I need, and also expose the ability to users to
+    configure their own options.
+  </p>
+  <p>
+    A few options off the bat seem useful.
+  </p>
+  <ul>
+    <li>Spelling</li>
+    <li>Grammar</li>
+    <li>Link checking</li>
+  </ul>
+  <p>
+    The first two seem pretty self-evident, but link checking is something that
+    I think will be particularly useful as a part of the creation flow. One of
+    the pitfalls of creating your own HTML is that you have to make sure the
+    links are all working. One can very easily change a link or forget to
+    structure, and then the page isn't working and you don't find out about for
+    months. The link checker will alert you right away.
+  </p>
+</main>
