@@ -1,12 +1,15 @@
 {
   "name": "htmlgoddess",
   "version": "0.0.2",
-  "description": "",
+  "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
   "private": true,
+  "bin": {
+    "htmlgoddess": "node_modules/.bin/ntl"
+  },
   "scripts": {
     "start": "ntl",
     "print": "webpack",
-    "autoprint": "onchange 'src/**' -- webpack",
+    "autoprint": "onchange 'src/' -- webpack",
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
     "serve": "serve docs/",
@@ -14,7 +17,8 @@
     "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
     "dev": "webpack --watch",
     "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
-    "test": "jest"
+    "test": "jest",
+    "open": "open-cli https://localhost:5000 -- 'google chrome'"
   },
   "repository": {
     "type": "git",
@@ -68,6 +72,7 @@
     "html-replace-webpack-plugin": "2.5.6",
     "html-to-text": "5.1.1",
     "html-webpack-plugin": "4.3.0",
+    "livereload": "0.9.1",
     "mini-css-extract-plugin": "0.9.0",
     "ntl": "5.0.0",
     "onchange": "7.0.2",
@@ -83,11 +88,17 @@
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0",
     "webpack-fix-style-only-entries": "0.5.0",
+    "webpack-livereload-plugin": "2.3.0",
     "write-good": "1.0.2"
   },
   "dependencies": {
     "postcss-loader": "3.0.0",
     "serve": "11.3.1",
     "spellchecker": "3.7.0"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
   }
 }

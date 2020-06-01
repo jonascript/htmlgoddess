@@ -36,9 +36,7 @@ for (let x = 0; x < htmlFiles.length; x++) {
 }
 
 module.exports = {
-  entry: './src/css/index.css',
-  // entry: './src/content/index.html',
-  context: path.resolve(__dirname, ''),
+  entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
   output: {
     path: __dirname + PACKAGE.htmlgoddess.output,
   },
@@ -91,6 +89,5 @@ module.exports = {
         { flatten: true, toType: 'dir', from: './src/css/*.css', to: 'css' },
       ],
     }),
-    new webpack.HotModuleReplacementPlugin(),
   ],
 };

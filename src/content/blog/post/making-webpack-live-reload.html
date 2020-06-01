@@ -1,5 +1,5 @@
 <main>
-  <h1>Making Webpack Live Reload</h1>
+  <h1>Making HTML Godess Live Reload</h1>
   <p>May 29, 2020</p>
   <p>
     As I write this, I've been struggling a bit over an hour trying to get
@@ -23,5 +23,44 @@
     that I'm running askew of the original use case of webpack-dev-server so it
     will have to do. In this case I think it will be ok as long as I'm not
     technically "hacking" anything in webpack.
+  </p>
+  <h3>The Webpack livereload feature is pretty difficult to customize</h3>
+  <p>
+    Coming back to it again after a couple days, I've made some headway. After
+    struggling to get the existing live reload plugins to work, I've settled on
+    rolling my own livereload server using the underlying module that webpack
+    uses and loading it independently. I think this is a classic case of a
+    framework biting off more than it can chew. By using the individual modules
+    independent of webpack I have a much smoother cohesion between the various
+    components:
+  </p>
+  <ol>
+    <li>Onchange watches for changes in the src folder and calls webpack.</li>
+    <li>Webpack compiles the source files into the output directory.</li>
+    <li>
+      Livereload watches only the output directory and tells the browser to
+      reload.
+    </li>
+  </ol>
+  <p>
+    Notice you can remove anyone of the parts and the essential functionality of
+    each part is preserved and intuitive.
+  </p>
+  <p>
+    With webpack-dev-server the use case is a bit ambiguous. Yes it's a dev
+    server, but it's also a watcher and also a live reloader. Getting access to
+    those options and configuring them is often not possible because they were
+    composed with particular use cases in mind. There's also overlap with
+    "webpack --watch" which does certain things, and the webpack-devserver
+    plugin which does other things.
+  </p>
+  <p>
+    I still have a little to do, I need to automatically add the JS to template
+    when the dev server is loaded. I need to think about how I'm going to do
+    this so it's straightforward and I'm not creating something that will trip
+    somebody up. Also I want to make the watcher more efficient so it only
+    triggers the files that are affected. Right now the entire site is
+    recompiled everytime you save and this obviously won't scale. For now I'm
+    happy with the progress made so I'll leave this for another day.
   </p>
 </main>
