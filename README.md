@@ -69,6 +69,7 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
 ## To Do
+- Add inject live reload script
 - Live Reload
 - GUI
 - Accesibility Validation
