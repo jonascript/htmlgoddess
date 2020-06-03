@@ -84,6 +84,7 @@
     "textlint-rule-ginger": "2.2.1",
     "textlint-rule-rousseau": "1.4.6",
     "textlint-rule-spellchecker": "2.2.1",
+    "textlint-rule-terminology": "2.1.4",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0",

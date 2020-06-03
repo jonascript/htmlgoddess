@@ -208,5 +208,7 @@ nav ul {
 nav li {
   display: flex;
   flex-grow: 1;
+  justify-content: center;
+  margin: 0;
   text-transform: lowercase;
 }
