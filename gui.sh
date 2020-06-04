@@ -1,16 +1,23 @@
 echo $PWD;
 
-Suitcase basic --name="Demo App" --window-title="Hello World" \
+Suitcase basic --name="HTML Goddess" --window-title="HTML Goddess" \
   --window-width="200" --window-height="200" \
+  --icon="./html-xxl.png" \
   --working-directory="$PWD" \
   --control-type="label" \
-  --control-title="Start up your local server" \
+  --control-title="Compiles all your source files to the \"docs\" dir" \
   --control-type="button" \
-  --control-title="🗣 Launch Site" \
-  --control-action="source ~/.bash_profile && npm serve docs" \
-  --control-action-destination="Terminal" \
-  --control-title="Terminal" \
-  --control-type="error-text" \
+  --control-title="Print" \
+  --control-action="/usr/local/bin/npm run print" \
+  --control-type="button" \
+  --control-title="Save" \
+  --control-action="/usr/local/bin/npm run save" \
+  --control-type="button" \
+  --control-title="Publish" \
+  --control-action="/usr/local/bin/npm run save" \
+  --control-action-destination="output" \
+  --control-title="Console" \
+  --control-type="text" \
   --control-identifier="output" \
   -E="PATH"
  

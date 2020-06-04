@@ -6,12 +6,12 @@ const fs = require('fs');
 const path = require('path');
 
 const liveReloadScript = `
-<!-- LIVE RELOAD SCRIPT INJECTION -->
-<script>
-document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-':35729/livereload.js?snipver=1"></' + 'script>')
-</script>
-<!-- LIVE RELOAD SCRIPT INJECTION -->
+    <!-- LIVE RELOAD SCRIPT INJECTION -->
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+    ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+    <!-- LIVE RELOAD SCRIPT INJECTION -->
 `;
 
 /**
