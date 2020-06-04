@@ -12,13 +12,11 @@
     "autoprint": "onchange 'src/' -- webpack",
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
-    "serve": "serve docs/",
+    "serve": "node server",
     "format": "prettier src/ --write",
     "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
-    "dev": "webpack --watch",
     "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
-    "test": "jest",
-    "open": "open-cli https://localhost:5000 -- 'google chrome'"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
