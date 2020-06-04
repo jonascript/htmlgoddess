@@ -92,9 +92,8 @@ class HtmlGoddessPlugin {
           if (textLintEngine.isErrorResults(results)) {
             var output = textLintEngine.formatResults(results);
             console.log(output);
-          } else {
-            cb(null, data);
           }
+          cb(null, data);
         }
       );
     });

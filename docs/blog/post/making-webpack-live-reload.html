@@ -9,10 +9,7 @@
     <meta name="Keywords" content="" />
     <link rel="icon" href="/img/favicon.ico?q=0" />
     <link rel="stylesheet" href="/css/latex.css" />
-  <script>
-          document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-          ':35729/livereload.js?snipver=1"></' + 'script>')
-         </script></head>
+  </head>
 
   <body>
     <main>
@@ -41,11 +38,11 @@
         will have to do. In this case I think it will be ok as long as I'm not
         technically "hacking" anything in webpack.
       </p>
-      <h3>The Webpack livereload feature is pretty difficult to customize</h3>
+      <h3>The Webpack live-reload feature is pretty difficult to customize</h3>
       <p>
         Coming back to it again after a couple days, I've made some headway. After
         struggling to get the existing live reload plugins to work, I've settled on
-        rolling my own livereload server using the underlying module that webpack
+        rolling my own live-reload server using the underlying module that webpack
         uses and loading it independently. I think this is a classic case of a
         framework biting off more than it can chew. By using the individual modules
         independent of webpack I have a much smoother cohesion between the various
@@ -68,7 +65,7 @@
         server, but it's also a watcher and also a live reloader. Getting access to
         those options and configuring them is often not possible because they were
         composed with particular use cases in mind. There's also overlap with
-        "webpack --watch" which does certain things, and the webpack-devserver
+        "webpack --watch" which does certain things, and the "webpack-devserver"
         plugin which does other things.
       </p>
       <p>
@@ -77,7 +74,7 @@
         this so it's straightforward and I'm not creating something that will trip
         somebody up. Also I want to make the watcher more efficient so it only
         triggers the files that are affected. Right now the entire site is
-        recompiled everytime you save and this obviously won't scale. For now I'm
+        recompiled every time you save and this obviously won't scale. For now I'm
         happy with the progress made so I'll leave this for another day.
       </p>
     </main>

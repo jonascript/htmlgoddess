@@ -41,6 +41,7 @@ module.exports = {
     path: __dirname + PACKAGE.htmlgoddess.output,
   },
   mode: 'development',
+  stats: 'errors-warnings',
   module: {
     rules: [
       {

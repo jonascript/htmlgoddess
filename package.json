@@ -33,7 +33,8 @@
     "url": "https://github.com/jonascript/htmlgoddess/issues"
   },
   "htmlgoddess": {
-    "output": "/docs"
+    "output": "/docs",
+    "livereload": true
   },
   "textlint": {
     "plugins": [
