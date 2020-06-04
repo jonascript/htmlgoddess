@@ -88,8 +88,7 @@
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0",
     "webpack-fix-style-only-entries": "0.5.0",
-    "webpack-livereload-plugin": "2.3.0",
-    "write-good": "1.0.2"
+    "webpack-livereload-plugin": "2.3.0"
   },
   "dependencies": {
     "postcss-loader": "3.0.0",
