@@ -4,8 +4,6 @@ Suitcase basic --name="HTML Goddess" --window-title="HTML Goddess" \
   --window-width="200" --window-height="200" \
   --icon="./html-xxl.png" \
   --working-directory="$PWD" \
-  --control-type="label" \
-  --control-title="Compiles all your source files to the \"docs\" dir" \
   --control-type="button" \
   --control-title="Print" \
   --control-action="/usr/local/bin/npm run print" \
