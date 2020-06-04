@@ -4,7 +4,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pretty = require('pretty');
 const htmlToText = require('html-to-text');
-const writeGood = require('write-good');
 // const Proofreader = require('proofreader');
 const TextLintEngine = require('textlint').TextLintEngine;
 const textLintEngine = new TextLintEngine();
