@@ -3,17 +3,19 @@
   "version": "0.0.0",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
   "private": false,
+  "main": "babel-node index.js",
   "scripts": {
     "start": "ntl",
     "print": "webpack",
+    "cjstoes6": "cjs-to-es6 --verbose ./index.js",
     "autoprint": "onchange 'src/' -- webpack",
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
-    "serve": "node server",
+    "serve": "node ./scripts/server",
     "format": "prettier src/ --write",
     "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
     "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
-    "a11y": "node a11y",
+    "a11y": "node ./scripts/a11y",
     "test": "jest"
   },
   "repository": {
@@ -59,6 +61,7 @@
   "devDependencies": {
     "@textlint-rule/textlint-rule-no-dead-link": "3.2.0",
     "@webpack-cli/serve": "0.2.0",
+    "cjs-to-es6": "1.1.1",
     "clean-webpack-plugin": "3.0.0",
     "command-line-args": "5.1.1",
     "copy-webpack-plugin": "6.0.1",
@@ -95,7 +98,6 @@
     "serve": "11.3.1",
     "spellchecker": "3.7.0"
   },
-  "main": "index.js",
   "directories": {
     "doc": "docs",
     "test": "tests"

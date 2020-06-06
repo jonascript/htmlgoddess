@@ -1,7 +1,11 @@
-'use strict';
+"use strict";
 
-const htmlgoddessCli = require('..');
+const htmlgoddessCli = require("..");
 
-describe('htmlgoddess-cli', () => {
-    it('needs tests');
+describe("htmlgoddess-cli", () => {
+  it("needs tests", (done) => {
+    console.log(htmlgoddessCli);
+    expect(htmlgoddessCli).toBeTruthy();
+    done();
+  });
 });

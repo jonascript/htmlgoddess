@@ -1,6 +1,9 @@
 import {Command, flags} from '@oclif/command'
 
-export default class Hello extends Command {
+import HTMLGoddess, {print} from "../../../htmlgoddess";
+
+
+export default class Print extends Command {
   static description = 'describe the command here'
 
   static examples = [
@@ -20,10 +23,11 @@ hello world wide web from ./src/hello.ts!
   static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Hello)
-
+    const {args, flags} = this.parse(Print)
+  
+    console.log(print());
     const name = flags.name ?? 'world'
-    this.log(`hello ${name} from ./src/commands/hello.ts`)
+    this.log(`heldlo ${name} from ./src/commands/hello.ts`)
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)
     }
