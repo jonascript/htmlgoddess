@@ -5,14 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pretty = require('pretty');
 const htmlToText = require('html-to-text');
 const TextLintEngine = require('textlint').TextLintEngine;
-const a11y = require('a11y');
 const textLintEngine = new TextLintEngine();
-
-// a11y('twitter.com', function (err, reports) {
-//     var output = JSON.parse(reports);
-//     var audit = output.audit; // a11y Formatted report
-//     var report = output.report; // DevTools Accessibility Audit formatted report
-// });
 
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:

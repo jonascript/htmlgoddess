@@ -13,7 +13,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Link Checker
 
 ## 0.0.2
-
 - Added proofreader via textlint.
 - Fixed typos.
 - Changed templatePath to contentPath in plugin.
