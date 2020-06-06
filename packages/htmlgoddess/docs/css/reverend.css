@@ -15,7 +15,8 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.2;
-  text-decoration: none;
+  text-decoration: normal;
+  font-weight: normal;
 
   text-align: justify;
   text-justify: auto;
@@ -23,7 +24,7 @@ body {
   text-indent: 0;
   overflow: auto;
   white-space: normal;
-  /word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 div {
@@ -154,7 +155,6 @@ option {
   opacity: 1;
 }
 
-
 a {
   color: magenta;
   font-weight: 600;
@@ -165,7 +165,6 @@ hr {
   width: 50%;
 }
 
-
 @media screen and (max-width: 1024px) {
   /* wide screens */
   body {
@@ -175,10 +174,7 @@ hr {
   }
 }
 
-
-
 @media screen and (max-width: 768px) {
-
   body {
     /* background-color:  lightgreen; /* for test purposes */
     padding: 0 5%;
@@ -197,4 +193,22 @@ hr {
   button {
     width: 90%;
   }
+}
+
+nav {
+  display: block;
+  width: 100%;
+}
+
+nav ul {
+  display: inline-flex;
+  width: 100%;
+}
+
+nav li {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  margin: 0;
+  text-transform: lowercase;
 }

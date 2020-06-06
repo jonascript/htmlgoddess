@@ -1,4 +1,5 @@
 const PACKAGE = require('./package.json');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
@@ -17,7 +18,6 @@ const plugins = [];
 for (let x = 0; x < htmlFiles.length; x++) {
   const pathObj = path.parse(htmlFiles[x]);
   let templatePath = htmlFiles[x].replace('src/content/', '');
-
   let templateName = 'index.html';
   if (fs.existsSync('src/templates/' + path.dirname(templatePath) + '.html')) {
     templateName = path.dirname(templatePath) + '.html';
@@ -35,13 +35,18 @@ for (let x = 0; x < htmlFiles.length; x++) {
 }
 
 module.exports = {
-  entry: './src/css/index.css',
+  entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
   output: {
     path: __dirname + PACKAGE.htmlgoddess.output,
   },
   mode: 'development',
+  stats: 'errors-warnings',
   module: {
     rules: [
+      {
+        test: /\.html$/i, // Enables live reload
+        loader: 'html-loader',
+      },
       {
         // For CSS modules
         // For pure CSS - /\.css$/i,
@@ -72,8 +77,8 @@ module.exports = {
     ],
   },
   plugins: [
+    new HtmlGoddessPlugin(),
     ...plugins,
-    new HtmlGoddessPlugin({ options: '' }),
     new CleanWebpackPlugin({
       dry: false,
       cleanOnceBeforeBuildPatterns: ['**/*', '!CNAME'],
