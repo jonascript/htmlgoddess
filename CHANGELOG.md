@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 0.0.4
 - Live Reload
+- Accessibility Validation
 
 ## 0.0.3
 - Spell Checker

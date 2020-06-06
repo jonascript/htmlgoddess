@@ -73,4 +73,4 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - Check if user has edited files in output folder and show a warning.
 - convert "docs" to configurable variable
 - Double compile bug "The HtmlGoddessPlugin is starting a new compilation..."
-- Accesibility Validation
+- Accessibility Validation

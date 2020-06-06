@@ -18,7 +18,6 @@ const plugins = [];
 for (let x = 0; x < htmlFiles.length; x++) {
   const pathObj = path.parse(htmlFiles[x]);
   let templatePath = htmlFiles[x].replace('src/content/', '');
-
   let templateName = 'index.html';
   if (fs.existsSync('src/templates/' + path.dirname(templatePath) + '.html')) {
     templateName = path.dirname(templatePath) + '.html';
