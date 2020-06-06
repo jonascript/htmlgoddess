@@ -16,6 +16,9 @@ This is a minimalist framework for creating a website like it's 1999.
 - ``` npm start ```
 - The menu will give you options which should be self explanatory
 
+# I don't know any HTML
+That's ok. Check out [this video](https://www.youtube.com/watch?v=3RXlQPkJzCM) to get started.
+
 ## Command Line Menu
 When you run ``` npm start ``` and it will give you the following options.
 
@@ -65,7 +68,9 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - Using JavaScript is discouraged as it shouldn't be unnecessary, though there's nothing in the framework that prevents you using it. 
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
-
-
-
-
+## To Do
+- GUI
+- Check if user has edited files in output folder and show a warning.
+- convert "docs" to configurable variable
+- Double compile bug "The HtmlGoddessPlugin is starting a new compilation..."
+- Accessibility Validation

@@ -143,5 +143,9 @@ dist
 
 .DS_Store
 
+.vscode/
+
 # For github pages to point to work with custom domain 
 CNAME
+
+.vscode/

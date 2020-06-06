@@ -201,13 +201,14 @@ nav ol {
   padding-left: 2rem;
 }
 nav li {
-  display: block;
+  display: inline-block;
+  margin: 0 1rem;
 }
-nav li:before {
+/* nav li:before {
   content: counters(item, ".") " ";
   counter-increment: item;
   padding-right: 0.85rem;
-}
+} */
 
 /* Center definitions (most useful for display equations) */
 dl dd {
@@ -225,6 +226,10 @@ dl dd {
   content: "Theorem " counter(theorem) ". ";
   font-weight: bold;
   font-style: normal;
+}
+
+footer {
+  margin-top: 300px;
 }
 
 /* Lemma */
