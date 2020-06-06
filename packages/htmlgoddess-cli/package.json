@@ -1,0 +1,61 @@
+{
+  "name": "htmlgoddess-cli",
+  "description": "> TODO: description",
+  "version": "0.0.0",
+  "author": "Jonathan Crockett <joncrockett@gmail.com>",
+  "bin": {
+    "htmlgoddess": "./bin/run"
+  },
+  "bugs": "https://github.com/jonascript/htmlgoddess-cli/issues",
+  "dependencies": {
+    "@oclif/command": "1.6.1",
+    "@oclif/config": "1.15.1",
+    "@oclif/plugin-help": "3.1.0",
+    "tslib": "1.13.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "1.22.2",
+    "@types/node": "10.17.24",
+    "eslint": "5.16.0",
+    "eslint-config-oclif": "3.1.0",
+    "eslint-config-oclif-typescript": "0.1.0",
+    "globby": "10.0.2",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.5"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "lib"
+  ],
+  "homepage": "https://github.com/jonascript/htmlgoddess-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "ISC",
+  "main": "lib/htmlgoddess-cli.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "htmlgoddess-cli",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "jonascript/htmlgoddess-cli",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}

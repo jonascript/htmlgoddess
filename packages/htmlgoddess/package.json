@@ -1,11 +1,8 @@
 {
   "name": "htmlgoddess",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
-  "private": true,
-  "bin": {
-    "htmlgoddess": "node_modules/.bin/ntl"
-  },
+  "private": false,
   "scripts": {
     "start": "ntl",
     "print": "webpack",
