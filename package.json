@@ -1,64 +1,19 @@
 {
   "name": "htmlgoddess",
-  "version": "0.0.2",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
-  "private": true,
+  "version": "0.0.2",
+  "author": "Jonathan Crockett",
   "bin": {
     "htmlgoddess": "node_modules/.bin/ntl"
   },
-  "scripts": {
-    "start": "ntl",
-    "print": "webpack",
-    "autoprint": "onchange 'src/' -- webpack",
-    "save": "git commit -am 'saving work'",
-    "publish": "git push origin",
-    "serve": "node server",
-    "format": "prettier src/ --write",
-    "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
-    "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
-    "a11y": "node a11y",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jonascript/htmlgoddess.git"
-  },
-  "keywords": [
-    "html"
-  ],
-  "author": "Jonathan Crockett",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/jonascript/htmlgoddess/issues"
   },
-  "htmlgoddess": {
-    "output": "/docs",
-    "livereload": true
+  "dependencies": {
+    "postcss-loader": "3.0.0",
+    "serve": "11.3.1",
+    "spellchecker": "3.7.0"
   },
-  "textlint": {
-    "plugins": [
-      "html"
-    ],
-    "rules": {
-      "@textlint-rule/no-dead-link": {
-        "checkRelative": true,
-        "baseURI": "http://localhost:3000",
-        "severity": "warning"
-      },
-      "textlint-rule-rousseau": {
-        "ignoreTypes": [
-          "sentence:uppercase",
-          "weasel"
-        ],
-        "severity": "warning",
-        "showLevels": [
-          "error"
-        ]
-      },
-      "textlint-rule-spellchecker": true
-    }
-  },
-  "homepage": "https://github.com/jonascript/htmlgoddess#readme",
   "devDependencies": {
     "@textlint-rule/textlint-rule-no-dead-link": "3.2.0",
     "@webpack-cli/serve": "0.2.0",
@@ -93,14 +48,59 @@
     "webpack-fix-style-only-entries": "0.5.0",
     "webpack-livereload-plugin": "2.3.0"
   },
-  "dependencies": {
-    "postcss-loader": "3.0.0",
-    "serve": "11.3.1",
-    "spellchecker": "3.7.0"
-  },
-  "main": "index.js",
   "directories": {
     "doc": "docs",
     "test": "tests"
+  },
+  "homepage": "https://github.com/jonascript/htmlgoddess#readme",
+  "htmlgoddess": {
+    "output": "/docs",
+    "livereload": true
+  },
+  "keywords": [
+    "html"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonascript/htmlgoddess.git"
+  },
+  "scripts": {
+    "a11y": "node a11y",
+    "autoformat": "onchange 'src/**/*.html'  'src/**/*.css' -- prettier {{changed}} --write",
+    "autoprint": "onchange 'src/' -- webpack",
+    "format": "prettier src/ --write",
+    "print": "webpack",
+    "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
+    "publish": "git push origin",
+    "save": "git commit -am 'saving work'",
+    "serve": "node server",
+    "start": "ntl",
+    "test": "jest"
+  },
+  "textlint": {
+    "plugins": [
+      "html"
+    ],
+    "rules": {
+      "@textlint-rule/no-dead-link": {
+        "checkRelative": true,
+        "baseURI": "http://localhost:3000",
+        "severity": "warning"
+      },
+      "textlint-rule-rousseau": {
+        "ignoreTypes": [
+          "sentence:uppercase",
+          "weasel"
+        ],
+        "severity": "warning",
+        "showLevels": [
+          "error"
+        ]
+      },
+      "textlint-rule-spellchecker": true
+    }
   }
 }
