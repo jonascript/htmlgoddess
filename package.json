@@ -1,7 +1,7 @@
 {
   "name": "htmlgoddess",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Jonathan Crockett",
   "bin": {
     "htmlgoddess": "node_modules/.bin/ntl"
@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "postcss-loader": "3.0.0",
-    "serve": "11.3.1",
-    "spellchecker": "3.7.0"
+    "serve": "11.3.1"
   },
   "devDependencies": {
     "@textlint-rule/textlint-rule-no-dead-link": "3.2.0",
@@ -73,7 +72,6 @@
     "autoprint": "onchange 'src/' -- webpack",
     "format": "prettier src/ --write",
     "print": "webpack",
-    "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
     "publish": "git push origin",
     "save": "git commit -am 'saving work'",
     "serve": "node server",
