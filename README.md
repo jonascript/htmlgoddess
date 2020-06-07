@@ -69,8 +69,10 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 - You can ignore everything I just wrote and do whatever you want. It's the internet!
 
 ## To Do
+- Create executable
+- Swap CNAME for yaml config for hosting 
+- Coverage
 - GUI
 - Check if user has edited files in output folder and show a warning.
 - convert "docs" to configurable variable
 - Double compile bug "The HtmlGoddessPlugin is starting a new compilation..."
-- Accessibility Validation

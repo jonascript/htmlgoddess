@@ -83,7 +83,7 @@ module.exports = {
       dry: false,
       cleanOnceBeforeBuildPatterns: ['**/*', '!CNAME'],
     }),
-    new FixStyleOnlyEntriesPlugin(),
+    new FixStyleOnlyEntriesPlugin({ silent: true }),
     new CopyPlugin({
       patterns: [
         { flatten: true, toType: 'dir', from: './src/css/*.css', to: 'css' },
