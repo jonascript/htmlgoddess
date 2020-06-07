@@ -31,7 +31,7 @@
     "url": "https://github.com/jonascript/htmlgoddess/issues"
   },
   "htmlgoddess": {
-    "output": "/docs",
+    "output": "./docs",
     "livereload": true
   },
   "textlint": {
@@ -58,7 +58,11 @@
     }
   },
   "homepage": "https://github.com/jonascript/htmlgoddess#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "postcss-loader": "3.0.0",
+    "serve": "11.3.1",
+    "spellchecker": "3.7.0",
     "@textlint-rule/textlint-rule-no-dead-link": "3.2.0",
     "@webpack-cli/serve": "0.2.0",
     "cjs-to-es6": "1.1.1",
@@ -92,11 +96,6 @@
     "webpack-dev-server": "3.11.0",
     "webpack-fix-style-only-entries": "0.5.0",
     "webpack-livereload-plugin": "2.3.0"
-  },
-  "dependencies": {
-    "postcss-loader": "3.0.0",
-    "serve": "11.3.1",
-    "spellchecker": "3.7.0"
   },
   "directories": {
     "doc": "docs",

@@ -1,0 +1,149 @@
+{
+    "version": "0.0.0",
+    "commands": {
+        "format": {
+            "id": "format",
+            "description": "formats your HTML.",
+            "pluginName": "htmlgoddess-cli",
+            "pluginType": "core",
+            "aliases": [],
+            "examples": [
+                "$ htmlgoddess format\n"
+            ],
+            "flags": {
+                "help": {
+                    "name": "help",
+                    "type": "boolean",
+                    "char": "h",
+                    "description": "show CLI help",
+                    "allowNo": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "option",
+                    "char": "n",
+                    "description": "name to print"
+                },
+                "force": {
+                    "name": "force",
+                    "type": "boolean",
+                    "char": "f",
+                    "allowNo": false
+                }
+            },
+            "args": [
+                {
+                    "name": "file"
+                }
+            ]
+        },
+        "hello": {
+            "id": "hello",
+            "description": "describe the command here",
+            "pluginName": "htmlgoddess-cli",
+            "pluginType": "core",
+            "aliases": [],
+            "examples": [
+                "$ htmlgoddess hello\nhello world wide web from ./src/hello.ts!\n"
+            ],
+            "flags": {
+                "help": {
+                    "name": "help",
+                    "type": "boolean",
+                    "char": "h",
+                    "description": "show CLI help",
+                    "allowNo": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "option",
+                    "char": "n",
+                    "description": "name to print"
+                },
+                "force": {
+                    "name": "force",
+                    "type": "boolean",
+                    "char": "f",
+                    "allowNo": false
+                }
+            },
+            "args": [
+                {
+                    "name": "file"
+                }
+            ]
+        },
+        "print": {
+            "id": "print",
+            "description": "describe the command here",
+            "pluginName": "htmlgoddess-cli",
+            "pluginType": "core",
+            "aliases": [],
+            "examples": [
+                "$ htmlgoddess print\nhello world wide web from ./src/hello.ts!\n"
+            ],
+            "flags": {
+                "help": {
+                    "name": "help",
+                    "type": "boolean",
+                    "char": "h",
+                    "description": "show CLI help",
+                    "allowNo": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "option",
+                    "char": "n",
+                    "description": "name to print"
+                },
+                "force": {
+                    "name": "force",
+                    "type": "boolean",
+                    "char": "f",
+                    "allowNo": false
+                }
+            },
+            "args": [
+                {
+                    "name": "file"
+                }
+            ]
+        },
+        "serve": {
+            "id": "serve",
+            "description": "serves your website and auto-reloads when changed.",
+            "pluginName": "htmlgoddess-cli",
+            "pluginType": "core",
+            "aliases": [],
+            "examples": [
+                "$ htmlgoddess serve\n"
+            ],
+            "flags": {
+                "help": {
+                    "name": "help",
+                    "type": "boolean",
+                    "char": "h",
+                    "description": "show CLI help",
+                    "allowNo": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "option",
+                    "char": "n",
+                    "description": "name to print"
+                },
+                "force": {
+                    "name": "force",
+                    "type": "boolean",
+                    "char": "f",
+                    "allowNo": false
+                }
+            },
+            "args": [
+                {
+                    "name": "file"
+                }
+            ]
+        }
+    }
+}

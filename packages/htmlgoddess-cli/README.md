@@ -28,8 +28,30 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`htmlgoddess-cli format [FILE]`](#htmlgoddess-cli-format-file)
 * [`htmlgoddess-cli hello [FILE]`](#htmlgoddess-cli-hello-file)
 * [`htmlgoddess-cli help [COMMAND]`](#htmlgoddess-cli-help-command)
+* [`htmlgoddess-cli print [FILE]`](#htmlgoddess-cli-print-file)
+* [`htmlgoddess-cli serve [FILE]`](#htmlgoddess-cli-serve-file)
+
+## `htmlgoddess-cli format [FILE]`
+
+formats your HTML.
+
+```
+USAGE
+  $ htmlgoddess-cli format [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess format
+```
+
+_See code: [src/commands/format.ts](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/src/commands/format.ts)_
 
 ## `htmlgoddess-cli hello [FILE]`
 
@@ -45,8 +67,8 @@ OPTIONS
   -n, --name=name  name to print
 
 EXAMPLE
-  $ htmlgoddess-cli hello
-  hello world from ./src/hello.ts!
+  $ htmlgoddess hello
+  hello world wide web from ./src/hello.ts!
 ```
 
 _See code: [src/commands/hello.ts](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/src/commands/hello.ts)_
@@ -67,4 +89,43 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0/src/commands/help.ts)_
+
+## `htmlgoddess-cli print [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ htmlgoddess-cli print [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess print
+  hello world wide web from ./src/hello.ts!
+```
+
+_See code: [src/commands/print.ts](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/src/commands/print.ts)_
+
+## `htmlgoddess-cli serve [FILE]`
+
+serves your website and auto-reloads when changed.
+
+```
+USAGE
+  $ htmlgoddess-cli serve [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess serve
+```
+
+_See code: [src/commands/serve.ts](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/src/commands/serve.ts)_
 <!-- commandsstop -->

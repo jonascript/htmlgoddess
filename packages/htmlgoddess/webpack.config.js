@@ -1,4 +1,4 @@
-const PACKAGE = require('./package.json');
+const PACKAGE = require('../htmlgoddess-cli/package.json');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -37,7 +37,7 @@ for (let x = 0; x < htmlFiles.length; x++) {
 module.exports = {
   entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
   output: {
-    path: __dirname + PACKAGE.htmlgoddess.output,
+    path: process.cwd() + '/' + PACKAGE.htmlgoddess.output,
   },
   mode: 'development',
   stats: 'errors-warnings',
@@ -77,13 +77,13 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlGoddessPlugin(),
     ...plugins,
+    new HtmlGoddessPlugin(),
     new CleanWebpackPlugin({
       dry: false,
       cleanOnceBeforeBuildPatterns: ['**/*', '!CNAME'],
     }),
-    new FixStyleOnlyEntriesPlugin(),
+    new FixStyleOnlyEntriesPlugin({ silent: true }),
     new CopyPlugin({
       patterns: [
         { flatten: true, toType: 'dir', from: './src/css/*.css', to: 'css' },

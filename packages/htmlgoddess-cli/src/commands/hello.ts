@@ -4,7 +4,7 @@ export default class Hello extends Command {
   static description = 'describe the command here'
 
   static examples = [
-    `$ htmlgoddess-cli hello
+    `$ htmlgoddess hello
 hello world wide web from ./src/hello.ts!
 `,
   ]
