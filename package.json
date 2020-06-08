@@ -2,6 +2,19 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.22.0"
+    "@oclif/dev-cli": "1.22.2",
+    "@types/node": "10.17.24",
+    "eslint": "5.16.0",
+    "eslint-config-oclif": "3.1.0",
+    "eslint-config-oclif-typescript": "0.1.0",
+    "globby": "10.0.2",
+    "lerna": "^3.22.0",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.5"
+  },
+  "dependencies": {
+    "htmlgoddess": "file:packages/htmlgoddess",
+    "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
+    "test": "file:packages/test"
   }
 }

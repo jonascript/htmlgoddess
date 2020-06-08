@@ -1,8 +1,8 @@
 import {Command, flags} from '@oclif/command'
 
-import HTMLGoddess, {print as printSite } from "../../../htmlgoddess";
+import HTMLGoddess, {printAuto} from "htmlgoddess";
 
-export default class Print extends Command {
+export default class AutoPrint extends Command {
   static description = 'describe the command here'
 
   static examples = [
@@ -22,10 +22,11 @@ hello world wide web from ./src/hello.ts!
   static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Print)
+    const {args, flags} = this.parse(AutoPrint)
   
-    console.log(printSite());
-    this.log(`Printing your website from ./src to ./docs`)
+  
+    this.log(`Printing your website from ./src to ./docs`);
+    printAuto();
 
   }
 }

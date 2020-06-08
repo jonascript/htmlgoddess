@@ -37,7 +37,7 @@ for (let x = 0; x < htmlFiles.length; x++) {
 module.exports = {
   entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
   output: {
-    path: process.cwd() + '/' + PACKAGE.htmlgoddess.output,
+    path: path.join(process.cwd(), PACKAGE.htmlgoddess.output),
   },
   mode: 'development',
   stats: 'errors-warnings',

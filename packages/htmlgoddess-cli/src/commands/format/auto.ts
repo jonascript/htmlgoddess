@@ -1,12 +1,12 @@
 import {Command, flags} from '@oclif/command'
 
-import HTMLGoddess, { serve } from "../../../htmlgoddess";
+import HTMLGoddess, { format } from "htmlgoddess";
 
-export default class Serve extends Command {
-  static description = 'serves your website and auto-reloads when changed.'
+export default class FormatAuto extends Command {
+  static description = 'formats your HTML.'
 
   static examples = [
-    `$ htmlgoddess serve
+    `$ htmlgoddess format:auto
 `,
   ]
 
@@ -21,7 +21,7 @@ export default class Serve extends Command {
   static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Serve)
-    serve()
+    const {args, flags} = this.parse(FormatAuto)
+    format()
   }
 }

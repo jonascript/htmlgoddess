@@ -85,12 +85,13 @@ class HtmlGoddessPlugin {
 
           data.html = pretty(data.html);
 
-          const results = await textLintEngine.executeOnFiles([contentPath]);
+          // const results = await textLintEngine.executeOnFiles([contentPath]);
 
-          if (textLintEngine.isErrorResults(results)) {
-            var output = textLintEngine.formatResults(results);
-            console.log(output);
-          }
+          // if (textLintEngine.isErrorResults(results)) {
+          //   var output = textLintEngine.formatResults(results);
+          //   console.log(output);
+          // }
+
           cb(null, data);
         }
       );

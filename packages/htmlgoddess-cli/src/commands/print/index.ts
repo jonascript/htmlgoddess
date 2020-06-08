@@ -1,12 +1,13 @@
 import {Command, flags} from '@oclif/command'
 
-import HTMLGoddess, { format } from "../../../htmlgoddess";
+import HTMLGoddess, {print as printSite } from "htmlgoddess";
 
-export default class Format extends Command {
-  static description = 'formats your HTML.'
+export default class Print extends Command {
+  static description = 'describe the command here'
 
   static examples = [
-    `$ htmlgoddess format
+    `$ htmlgoddess print
+hello world wide web from ./src/hello.ts!
 `,
   ]
 
@@ -21,7 +22,10 @@ export default class Format extends Command {
   static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Format)
-    format()
+    const {args, flags} = this.parse(Print)
+  
+    console.log(printSite());
+    this.log(`Printing your website from ./src to ./docs`)
+
   }
 }
