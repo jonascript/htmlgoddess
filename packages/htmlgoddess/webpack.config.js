@@ -34,6 +34,8 @@ for (let x = 0; x < htmlFiles.length; x++) {
   );
 }
 
+console.log('PRINTY TIME', process.cwd());
+
 module.exports = {
   entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
   output: {

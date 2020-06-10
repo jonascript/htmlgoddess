@@ -1,6 +1,6 @@
 import {Command, flags} from '@oclif/command'
-
 import HTMLGoddess, { format } from "htmlgoddess";
+import execa from 'execa';
 
 export default class FormatAuto extends Command {
   static description = 'formats your HTML.'
@@ -22,6 +22,6 @@ export default class FormatAuto extends Command {
 
   async run() {
     const {args, flags} = this.parse(FormatAuto)
-    format()
+    execa('onchange', [`${process.cwd()}/src/**/*.html`, `${process.cwd()}/src/**/*.css`, '--', 'prettier', '{{changed}}','--write']).stdout.pipe(process.stdout);
   }
 }

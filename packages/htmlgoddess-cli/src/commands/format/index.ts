@@ -1,6 +1,7 @@
 import {Command, flags} from '@oclif/command'
 
 import HTMLGoddess, { format } from "htmlgoddess";
+import execa from 'execa';
 
 export default class Format extends Command {
   static description = 'formats your HTML.'
@@ -22,6 +23,6 @@ export default class Format extends Command {
 
   async run() {
     const {args, flags} = this.parse(Format)
-    format()
+    execa('prettier', [`${process.cwd()}/src/`, '--write']).stdout.pipe(process.stdout);
   }
 }
