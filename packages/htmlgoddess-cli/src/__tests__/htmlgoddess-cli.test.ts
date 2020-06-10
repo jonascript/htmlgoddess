@@ -1,6 +1,11 @@
 "use strict";
 
-const htmlgoddessCli = require("../lib");
+import fs from "fs";
+import path from "path";
+
+import { run } from "../index";
+
+const TEST_DIR_PATH = "../../test";
 
 describe("htmlgoddess Command", () => {
   let result;
@@ -19,9 +24,18 @@ describe("htmlgoddess Command", () => {
   afterEach(() => jest.restoreAllMocks());
 
   it("can print", async () => {
-    await htmlgoddessCli.run(["print"]);
-    expect(result[0]).toContain("Printing your website from ./src to ./docs");
-    expect(result[1]).toContain("Your website has been printed");
+    fs.writeFileSync(
+      path.join("src/content/can-print.html"),
+      "<p>I am printed</p>"
+    );
+
+    await run(["print"]);
+    const output = fs.readFileSync(
+      path.join("src/content/can-print.html"),
+      "utf-8"
+    );
+
+    expect(output).toContain("<p>I am printed</p>");
   });
 
   it("can print:auto", async () => {});

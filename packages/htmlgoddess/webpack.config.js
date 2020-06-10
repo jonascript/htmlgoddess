@@ -36,8 +36,6 @@ for (let x = 0; x < htmlFiles.length; x++) {
 
 const CWD_PATH = process.cwd();
 
-console.log('PRINTY TIME', CWD_PATH);
-
 module.exports = {
   entry: path.join(CWD_PATH, './src/css/index.css'), // Prevents unnecessary main.js from being included.
   output: {

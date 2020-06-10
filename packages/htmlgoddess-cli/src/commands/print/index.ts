@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import HTMLGoddess, { print as printSite } from "htmlgoddess";
+import cli from "cli-ux";
 
 export default class Print extends Command {
   static description = "describe the command here";
@@ -24,10 +24,16 @@ hello world wide web from ./src/hello.ts!
   async run() {
     const { args, flags } = this.parse(Print);
 
-    this.log(`Printing your website from ./src to ./docs`);
+    cli.action.start(`Printing your website from ./src to ./docs`);
+    const output = await execa("webpack", [
+      "--config",
+      "../htmlgoddess/webpack.config.js",
+    ]);
 
-    await execa("webpack", ["--config", "../htmlgoddess/webpack.config.js"]);
-
-    this.log(`Your website has been printed`);
+    if (output.failed) {
+      this.log(output.stderr);
+    } else {
+      cli.action.stop();
+    }
   }
 }

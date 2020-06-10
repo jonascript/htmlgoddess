@@ -68,7 +68,6 @@ const compileTemplate = (html, basePath = '') => {
 
 class HtmlGoddessPlugin {
   apply(compiler) {
-    console.log('The HTML Goddess has been summoned...');
     compiler.hooks.compilation.tap('HtmlGoddessPlugin', (compilation) => {
       HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
         'HtmlGoddessPlugin',

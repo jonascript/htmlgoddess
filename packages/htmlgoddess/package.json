@@ -12,8 +12,6 @@
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
     "serve": "node ./scripts/server",
-    "format": "prettier src/ --write",
-    "format:auto": "",
     "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
     "a11y": "node ./scripts/a11y",
     "test": "jest"
