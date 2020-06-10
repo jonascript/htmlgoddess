@@ -80,7 +80,10 @@
     ]
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1"
+    "@oclif/dev-cli": "^1",
+    "@types/jest": "26.0.0",
+    "jest": "26.0.1",
+    "ts-jest": "26.1.0"
   },
   "repository": "jonascript/htmlgoddess-cli",
   "scripts": {
@@ -88,7 +91,8 @@
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "jest",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "prettier:watch": "onchange 'src/**/*.ts' '__tests__/**/*.ts' -- prettier {{changed}} --write"
   },
   "types": "lib/index.d.ts"
 }

@@ -5,6 +5,14 @@ module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
+  testMatch: [
+    "**/__tests__/**/*.+(ts|tsx|js)",
+    "**/?(*.)+(spec|test).+(ts|tsx|js)",
+  ],
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest",
+  },
+
   // Stop running tests after `n` failures
   // bail: 0,
 

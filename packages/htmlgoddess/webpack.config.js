@@ -34,12 +34,14 @@ for (let x = 0; x < htmlFiles.length; x++) {
   );
 }
 
-console.log('PRINTY TIME', process.cwd());
+const CWD_PATH = process.cwd();
+
+console.log('PRINTY TIME', CWD_PATH);
 
 module.exports = {
-  entry: './src/css/index.css', // Prevents unnecessary main.js from being included.
+  entry: path.join(CWD_PATH, './src/css/index.css'), // Prevents unnecessary main.js from being included.
   output: {
-    path: path.join(process.cwd(), PACKAGE.htmlgoddess.output),
+    path: path.join(CWD_PATH, PACKAGE.htmlgoddess.output),
   },
   mode: 'development',
   stats: 'errors-warnings',
@@ -88,7 +90,12 @@ module.exports = {
     new FixStyleOnlyEntriesPlugin({ silent: true }),
     new CopyPlugin({
       patterns: [
-        { flatten: true, toType: 'dir', from: './src/css/*.css', to: 'css' },
+        {
+          flatten: true,
+          toType: 'dir',
+          from: CWD_PATH + '/src/css/*.css',
+          to: 'css',
+        },
       ],
     }),
   ],

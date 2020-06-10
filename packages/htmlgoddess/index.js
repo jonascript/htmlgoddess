@@ -12,7 +12,6 @@ exports.print = function () {
       console.log('Errors while compiling...', err, stats.hasErrors());
       // Handle errors here
     }
-    console.log('Your website has been printed.');
     // Done processing
   });
 };
