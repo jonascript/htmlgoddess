@@ -1,18 +1,15 @@
 import { Command, flags } from "@oclif/command";
-import HTMLGoddess from "htmlgoddess";
+import HTMLGoddess, { format } from "htmlgoddess";
 import execa from "execa";
 import { CWD_PATH } from "../../index";
-import path from "path";
 
-export default class Serve extends Command {
-  static description = "serves your website and auto-reloads when changed.";
+export default class Save extends Command {
+  static description = "formats your HTML.";
 
   static examples = [
-    `$ htmlgoddess serve
+    `$ htmlgoddess format
 `,
   ];
-
-  public subprocess = null;
 
   static flags = {
     help: flags.help({ char: "h" }),
@@ -25,9 +22,11 @@ export default class Serve extends Command {
   static args = [{ name: "file" }];
 
   async run() {
-    const { args, flags } = this.parse(Serve);
-    this.log("starting server");
-    execa("node", ["../htmlgoddess/scripts/server.js"]);
-    this.log("Server started");
+    const { args, flags } = this.parse(Save);
+    this.log("Saving work");
+    await execa("git", ["add", "src"]).stdout.pipe(process.stdout);
+    await execa("git", ["commit", "-m", '"saving content edit"']).stdout.pipe(
+      process.stdout
+    );
   }
 }

@@ -82,6 +82,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@types/jest": "26.0.0",
+    "axios": "0.19.2",
     "jest": "26.0.1",
     "supertest": "4.0.2",
     "ts-jest": "26.1.0"

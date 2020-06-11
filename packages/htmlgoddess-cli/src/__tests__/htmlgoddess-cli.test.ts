@@ -3,7 +3,8 @@
 import fs from "fs";
 import path from "path";
 import { run } from "../index";
-import http from "http";
+import axios from "axios";
+import execa from "execa";
 
 const TEST_DIR_PATH = "../../test";
 
@@ -31,11 +32,10 @@ describe("htmlgoddess Command", () => {
 
     await run(["print"]);
     const output = fs.readFileSync(path.join("docs/can-print.html"), "utf-8");
-
     expect(output).toContain("<p>I am printed</p>");
   });
 
-  it("can print:auto", async () => {});
+  // it("can print:auto", async () => {});
 
   it("can format", async () => {
     fs.writeFileSync(
@@ -49,27 +49,31 @@ describe("htmlgoddess Command", () => {
 
   it("can format:auto", async () => {});
 
-  it("can serve", async () => {
-
+  it("can serve", async (done) => {
     // @todo figure out how to test server
     // and kill gracefully.
-    const request = require("supertest");
-    const server = await run(["serve"]);
-    console.log("server", server);
-    const options = {
-      port: 3000,
-      host: "127.0.0.1",
-      method: "GET",
-      path: "",
-    };
+    await run(["serve"]);
+    setTimeout(async () => {
+      try {
+        let response = await axios.get("http://localhost:3000");
+        expect(response).toBeTruthy();
+      } catch (error) {
+        expect(error).not.toBeTruthy();
+      }
 
-    const response = await http.get(options);
-    expect(response).toBeTruthy();
+      done();
+    }, 1000);
   });
 
   it("can serve:auto", async () => {});
 
-  it("can save", async () => {});
+  it("can save", async () => {
+    fs.writeFileSync(
+      path.join("src/content/can-save.html"),
+      `<p>I am saved at ${Date.now()}</p>`
+    );
+    await run(["save"]);
+  });
 
   it("can publish", async () => {});
 });
