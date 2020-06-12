@@ -25,4 +25,5 @@ export default class Publish extends Command {
     const { args, flags } = this.parse(Publish);
     this.log("Publishing work");
     await execa("git", ["push", "origin"]).stdout.pipe(process.stdout);
+  }
 }
