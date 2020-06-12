@@ -37,6 +37,7 @@ app.get('*(.html|.htm|/)', (req, res, next) => {
     },
   });
 });
+
 app.use(express.static('docs'));
 
 app.listen(port, () =>

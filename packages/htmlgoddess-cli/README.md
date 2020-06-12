@@ -36,6 +36,7 @@ USAGE
 * [`htmlgoddess-cli help [COMMAND]`](#htmlgoddess-cli-help-command)
 * [`htmlgoddess-cli print [FILE]`](#htmlgoddess-cli-print-file)
 * [`htmlgoddess-cli print:auto [FILE]`](#htmlgoddess-cli-printauto-file)
+* [`htmlgoddess-cli save [FILE]`](#htmlgoddess-cli-save-file)
 * [`htmlgoddess-cli serve [FILE]`](#htmlgoddess-cli-serve-file)
 * [`htmlgoddess-cli serve:auto [FILE]`](#htmlgoddess-cli-serveauto-file)
 
@@ -153,6 +154,25 @@ EXAMPLE
 ```
 
 _See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/print/auto.js)_
+
+## `htmlgoddess-cli save [FILE]`
+
+formats your HTML.
+
+```
+USAGE
+  $ htmlgoddess-cli save [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess format
+```
+
+_See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/save/index.js)_
 
 ## `htmlgoddess-cli serve [FILE]`
 
