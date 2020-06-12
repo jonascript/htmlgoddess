@@ -1,4 +1,5 @@
 import { Command, flags } from "@oclif/command";
+import chalk from "chalk";
 
 export default class Hello extends Command {
   static description = "describe the command here";
@@ -23,7 +24,8 @@ hello world wide web from ./src/hello.ts!
     const { args, flags } = this.parse(Hello);
 
     const name = flags.name ?? "world";
-    this.log(`hello ${name} from ./src/commands/hello.ts`);
+
+    this.log(`${chalk.blue("hello")} ${name} from ./src/commands/hello.ts`);
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`);
     }

@@ -11,7 +11,6 @@
     "cjstoes6": "cjs-to-es6 --verbose ./index.js",
     "save": "git commit -am 'saving work'",
     "publish": "git push origin",
-    "serve": "node ./scripts/server",
     "proofread": "textlint 'src/**/*.html' 'src/**/*.htm'",
     "a11y": "node ./scripts/a11y",
     "test": "jest"

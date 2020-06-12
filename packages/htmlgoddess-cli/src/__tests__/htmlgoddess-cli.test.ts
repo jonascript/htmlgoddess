@@ -52,7 +52,8 @@ describe("htmlgoddess Command", () => {
   it("can serve", async (done) => {
     // @todo figure out how to test server
     // and kill gracefully.
-    await run(["serve"]);
+    run(["serve"]);
+    console.log("hello serve");
     setTimeout(async () => {
       try {
         let response = await axios.get("http://localhost:3000");
@@ -60,7 +61,6 @@ describe("htmlgoddess Command", () => {
       } catch (error) {
         expect(error).not.toBeTruthy();
       }
-
       done();
     }, 1000);
   });
@@ -98,6 +98,8 @@ describe("htmlgoddess Command", () => {
     await run(["publish"]);
 
     execa.sync("git", ["checkout", "master"]);
+
+    //@todo gracefully handle commits and rollbacks
     done();
   });
 });
