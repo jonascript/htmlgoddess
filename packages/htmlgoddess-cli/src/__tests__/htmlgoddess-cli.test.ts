@@ -83,7 +83,7 @@ describe("htmlgoddess Command", () => {
       expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
       execa.sync("git", ["checkout", "master"]);
       done();
-    }, 500);
+    }, 1000);
   });
 
   it("can publish", async (done) => {
@@ -95,8 +95,6 @@ describe("htmlgoddess Command", () => {
     );
 
     await run(["publish"]);
-
-  
   });
 });
 
