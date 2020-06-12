@@ -87,6 +87,7 @@ describe("htmlgoddess Command", () => {
   });
 
   it("can publish", async (done) => {
+    execa.sync("git", ["checkout", "unit-test"]);
     const time = Date.now();
 
     fs.writeFileSync(
@@ -95,6 +96,9 @@ describe("htmlgoddess Command", () => {
     );
 
     await run(["publish"]);
+
+    execa.sync("git", ["checkout", "master"]);
+    done();
   });
 });
 
