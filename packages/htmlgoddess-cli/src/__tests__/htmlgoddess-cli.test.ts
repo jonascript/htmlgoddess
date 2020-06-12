@@ -83,10 +83,11 @@ describe("htmlgoddess Command", () => {
       expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
       execa.sync("git", ["checkout", "master"]);
       done();
-    }, 500);
+    }, 1000);
   });
 
   it("can publish", async (done) => {
+    execa.sync("git", ["checkout", "unit-test"]);
     const time = Date.now();
 
     fs.writeFileSync(
@@ -96,12 +97,8 @@ describe("htmlgoddess Command", () => {
 
     await run(["publish"]);
 
-    setTimeout(() => {
-      const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
-      expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
-      execa.sync("git", ["checkout", "master"]);
-      done();
-    }, 500);
+    execa.sync("git", ["checkout", "master"]);
+    done();
   });
 });
 
