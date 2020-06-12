@@ -25,8 +25,6 @@ export default class Save extends Command {
     const { args, flags } = this.parse(Save);
     this.log("Saving work");
     await execa("git", ["add", "src"]).stdout.pipe(process.stdout);
-    await execa("git", ["commit", "-m", '"saving content edit"']).stdout.pipe(
-      process.stdout
-    );
+    await execa("git", ["commit", "-m", '"saving content edit"']);
   }
 }

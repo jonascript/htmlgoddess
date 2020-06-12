@@ -67,7 +67,7 @@ describe("htmlgoddess Command", () => {
 
   it("can serve:auto", async () => {});
 
-  it("can save", async () => {
+  it("can save", async (done) => {
     execa.sync("git", ["checkout", "unit-test"]);
 
     const time = Date.now();
@@ -76,11 +76,15 @@ describe("htmlgoddess Command", () => {
       path.join("src/content/can-save.html"),
       `<p>I am saved at ${time}</p>`
     );
+
     await run(["save"]);
 
-    const output = execa.sync("git", ["log", "-1"]);
-
-    console.log(output);
+    setTimeout(() => {
+      const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
+      expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
+      execa.sync("git", ["checkout", "master"]);
+      done();
+    }, 500);
   });
 
   it("can publish", async () => {});
