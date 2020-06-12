@@ -82,6 +82,7 @@ describe("htmlgoddess Command", () => {
     setTimeout(() => {
       const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
       expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
+      // @todo make this go back to whatever branch you are on
       execa.sync("git", ["checkout", "master"]);
       done();
     }, 500);
