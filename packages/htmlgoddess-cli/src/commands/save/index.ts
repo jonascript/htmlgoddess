@@ -2,6 +2,9 @@ import { Command, flags } from "@oclif/command";
 import HTMLGoddess, { format } from "htmlgoddess";
 import execa from "execa";
 import { CWD_PATH } from "../../index";
+import * as git from "isomorphic-git";
+import fs from "fs";
+import dir from "dir";
 
 export default class Save extends Command {
   static description = "formats your HTML.";
@@ -24,7 +27,8 @@ export default class Save extends Command {
   async run() {
     const { args, flags } = this.parse(Save);
     this.log("Saving work");
-    await execa("git", ["add", "src"]).stdout.pipe(process.stdout);
-    await execa("git", ["commit", "-m", '"saving content edit"']);
+    await git.add({ fs, dir, filepath: "src" });
+    await git.commit({ fs, dir, message: "Saving content edit." });
+    // await execa("git", ["add", "src"]).stdout.pipe(process.stdout);
   }
 }
