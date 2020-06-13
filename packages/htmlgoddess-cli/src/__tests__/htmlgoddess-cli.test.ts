@@ -50,10 +50,10 @@ describe("htmlgoddess Command", () => {
   it("can format:auto", async () => {});
 
   it("can serve", async (done) => {
-    // @todo figure out how to test server
-    // and kill gracefully.
+    // @todo fix test
+
     run(["serve"]);
-    console.log("hello serve");
+
     setTimeout(async () => {
       try {
         let response = await axios.get("http://localhost:3000");

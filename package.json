@@ -4,18 +4,28 @@
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
     "@types/node": "10.17.24",
+    "cz-conventional-changelog": "3.2.0",
     "eslint": "5.16.0",
     "eslint-config-oclif": "3.1.0",
     "eslint-config-oclif-typescript": "0.1.0",
+    "git-cz": "4.6.2",
     "globby": "10.0.2",
     "lerna": "^3.22.0",
     "ts-node": "8.10.2",
     "typescript": "3.9.5"
+  },
+  "scripts": {
+    "commit": "git-cz"
   },
   "dependencies": {
     "execa": "4.0.2",
     "htmlgoddess": "file:packages/htmlgoddess",
     "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
     "test": "file:packages/test"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
