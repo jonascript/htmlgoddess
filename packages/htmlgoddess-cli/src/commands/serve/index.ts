@@ -27,13 +27,15 @@ export default class Serve extends Command {
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "file" }];
+  static args = [{ name: "basePath" }];
 
   async run() {
     const { args, flags } = this.parse(Serve);
     this.log("");
-    cli.action.start(`Starting server from ${CWD_PATH}/docs`);
 
+    const basePath  = args.basePath ?   args.basePath: CWD_PATH;
+
+    cli.action.start(`Starting server from ${basePath}/docs`);
     const app = express();
     const port = 3000;
 
@@ -52,7 +54,7 @@ export default class Serve extends Command {
     app.get("*(.html|.htm|/)", (req, res, next) => {
       res.format({
         html: function () {
-          let filename = path.join(CWD_PATH, "/docs", req.url);
+          let filename = path.join(basePath, "/docs", req.url);
           if (filename.charAt(filename.length - 1) === "/") {
             filename += "index.html";
           }
@@ -87,7 +89,7 @@ export default class Serve extends Command {
           `http://localhost:${liveReloadServer.config.port}`
         )}`
       );
-      liveReloadServer.watch(CWD_PATH + "/docs");
+      liveReloadServer.watch(basePath + "/docs");
     });
   }
 }
