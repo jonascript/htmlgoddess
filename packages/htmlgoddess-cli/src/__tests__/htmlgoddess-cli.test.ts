@@ -57,7 +57,7 @@ describe("htmlgoddess Command", () => {
 
   describe("serve", () => {
     it("can serve", (done) => {
-      jest.setTimeout(10000);
+      jest.setTimeout(5000);
       
       run(["serve", '../test']);
       // @todo fix test
