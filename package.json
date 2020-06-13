@@ -4,6 +4,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
     "@types/node": "10.17.24",
+    "cz-conventional-changelog": "3.2.0",
     "eslint": "5.16.0",
     "eslint-config-oclif": "3.1.0",
     "eslint-config-oclif-typescript": "0.1.0",
@@ -21,5 +22,10 @@
     "htmlgoddess": "file:packages/htmlgoddess",
     "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
     "test": "file:packages/test"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
