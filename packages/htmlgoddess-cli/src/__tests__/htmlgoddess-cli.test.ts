@@ -53,7 +53,7 @@ describe("htmlgoddess Command", () => {
     // @todo fix test
 
     run(["serve"]);
-   
+
     setTimeout(async () => {
       try {
         let response = await axios.get("http://localhost:3000");
