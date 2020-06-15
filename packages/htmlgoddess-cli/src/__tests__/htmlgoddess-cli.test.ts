@@ -12,14 +12,14 @@ describe("htmlgoddess Command", () => {
   let result;
 
   beforeAll(() => {
-    process.chdir('../test');
+    process.chdir("../test");
   });
 
   beforeEach(() => {
-    result = [];
-    // jest
-    //   .spyOn(process.stdout, "write")
-    //   .mockImplementation((val) => result.push(val));
+    // result = [];
+    // // jest
+    // //   .spyOn(process.stdout, "write")
+    // //   .mockImplementation((val) => result.push(val));
   });
 
   afterEach(() => jest.restoreAllMocks());
@@ -38,7 +38,6 @@ describe("htmlgoddess Command", () => {
   });
   // it("can print:auto", async () => {});
   describe("format", () => {
-
     it("can format", async () => {
       fs.writeFileSync(
         path.join("src/content/can-format.html"),
@@ -58,53 +57,56 @@ describe("htmlgoddess Command", () => {
   describe("serve", () => {
     it("can serve", (done) => {
       jest.setTimeout(5000);
-      
-      run(["serve", '../test']);
+
+      run(["serve", "../test"]);
       // @todo fix test
       setTimeout(async () => {
-          const response = await axios.get("http://127.0.0.1:3000");
-          expect(response.status).toEqual(200);
-          done();
+        const response = await axios.get("http://127.0.0.1:3000");
+        expect(response.status).toEqual(200);
+        done();
       }, 3000);
     });
 
     it("can serve:auto", async () => {});
   });
 
-  it("can save", async (done) => {
-    execa.sync("git", ["checkout", "unit-test"]);
+  describe("save", () => {
+    it("can save", async (done) => {
+      execa.sync("git", ["checkout", "unit-test"]);
 
-    const time = Date.now();
+      const time = Date.now();
 
-    fs.writeFileSync(
-      path.join("src/content/can-save.html"),
-      `<p>I am saved at ${time}</p>`
-    );
+      fs.writeFileSync(
+        path.join("src/content/can-save.html"),
+        `<p>I am saved at ${time}</p>`
+      );
 
-    await run(["save"]);
-    setTimeout(() => {
-      const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
-      expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
-      execa.sync("git", ["checkout", "master"]);
-      done();
-    }, 1000);
+      await run(["save"]);
+      setTimeout(() => {
+        const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
+        expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
+        execa.sync("git", ["checkout", "master"]);
+        done();
+      }, 1000);
+    });
   });
+  describe("publish", () => {
+    it("can publish", async (done) => {
+      execa.sync("git", ["checkout", "unit-test"]);
+      const time = Date.now();
 
-  it("can publish", async (done) => {
-    execa.sync("git", ["checkout", "unit-test"]);
-    const time = Date.now();
+      fs.writeFileSync(
+        path.join("src/content/can-publish.html"),
+        `<p>I am published at ${time}</p>`
+      );
 
-    fs.writeFileSync(
-      path.join("src/content/can-publish.html"),
-      `<p>I am published at ${time}</p>`
-    );
+      await run(["publish"]);
 
-    await run(["publish"]);
+      execa.sync("git", ["checkout", "master"]);
 
-    execa.sync("git", ["checkout", "master"]);
-
-    //@todo gracefully handle commits and rollbacks
-    done();
+      //@todo gracefully handle commits and rollbacks
+      done();
+    });
   });
 });
 

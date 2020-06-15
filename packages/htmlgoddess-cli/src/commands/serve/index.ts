@@ -33,7 +33,7 @@ export default class Serve extends Command {
     const { args, flags } = this.parse(Serve);
     this.log("");
 
-    const basePath  = args.basePath ?   args.basePath: CWD_PATH;
+    const basePath = args.basePath ? args.basePath : CWD_PATH;
 
     cli.action.start(`Starting server from ${basePath}/docs`);
     const app = express();
