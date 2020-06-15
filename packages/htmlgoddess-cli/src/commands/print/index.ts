@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
 import cli from "cli-ux";
+import { CWD_PATH } from "../../index";
 
 export default class Print extends Command {
   static description = "describe the command here";
@@ -19,12 +20,15 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "file" }];
+  static args = [{ name: "basePath" }];
 
   async run() {
     const { args, flags } = this.parse(Print);
 
+    const basePath = args.basePath ? args.basePath : CWD_PATH;
+
     cli.action.start(`Printing your website from ./src to ./docs`);
+
     const output = await execa("webpack", [
       "--config",
       "../htmlgoddess/webpack.config.js",

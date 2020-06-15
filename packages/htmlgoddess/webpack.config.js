@@ -34,7 +34,9 @@ for (let x = 0; x < htmlFiles.length; x++) {
   );
 }
 
-const CWD_PATH = process.cwd();
+const CWD_PATH = process.env.CWD_PATH || process.cwd();
+
+console.log('CWD_PATH', CWD_PATH);
 
 module.exports = {
   entry: path.join(CWD_PATH, './src/css/index.css'), // Prevents unnecessary main.js from being included.

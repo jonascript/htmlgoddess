@@ -13,6 +13,8 @@ describe("htmlgoddess Command", () => {
 
   beforeAll(() => {
     process.chdir("../test");
+
+    process.env.CWD_PATH = "/Users/Jon/dev/htmlgoddess-monorepo/packages/test";
   });
 
   beforeEach(() => {
@@ -51,13 +53,11 @@ describe("htmlgoddess Command", () => {
       expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
     });
 
-    it("can format:auto", async () => {});
+    // it("can format:auto", async () => {});
   });
 
   describe("serve", () => {
     it("can serve", (done) => {
-      jest.setTimeout(5000);
-
       run(["serve", "../test"]);
       // @todo fix test
       setTimeout(async () => {
@@ -67,13 +67,11 @@ describe("htmlgoddess Command", () => {
       }, 3000);
     });
 
-    it("can serve:auto", async () => {});
+    // it("can serve:auto", async () => {});
   });
 
   describe("save", () => {
     it("can save", async (done) => {
-      execa.sync("git", ["checkout", "unit-test"]);
-
       const time = Date.now();
 
       fs.writeFileSync(
@@ -81,33 +79,33 @@ describe("htmlgoddess Command", () => {
         `<p>I am saved at ${time}</p>`
       );
 
-      await run(["save"]);
+      // @todo make sure this cleans up
+      await run(["save", process.env.CWD_PATH]);
+
       setTimeout(() => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
-        execa.sync("git", ["checkout", "master"]);
         done();
       }, 1000);
     });
   });
-  describe("publish", () => {
-    it("can publish", async (done) => {
-      execa.sync("git", ["checkout", "unit-test"]);
-      const time = Date.now();
+  // describe("publish", () => {
+  //   it("can publish", async (done) => {
+  //     const time = Date.now();
 
-      fs.writeFileSync(
-        path.join("src/content/can-publish.html"),
-        `<p>I am published at ${time}</p>`
-      );
+  //     fs.writeFileSync(
+  //       path.join("src/content/can-publish.html"),
+  //       `<p>I am published at ${time}</p>`
+  //     );
 
-      await run(["publish"]);
+  //     await run(["publish"]);
 
-      execa.sync("git", ["checkout", "master"]);
+  //     execa.sync("git", ["checkout", "master"]);
 
-      //@todo gracefully handle commits and rollbacks
-      done();
-    });
-  });
+  //     //@todo gracefully handle commits and rollbacks
+  //     done();
+  //   });
+  // });
 });
 
 // describe("htmlgoddess-cli", () => {
