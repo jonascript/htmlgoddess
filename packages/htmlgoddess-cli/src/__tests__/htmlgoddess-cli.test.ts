@@ -13,7 +13,6 @@ describe("htmlgoddess Command", () => {
 
   beforeAll(() => {
     process.chdir("../test");
-
     process.env.CWD_PATH = "/Users/Jon/dev/htmlgoddess-monorepo/packages/test";
   });
 
@@ -27,15 +26,29 @@ describe("htmlgoddess Command", () => {
   afterEach(() => jest.restoreAllMocks());
 
   describe("print", () => {
+    const time = Date.now();
+    // beforeEach((done) => {
+
+    //   done();
+    // });
+
     it("can print", async () => {
       fs.writeFileSync(
         path.join("src/content/can-print.html"),
-        "<p>I am printed</p>"
+        `<p>I am printed ${time}</p>`
       );
-
       await run(["print"]);
       const output = fs.readFileSync(path.join("docs/can-print.html"), "utf-8");
-      expect(output).toContain("<p>I am printed</p>");
+      expect(output).toContain(`<p>I am printed ${time}</p>`);
+
+      execa.sync("git", [
+        "checkout",
+        path.join(process.cwd(), "src/content/can-print.html"),
+      ]);
+    });
+
+    afterEach((done) => {
+      done();
     });
   });
   // it("can print:auto", async () => {});
@@ -74,7 +87,7 @@ describe("htmlgoddess Command", () => {
     const time = Date.now();
     beforeEach((done) => {
       fs.writeFileSync(
-        path.join("src/content/can-save.html"),
+        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
         `<p>I am saved at ${time}</p>`
       );
       done();
@@ -91,12 +104,10 @@ describe("htmlgoddess Command", () => {
     });
 
     afterEach((done) => {
-      const output = execa.sync("git", [
+      execa.sync("git", [
         "checkout",
-        path.join(process.cwd(), "src/content/can-save.html"),
+        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
       ]);
-      console.log("output", output);
-
       done();
     });
   });
