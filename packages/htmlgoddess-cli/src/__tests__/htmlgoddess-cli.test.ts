@@ -71,22 +71,33 @@ describe("htmlgoddess Command", () => {
   });
 
   describe("save", () => {
-    it("can save", async (done) => {
-      const time = Date.now();
-
+    const time = Date.now();
+    beforeEach((done) => {
       fs.writeFileSync(
         path.join("src/content/can-save.html"),
         `<p>I am saved at ${time}</p>`
       );
+      done();
+    });
 
+    it("can save", async (done) => {
       // @todo make sure this cleans up
       await run(["save", process.env.CWD_PATH]);
-
       setTimeout(() => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
       }, 1000);
+    });
+
+    afterEach((done) => {
+      const output = execa.sync("git", [
+        "checkout",
+        path.join(process.cwd(), "src/content/can-save.html"),
+      ]);
+      console.log("output", output);
+
+      done();
     });
   });
   // describe("publish", () => {
