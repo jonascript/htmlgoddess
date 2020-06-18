@@ -6,21 +6,20 @@ import { run } from "../index";
 import axios from "axios";
 import execa from "execa";
 
-const TEST_DIR_PATH = "../../test";
-
 describe("htmlgoddess Command", () => {
   let result;
 
   beforeAll(() => {
+    console.log("Changing to test directory");
     process.chdir("../test");
-    process.env.CWD_PATH = "/Users/Jon/dev/htmlgoddess-monorepo/packages/test";
-
-    console.log(process.env.CWD_PATH, process.cwd());
+    process.env.CWD_PATH = process.cwd();
   });
 
   afterAll(() => {
-    console.log(process.env.CWD_PATH, process.cwd());
-
+    console.log(
+      `Reseting and stashing changes for test submodule at: ${process.cwd()}`
+    );
+    execa.sync("git", ["reset", "origin/master"]);
     execa.sync("git", ["stash"]);
   });
 
@@ -31,41 +30,48 @@ describe("htmlgoddess Command", () => {
     // //   .mockImplementation((val) => result.push(val));
   });
 
-  afterEach(() => jest.restoreAllMocks());
+  // afterEach(() => jest.restoreAllMocks());
 
   describe("print", () => {
     const time = Date.now();
-    // beforeEach((done) => {
-
-    //   done();
-    // });
-
-    it("can print", async () => {
+    beforeEach((done) => {
       fs.writeFileSync(
         path.join(process.env.CWD_PATH, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
-      await run(["print"]);
-      const output = fs.readFileSync(path.join("docs/can-print.html"), "utf-8");
-      expect(output).toContain(`<p>I am printed ${time}</p>`);
-
-      execa.sync("git", [
-        "checkout",
-        path.join(process.env.CWD_PATH, "src/content/can-print.html"),
-      ]);
+      done();
     });
 
-    // afterEach((done) => {
-    //   done();
-    // });
+    afterEach((done) => {
+      execa.sync("git", ["stash"]);
+      done();
+    });
+
+    it("can print", async () => {
+      await run(["print"]);
+      const output = fs.readFileSync(
+        path.join(process.env.CWD_PATH, "docs/can-print.html"),
+        "utf-8"
+      );
+      expect(output).toContain(`<p>I am printed ${time}</p>`);
+    });
   });
   // it("can print:auto", async () => {});
   describe("format", () => {
-    it("can format", async () => {
+    beforeEach((done) => {
       fs.writeFileSync(
         path.join("src/content/can-format.html"),
         "<p>I <strong>am</strong>        formatted</p>"
       );
+      done();
+    });
+
+    afterEach((done) => {
+      execa.sync("git", ["stash"]);
+      done();
+    });
+
+    it("can format", async () => {
       await run(["format"]);
       const output = fs.readFileSync(
         path.join("docs/can-format.html"),
@@ -101,6 +107,15 @@ describe("htmlgoddess Command", () => {
       done();
     });
 
+    afterEach((done) => {
+      execa.sync("git", [
+        "reset",
+        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
+      ]);
+      execa.sync("git", ["stash"]);
+      done();
+    });
+
     it("can save", async (done) => {
       // @todo make sure this cleans up
       await run(["save", process.env.CWD_PATH]);
@@ -109,14 +124,6 @@ describe("htmlgoddess Command", () => {
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
       }, 1000);
-    });
-
-    afterEach((done) => {
-      execa.sync("git", [
-        "checkout",
-        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
-      ]);
-      done();
     });
   });
   // describe("publish", () => {
