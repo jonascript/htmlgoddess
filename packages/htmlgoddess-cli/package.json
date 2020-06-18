@@ -95,7 +95,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "jest",
+    "test": "jest --detectOpenHandles --forceExit",
     "test:watch": "jest -w",
     "version": "oclif-dev readme && git add README.md",
     "prettier:watch": "onchange 'src/**/*.ts' '__tests__/**/*.ts' -- prettier {{changed}} --write"

@@ -15,12 +15,13 @@ describe("htmlgoddess Command", () => {
     process.env.CWD_PATH = process.cwd();
   });
 
-  afterAll(() => {
+  afterAll((done) => {
     console.log(
       `Reseting and stashing changes for test submodule at: ${process.cwd()}`
     );
     execa.sync("git", ["reset", "origin/master"]);
     execa.sync("git", ["stash"]);
+    done();
   });
 
   beforeEach(() => {
@@ -85,7 +86,7 @@ describe("htmlgoddess Command", () => {
 
   describe("serve", () => {
     it("can serve", (done) => {
-      run(["serve", "../test"]);
+      run(["serve", process.env.CWD_PATH]);
       // @todo fix test
       setTimeout(async () => {
         const response = await axios.get("http://127.0.0.1:3000");
@@ -93,6 +94,10 @@ describe("htmlgoddess Command", () => {
         done();
       }, 3000);
     });
+
+    // it("can serve without param passed", (done) => {
+
+    // })
 
     // it("can serve:auto", async () => {});
   });
@@ -108,10 +113,7 @@ describe("htmlgoddess Command", () => {
     });
 
     afterEach((done) => {
-      execa.sync("git", [
-        "reset",
-        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
-      ]);
+      execa.sync("git", ["reset", "origin/master"]);
       execa.sync("git", ["stash"]);
       done();
     });
@@ -123,9 +125,13 @@ describe("htmlgoddess Command", () => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
-      }, 1000);
+      }, 200);
     });
   });
+
+  //
+  // @todo mock origin so that publish can be tested
+  //
   // describe("publish", () => {
   //   it("can publish", async (done) => {
   //     const time = Date.now();
