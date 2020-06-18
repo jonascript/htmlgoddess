@@ -14,6 +14,14 @@ describe("htmlgoddess Command", () => {
   beforeAll(() => {
     process.chdir("../test");
     process.env.CWD_PATH = "/Users/Jon/dev/htmlgoddess-monorepo/packages/test";
+
+    console.log(process.env.CWD_PATH, process.cwd());
+  });
+
+  afterAll(() => {
+    console.log(process.env.CWD_PATH, process.cwd());
+
+    execa.sync("git", ["stash"]);
   });
 
   beforeEach(() => {
@@ -34,7 +42,7 @@ describe("htmlgoddess Command", () => {
 
     it("can print", async () => {
       fs.writeFileSync(
-        path.join("src/content/can-print.html"),
+        path.join(process.env.CWD_PATH, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
       await run(["print"]);
@@ -43,13 +51,13 @@ describe("htmlgoddess Command", () => {
 
       execa.sync("git", [
         "checkout",
-        path.join(process.cwd(), "src/content/can-print.html"),
+        path.join(process.env.CWD_PATH, "src/content/can-print.html"),
       ]);
     });
 
-    afterEach((done) => {
-      done();
-    });
+    // afterEach((done) => {
+    //   done();
+    // });
   });
   // it("can print:auto", async () => {});
   describe("format", () => {
