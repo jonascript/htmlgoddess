@@ -1,0 +1,83 @@
+body {
+  background-image: url("images/background.gif");
+  background-size: auto;
+  margin: auto;
+  width: 900px;
+}
+
+header {
+  background-image: linear-gradient(red, yellow);
+  padding: 10px;
+  margin: 15px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header > img {
+  height: 75px;
+}
+
+h1 {
+  font-family: Monospace;
+  color: gray;
+}
+
+footer {
+}
+
+.oldschool {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.oldschool > a {
+  cursor: pointer;
+}
+
+.links {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.links > img,
+.links > a > img {
+  height: 75px;
+}
+
+.links > a {
+  font-family: Monospace;
+  color: white;
+  font-size: 20px;
+  line-height: 75px;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+  color: white;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+    -webkit-transform: rotateY(-360deg);
+    -moz-transform: rotateY(-360deg);
+    -ms-transform: rotateY(-360deg);
+    -o-transform: rotateY(-360deg);
+  }
+}
