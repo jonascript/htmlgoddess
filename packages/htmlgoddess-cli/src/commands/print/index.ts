@@ -27,23 +27,24 @@ hello world wide web from ./src/hello.ts!
 
   async run() {
     const { args, flags } = this.parse(Print);
-
     const basePath = args.basePath ? args.basePath : CWD_PATH;
-
     cli.action.start(`Printing your website from ./src to ./docs`);
-
-    // @todo this is not compiling properly
-    const compiler = webpack(webpackConfig);
-    compiler.run((err, stats) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      // console.log(stats.toString({
-      //   chunks: false,  // Makes the build much quieter
-      //   colors: true    // Shows colors in the console
-      // }));
-      cli.action.stop('done.');
+    return new Promise((resolve, reject) => {
+      // @todo this is not compiling properly
+      const compiler = webpack(webpackConfig(), (err, stats) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        // console.log(stats.toString({
+        //   chunks: false,  // Makes the build much quieter
+        //   colors: true    // Shows colors in the console
+        // }));
+        cli.action.stop('done.');
+        this.log('hello');
+        resolve(stats); 
+       
+      });
     });
   }
 }

@@ -28,17 +28,16 @@ export default class Serve extends Command {
 
   static args = [{ name: "basePath" }];
 
-  async run() {
+  run() {
     const { args, flags } = this.parse(Serve);
-    this.log("");
 
     const basePath = args.basePath ? args.basePath : CWD_PATH;
 
-    cli.action.start(`Starting server from ${basePath}/docs`);
-    const app = express();
-    const port = 3000;
-
-    const liveReloadScript = `
+    return new Promise((resolve, reject) => {
+      cli.action.start(`Starting server from ${basePath}/docs`);
+      const app = express();
+      const port = 3000;
+      const liveReloadScript = `
         <!-- LIVE RELOAD SCRIPT INJECTION -->
         <script>
         document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
@@ -47,48 +46,52 @@ export default class Serve extends Command {
         <!-- LIVE RELOAD SCRIPT INJECTION -->
     `;
 
-    /**
-     * Injects live reload script into all html GET requests.
-     */
-    app.get("*(.html|.htm|/)", (req, res, next) => {
-      res.format({
-        html: function () {
-          let filename = path.join(basePath, "/docs", req.url);
-          if (filename.charAt(filename.length - 1) === "/") {
-            filename += "index.html";
-          }
+      /**
+       * Injects live reload script into all html GET requests.
+       */
+      app.get("*(.html|.htm|/)", (req, res, next) => {
+        res.format({
+          html: function () {
+            let filename = path.join(basePath, "/docs", req.url);
+            if (filename.charAt(filename.length - 1) === "/") {
+              filename += "index.html";
+            }
 
-          if (fs.existsSync(filename)) {
-            const content = fs
-              .readFileSync(filename, "utf-8")
-              .replace("</head>", `${liveReloadScript}</head>`);
-            res.send(content);
-          }
-        },
-        default: function () {
-          next();
-        },
+            if (fs.existsSync(filename)) {
+              const content = fs
+                .readFileSync(filename, "utf-8")
+                .replace("</head>", `${liveReloadScript}</head>`);
+              res.send(content);
+            }
+          },
+          default: function () {
+            next();
+          },
+        });
       });
-    });
 
-    app.use(express.static("docs"));
+      app.use(express.static("docs"));
 
-    app.listen(port, () => {
-      cli.action.stop(chalk.green(`started.`));
-      this.log("");
-      this.log(
-        `Local server listening at: ${chalk.keyword("green")(
-          `http://localhost:${port}`
-        )}`
-      );
-      this.log("");
-      const liveReloadServer = livereload.createServer();
-      this.log(
-        `Live reload server listening at: ${chalk.keyword("purple")(
-          `http://localhost:${liveReloadServer.config.port}`
-        )}`
-      );
-      liveReloadServer.watch(basePath + "/docs");
+      app.listen(port, () => {
+        cli.action.stop(chalk.green(`started.`));
+        this.log("");
+        this.log(
+          `Local server listening at: ${chalk.keyword("green")(
+            `http://localhost:${port}`
+          )}`
+        );
+        this.log("");
+        const liveReloadServer = livereload.createServer();
+        this.log(
+          `Live reload server listening at: ${chalk.keyword("purple")(
+            `http://localhost:${liveReloadServer.config.port}`
+          )}`
+        );
+        liveReloadServer.watch(basePath + "/docs");
+      });
+
+      resolve(app);
     });
+      
   }
 }

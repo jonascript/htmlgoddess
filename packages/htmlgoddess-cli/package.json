@@ -21,7 +21,6 @@
     "html-beautify-webpack-plugin": "1.0.5",
     "html-replace-webpack-plugin": "2.5.6",
     "html-to-text": "5.1.1",
-    "html-webpack-plugin": "4.3.0",
     "isomorphic-git": "1.4.4",
     "livereload": "0.9.1",
     "mini-css-extract-plugin": "0.9.0",
@@ -96,9 +95,9 @@
   "repository": "jonascript/htmlgoddess-cli",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "lint": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "jest --detectOpenHandles --forceExit",
+    "test": "jest -i --detectOpenHandles --forceExit",
     "test:watch": "jest -w",
     "version": "oclif-dev readme && git add README.md",
     "prettier:watch": "onchange 'src/**/*.ts' '__tests__/**/*.ts' -- prettier {{changed}} --write"
