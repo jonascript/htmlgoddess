@@ -13,6 +13,7 @@
     "globby": "10.0.2",
     "html-loader": "1.1.0",
     "html-webpack-plugin": "4.3.0",
+    "husky": "4.2.5",
     "lerna": "^3.22.0",
     "style-loader": "1.2.1",
     "ts-node": "8.10.2",
@@ -26,6 +27,11 @@
     "htmlgoddess-webpack-plugin": "file:packages/htmlgoddess-webpack-plugin",
     "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
     "test": "file:packages/test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run commit"
+    }
   },
   "config": {
     "commitizen": {
