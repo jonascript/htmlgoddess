@@ -1,7 +1,7 @@
 # HTML Goddess Mono Repo
 
 ## To Do
-- add: auto commitizen hook to trigger when commiting.
+-   add: auto commitizen hook to trigger when commiting.
 - Migrate this to new branch on existing repo.
 - Do cleanup pass to ensure paths are being constructed properly
 - Create print:auto, publish, a11y, proofread commands.

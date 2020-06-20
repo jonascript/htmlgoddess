@@ -28,11 +28,6 @@
     "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
     "test": "file:packages/test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "git-cz"
-    }
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
