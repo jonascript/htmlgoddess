@@ -2,8 +2,8 @@
   "name": "htmlgoddess-webpack-plugin",
   "version": "0.0.0",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
-  "private": false,
-  "main": "index.js",
+  "private": true,
+  "main": "plugin.js",
   "scripts": {
     "start": "ntl",
     "cjstoes6": "cjs-to-es6 --verbose ./index.js",

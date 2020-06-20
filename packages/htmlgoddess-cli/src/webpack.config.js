@@ -9,17 +9,16 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlReplaceWebpackPlugin = require("html-replace-webpack-plugin");
 const HtmlBeautifyPlugin = require("html-beautify-webpack-plugin");
-const HtmlGoddessPlugin = require("./htmlgoddess-webpack-plugin");
+const HtmlGoddessPlugin = require("htmlgoddess-webpack-plugin");
 const htmlLoader = require("html-loader");
 const styleLoader = require("style-loader");
-const plugins = [];
-
-const htmlFiles = glob.sync(process.cwd() + "/src/content/**/*+(*.htm|*.html)");
 const path = require("path");
-
 const CWD_PATH = process.env.CWD_PATH || process.cwd();
 
 function getWebpackConfig() {
+  const plugins = [];
+  const htmlFiles = glob.sync(CWD_PATH + "/src/content/**/*+(*.htm|*.html)");
+
   for (let x = 0; x < htmlFiles.length; x++) {
     const pathObj = path.parse(htmlFiles[x]);
     let templatePath = htmlFiles[x].replace(/.+src\/content\//, "");
@@ -41,7 +40,6 @@ function getWebpackConfig() {
     );
   }
 
-  console.log("getting webpack config");
   return {
     entry: path.join(CWD_PATH, "./src/css/index.css"), // Prevents unnecessary main.js from being included.
     output: {

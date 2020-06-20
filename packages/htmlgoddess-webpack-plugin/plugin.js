@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-// If your plugin is direct dependent to the html webpack plugin:
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pretty = require('pretty');
 const htmlToText = require('html-to-text');
 // const TextLintEngine = require('textlint').TextLintEngine;
@@ -69,12 +67,18 @@ const compileTemplate = (html, basePath = '') => {
 class HtmlGoddessPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap('HtmlGoddessPlugin', (compilation) => {
-      console.log('HEEEYYYYY');
+      // Gets an existing instance of the plugin.
+      const HtmlWebpackPlugin = compiler.options.plugins
+        .map(({ constructor }) => constructor)
+        .find(
+          (constructor) =>
+            constructor && constructor.name === 'HtmlWebpackPlugin'
+        );
+
       HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(
         'HtmlGoddessPlugin',
         async (data, cb) => {
           const { contentPath } = data.plugin.options.templateParameters;
-          console.log('HtmlGoddessPlugin running...', contentPath);
           data.html = compileTemplate(data.html);
           let mainRegExp = /<(content+) \/>/i;
           data.html = data.html.replace(
