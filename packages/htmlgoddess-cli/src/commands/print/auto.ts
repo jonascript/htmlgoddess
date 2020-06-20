@@ -1,7 +1,5 @@
 import { Command, flags } from "@oclif/command";
 
-import HTMLGoddess, { printAuto } from "htmlgoddess";
-
 export default class AutoPrint extends Command {
   static description = "describe the command here";
 
@@ -25,6 +23,6 @@ hello world wide web from ./src/hello.ts!
     const { args, flags } = this.parse(AutoPrint);
 
     this.log(`Printing your website from ./src to ./docs`);
-    printAuto();
+    // printAuto();
   }
 }

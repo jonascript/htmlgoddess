@@ -1,5 +1,4 @@
 import { Command, flags } from "@oclif/command";
-import HTMLGoddess, { format } from "htmlgoddess";
 import execa from "execa";
 import { CWD_PATH } from "../../index";
 
@@ -23,8 +22,8 @@ export default class Format extends Command {
 
   async run() {
     const { args, flags } = this.parse(Format);
-    execa("prettier", [`${CWD_PATH}/src/`, "--write"]).stdout.pipe(
-      process.stdout
-    );
+    // execa("prettier", [`${CWD_PATH}/src/`, "--write"]).stdout.pipe(
+    //   process.stdout
+    // );
   }
 }

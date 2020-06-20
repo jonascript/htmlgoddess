@@ -1,6 +1,9 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
+import path from 'path';
 import cli from "cli-ux";
+import webpack from 'webpack';
+import webpackConfig from "../../webpack.config.js";
 import { CWD_PATH } from "../../index";
 
 export default class Print extends Command {
@@ -29,15 +32,18 @@ hello world wide web from ./src/hello.ts!
 
     cli.action.start(`Printing your website from ./src to ./docs`);
 
-    const output = await execa("webpack", [
-      "--config",
-      "../htmlgoddess/webpack.config.js",
-    ]);
-
-    if (output.failed) {
-      this.log(output.stderr);
-    } else {
-      cli.action.stop();
-    }
+    // @todo this is not compiling properly
+    const compiler = webpack(webpackConfig);
+    compiler.run((err, stats) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      // console.log(stats.toString({
+      //   chunks: false,  // Makes the build much quieter
+      //   colors: true    // Shows colors in the console
+      // }));
+      cli.action.stop('done.');
+    });
   }
 }

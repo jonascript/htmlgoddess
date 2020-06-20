@@ -62,7 +62,6 @@
     "css-loader": "3.5.3",
     "glob": "7.1.6",
     "html-beautify-webpack-plugin": "1.0.5",
-    "html-loader": "1.1.0",
     "html-replace-webpack-plugin": "2.5.6",
     "html-to-text": "5.1.1",
     "html-webpack-plugin": "4.3.0",

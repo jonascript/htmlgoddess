@@ -66,7 +66,7 @@ const compileTemplate = (html, basePath = '') => {
   return output;
 };
 
-console.log('HtmlGoddessPlugin loading', process.cwd());
+console.log('HtmlGoddessPlugin loading2', process.cwd());
 
 class HtmlGoddessPlugin {
   apply(compiler) {
@@ -77,7 +77,6 @@ class HtmlGoddessPlugin {
           const { contentPath } = data.plugin.options.templateParameters;
           console.log('HtmlGoddessPlugin running...', contentPath);
           data.html = compileTemplate(data.html);
-
           let mainRegExp = /<(content+) \/>/i;
           data.html = data.html.replace(
             mainRegExp,

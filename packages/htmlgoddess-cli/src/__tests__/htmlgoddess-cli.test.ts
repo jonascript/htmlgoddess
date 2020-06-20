@@ -8,56 +8,57 @@ import execa from "execa";
 
 describe("htmlgoddess Command", () => {
   let result;
-
   beforeAll(() => {
     console.log("Changing to test directory");
     process.chdir("../test");
     process.env.CWD_PATH = process.cwd();
   });
 
-  afterAll((done) => {
-    console.log(
-      `Reseting and stashing changes for test submodule at: ${process.cwd()}`
-    );
-    execa.sync("git", ["reset", "origin/master"]);
-    execa.sync("git", ["stash"]);
-    done();
-  });
+  // afterAll((done) => {
+  //   console.log(
+  //     `Reseting and stashing changes for test submodule at: ${process.cwd()}`
+  //   );
+  //   // execa.sync("git", ["reset", "origin/master"]);
+  //   // execa.sync("git", ["stash"]);
+  //   done();
+  // });
 
-  beforeEach(() => {
-    // result = [];
-    // // jest
-    // //   .spyOn(process.stdout, "write")
-    // //   .mockImplementation((val) => result.push(val));
-  });
+  // beforeEach(() => {
+  //   // result = [];
+  //   // // jest
+  //   // //   .spyOn(process.stdout, "write")
+  //   // //   .mockImplementation((val) => result.push(val));
+  // });
 
-  // afterEach(() => jest.restoreAllMocks());
+//  afterEach(() => jest.restoreAllMocks());
 
   describe("print", () => {
     const time = Date.now();
-    beforeEach((done) => {
+
+    it("can print",  (done) => {
       fs.writeFileSync(
         path.join(process.env.CWD_PATH, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
-      done();
-    });
+      // console.log(fs.readFileSync(
+      //   path.join(process.env.CWD_PATH, "src/content/can-print.html"),
+      //   "utf-8"
+      // ));
 
-    afterEach((done) => {
-      execa.sync("git", ["stash"]);
-      done();
-    });
-
-    it("can print", async () => {
-      await run(["print"]);
-      const output = fs.readFileSync(
-        path.join(process.env.CWD_PATH, "docs/can-print.html"),
-        "utf-8"
-      );
-      expect(output).toContain(`<p>I am printed ${time}</p>`);
+       run(["print"]);
+      
+      setTimeout(() => {
+        const output = fs.readFileSync(
+          path.join(process.env.CWD_PATH, "docs/can-print.html"),
+          "utf-8"
+        );
+        expect(output).toContain(`<p>I am printed ${time}</p>`);
+        done()
+      }, 10000);
     });
   });
   // it("can print:auto", async () => {});
+
   describe("format", () => {
     beforeEach((done) => {
       fs.writeFileSync(
@@ -112,11 +113,11 @@ describe("htmlgoddess Command", () => {
       done();
     });
 
-    afterEach((done) => {
-      execa.sync("git", ["reset", "origin/master"]);
-      execa.sync("git", ["stash"]);
-      done();
-    });
+    // afterEach((done) => {
+    //   execa.sync("git", ["reset", "origin/master"]);
+    //   execa.sync("git", ["stash"]);
+    //   done();
+    // });
 
     it("can save", async (done) => {
       // @todo make sure this cleans up

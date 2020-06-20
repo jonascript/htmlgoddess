@@ -2,7 +2,7 @@
 
 ## To Do
 
-- bug: global cli not loading dependancies.
+- bug: templates not compiling properly with webpack called as a module
 - add: auto commitizen hook to trigger when commiting.
 - Migrate this to new branch on existing repo.
 - Do cleanup pass to ensure paths are being constructed properly

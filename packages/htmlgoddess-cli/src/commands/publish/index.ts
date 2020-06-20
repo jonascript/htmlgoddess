@@ -1,5 +1,4 @@
 import { Command, flags } from "@oclif/command";
-import HTMLGoddess, { format } from "htmlgoddess";
 import execa from "execa";
 import { CWD_PATH } from "../../index";
 

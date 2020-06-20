@@ -12,14 +12,17 @@
     "globby": "10.0.2",
     "lerna": "^3.22.0",
     "ts-node": "8.10.2",
-    "typescript": "3.9.5"
+    "typescript": "3.9.5",
+    "css-loader": "3.5.3",
+    "html-loader": "1.1.0",
+    "style-loader": "1.2.1"
   },
   "scripts": {
     "commit": "git-cz"
   },
   "dependencies": {
     "execa": "4.0.2",
-    "htmlgoddess": "file:packages/htmlgoddess",
+    "htmlgoddess-webpack-plugin": "file:packages/htmlgoddess-webpack-plugin",
     "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
     "test": "file:packages/test"
   },

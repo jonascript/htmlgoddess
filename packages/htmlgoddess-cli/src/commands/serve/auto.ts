@@ -1,7 +1,5 @@
 import { Command, flags } from "@oclif/command";
 
-import HTMLGoddess, { serve } from "htmlgoddess";
-
 export default class ServeAuto extends Command {
   static description = "serves your website and auto-reloads when changed.";
 
@@ -22,6 +20,6 @@ export default class ServeAuto extends Command {
 
   async run() {
     const { args, flags } = this.parse(ServeAuto);
-    serve();
+    // serve();
   }
 }

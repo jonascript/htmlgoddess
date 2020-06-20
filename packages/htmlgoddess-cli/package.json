@@ -17,10 +17,8 @@
     "clean-webpack-plugin": "3.0.0",
     "command-line-args": "5.1.1",
     "copy-webpack-plugin": "6.0.1",
-    "css-loader": "3.5.3",
     "glob": "7.1.6",
     "html-beautify-webpack-plugin": "1.0.5",
-    "html-loader": "1.1.0",
     "html-replace-webpack-plugin": "2.5.6",
     "html-to-text": "5.1.1",
     "html-webpack-plugin": "4.3.0",
@@ -36,7 +34,6 @@
     "serve": "11.3.1",
     "simple-git": "2.6.0",
     "spellchecker": "3.7.0",
-    "style-loader": "1.2.1",
     "textlint": "11.6.3",
     "textlint-plugin-html": "0.2.0",
     "textlint-rule-ginger": "2.2.1",
@@ -49,7 +46,10 @@
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.0",
     "webpack-fix-style-only-entries": "0.5.0",
-    "webpack-livereload-plugin": "2.3.0"
+    "webpack-livereload-plugin": "2.3.0",
+    "css-loader": "3.5.3",
+    "html-loader": "1.1.0",
+    "style-loader": "1.2.1"
   },
   "htmlgoddess": {
     "output": "/docs",
@@ -76,7 +76,7 @@
   "main": "./bin/run",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "htmlgoddess-cli",
+    "bin": "htmlgoddess",
     "plugins": [
       "@oclif/plugin-help"
     ]
@@ -85,8 +85,11 @@
     "@oclif/dev-cli": "^1",
     "@types/jest": "26.0.0",
     "axios": "0.19.2",
+    "css-loader": "3.5.3",
     "git-http-mock-server": "1.2.1",
+    "html-loader": "1.1.0",
     "jest": "26.0.1",
+    "style-loader": "1.2.1",
     "supertest": "4.0.2",
     "ts-jest": "26.1.0"
   },

@@ -18,35 +18,36 @@ htmlgoddess-cli
 <!-- usage -->
 ```sh-session
 $ npm install -g htmlgoddess-cli
-$ htmlgoddess-cli COMMAND
+$ htmlgoddess COMMAND
 running command...
-$ htmlgoddess-cli (-v|--version|version)
-htmlgoddess-cli/0.0.0 darwin-x64 node-v12.16.3
-$ htmlgoddess-cli --help [COMMAND]
+$ htmlgoddess (-v|--version|version)
+htmlgoddess-cli/0.0.0 darwin-x64 node-v12.18.1
+$ htmlgoddess --help [COMMAND]
 USAGE
-  $ htmlgoddess-cli COMMAND
+  $ htmlgoddess COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`htmlgoddess-cli format [FILE]`](#htmlgoddess-cli-format-file)
-* [`htmlgoddess-cli format:auto [FILE]`](#htmlgoddess-cli-formatauto-file)
-* [`htmlgoddess-cli hello [FILE]`](#htmlgoddess-cli-hello-file)
-* [`htmlgoddess-cli help [COMMAND]`](#htmlgoddess-cli-help-command)
-* [`htmlgoddess-cli print [FILE]`](#htmlgoddess-cli-print-file)
-* [`htmlgoddess-cli print:auto [FILE]`](#htmlgoddess-cli-printauto-file)
-* [`htmlgoddess-cli save [FILE]`](#htmlgoddess-cli-save-file)
-* [`htmlgoddess-cli serve [FILE]`](#htmlgoddess-cli-serve-file)
-* [`htmlgoddess-cli serve:auto [FILE]`](#htmlgoddess-cli-serveauto-file)
+* [`htmlgoddess format [FILE]`](#htmlgoddess-format-file)
+* [`htmlgoddess format:auto [FILE]`](#htmlgoddess-formatauto-file)
+* [`htmlgoddess hello [FILE]`](#htmlgoddess-hello-file)
+* [`htmlgoddess help [COMMAND]`](#htmlgoddess-help-command)
+* [`htmlgoddess print [BASEPATH]`](#htmlgoddess-print-basepath)
+* [`htmlgoddess print:auto [FILE]`](#htmlgoddess-printauto-file)
+* [`htmlgoddess publish [FILE]`](#htmlgoddess-publish-file)
+* [`htmlgoddess save [BASEPATH]`](#htmlgoddess-save-basepath)
+* [`htmlgoddess serve [BASEPATH]`](#htmlgoddess-serve-basepath)
+* [`htmlgoddess serve:auto [FILE]`](#htmlgoddess-serveauto-file)
 
-## `htmlgoddess-cli format [FILE]`
+## `htmlgoddess format [FILE]`
 
 formats your HTML.
 
 ```
 USAGE
-  $ htmlgoddess-cli format [FILE]
+  $ htmlgoddess format [FILE]
 
 OPTIONS
   -f, --force
@@ -59,13 +60,13 @@ EXAMPLE
 
 _See code: [lib/commands/format/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/format/index.js)_
 
-## `htmlgoddess-cli format:auto [FILE]`
+## `htmlgoddess format:auto [FILE]`
 
 formats your HTML.
 
 ```
 USAGE
-  $ htmlgoddess-cli format:auto [FILE]
+  $ htmlgoddess format:auto [FILE]
 
 OPTIONS
   -f, --force
@@ -78,13 +79,13 @@ EXAMPLE
 
 _See code: [lib/commands/format/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/format/auto.js)_
 
-## `htmlgoddess-cli hello [FILE]`
+## `htmlgoddess hello [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess-cli hello [FILE]
+  $ htmlgoddess hello [FILE]
 
 OPTIONS
   -f, --force
@@ -98,13 +99,13 @@ EXAMPLE
 
 _See code: [lib/commands/hello.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/hello.js)_
 
-## `htmlgoddess-cli help [COMMAND]`
+## `htmlgoddess help [COMMAND]`
 
-display help for htmlgoddess-cli
+display help for htmlgoddess
 
 ```
 USAGE
-  $ htmlgoddess-cli help [COMMAND]
+  $ htmlgoddess help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -115,13 +116,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0/src/commands/help.ts)_
 
-## `htmlgoddess-cli print [FILE]`
+## `htmlgoddess print [BASEPATH]`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess-cli print [FILE]
+  $ htmlgoddess print [BASEPATH]
 
 OPTIONS
   -f, --force
@@ -135,13 +136,13 @@ EXAMPLE
 
 _See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/print/index.js)_
 
-## `htmlgoddess-cli print:auto [FILE]`
+## `htmlgoddess print:auto [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess-cli print:auto [FILE]
+  $ htmlgoddess print:auto [FILE]
 
 OPTIONS
   -f, --force
@@ -155,13 +156,32 @@ EXAMPLE
 
 _See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/print/auto.js)_
 
-## `htmlgoddess-cli save [FILE]`
+## `htmlgoddess publish [FILE]`
 
 formats your HTML.
 
 ```
 USAGE
-  $ htmlgoddess-cli save [FILE]
+  $ htmlgoddess publish [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess format
+```
+
+_See code: [lib/commands/publish/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/publish/index.js)_
+
+## `htmlgoddess save [BASEPATH]`
+
+formats your HTML.
+
+```
+USAGE
+  $ htmlgoddess save [BASEPATH]
 
 OPTIONS
   -f, --force
@@ -174,13 +194,13 @@ EXAMPLE
 
 _See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/save/index.js)_
 
-## `htmlgoddess-cli serve [FILE]`
+## `htmlgoddess serve [BASEPATH]`
 
 serves your website and auto-reloads when changed.
 
 ```
 USAGE
-  $ htmlgoddess-cli serve [FILE]
+  $ htmlgoddess serve [BASEPATH]
 
 OPTIONS
   -f, --force
@@ -193,13 +213,13 @@ EXAMPLE
 
 _See code: [lib/commands/serve/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/serve/index.js)_
 
-## `htmlgoddess-cli serve:auto [FILE]`
+## `htmlgoddess serve:auto [FILE]`
 
 serves your website and auto-reloads when changed.
 
 ```
 USAGE
-  $ htmlgoddess-cli serve:auto [FILE]
+  $ htmlgoddess serve:auto [FILE]
 
 OPTIONS
   -f, --force
