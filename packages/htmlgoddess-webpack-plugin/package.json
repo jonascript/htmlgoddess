@@ -2,7 +2,7 @@
   "name": "htmlgoddess-webpack-plugin",
   "version": "0.0.0",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
-  "private": true,
+  "private": false,
   "main": "plugin.js",
   "scripts": {
     "start": "ntl",
