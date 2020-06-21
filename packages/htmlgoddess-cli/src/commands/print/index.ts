@@ -4,6 +4,7 @@ import path from 'path';
 import cli from "cli-ux";
 import webpack from 'webpack';
 import webpackConfig from "../../webpack.config.js";
+import chalk from 'chalk';
 import { CWD_PATH } from "../../index";
 
 export default class Print extends Command {
@@ -40,8 +41,7 @@ hello world wide web from ./src/hello.ts!
         //   chunks: false,  // Makes the build much quieter
         //   colors: true    // Shows colors in the console
         // }));
-        cli.action.stop('done.');
-        this.log('hello');
+        cli.action.stop(chalk.green('done.'));
         resolve(stats); 
        
       });

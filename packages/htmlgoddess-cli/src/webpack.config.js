@@ -11,7 +11,7 @@ const HtmlReplaceWebpackPlugin = require("html-replace-webpack-plugin");
 const HtmlBeautifyPlugin = require("html-beautify-webpack-plugin");
 const HtmlGoddessPlugin = require("htmlgoddess-webpack-plugin");
 const htmlLoader = require("html-loader");
-const styleLoader = require("style-loader");
+const styleLoader = require("../node_modules/style-loader");
 const path = require("path");
 const CWD_PATH = process.env.CWD_PATH || process.cwd();
 
@@ -51,7 +51,7 @@ function getWebpackConfig() {
       rules: [
         {
           test: /\.html$/i, // Enables live reload
-          loader: "html-loader",
+          loader: require.resolve("html-loader"),
         },
         {
           // For CSS modules
@@ -62,7 +62,7 @@ function getWebpackConfig() {
           use: [
             "style-loader",
             {
-              loader: "css-loader",
+              loader: require.resolve("css-loader"),
               options: {
                 // Run `postcss-loader` on each CSS `@import`, do not forget that `sass-loader` compile non CSS `@import`'s into a single file
                 // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
@@ -75,7 +75,7 @@ function getWebpackConfig() {
         },
         {
           test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-          loader: "url-loader",
+          loader: require.resolve("url-loader"),
           options: {
             limit: 8192,
           },
