@@ -17,11 +17,11 @@ htmlgoddess-cli
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g htmlgoddess-cli
+$ npm install -g htmlgoddess
 $ htmlgoddess COMMAND
 running command...
 $ htmlgoddess (-v|--version|version)
-htmlgoddess-cli/0.0.0 darwin-x64 node-v12.18.1
+htmlgoddess/0.1.0 darwin-x64 node-v12.13.0
 $ htmlgoddess --help [COMMAND]
 USAGE
   $ htmlgoddess COMMAND
@@ -58,7 +58,7 @@ EXAMPLE
   $ htmlgoddess format
 ```
 
-_See code: [lib/commands/format/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/format/index.js)_
+_See code: [lib/commands/format/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/format/index.js)_
 
 ## `htmlgoddess format:auto [FILE]`
 
@@ -77,7 +77,7 @@ EXAMPLE
   $ htmlgoddess format:auto
 ```
 
-_See code: [lib/commands/format/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/format/auto.js)_
+_See code: [lib/commands/format/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/format/auto.js)_
 
 ## `htmlgoddess hello [FILE]`
 
@@ -97,7 +97,7 @@ EXAMPLE
   hello world wide web from ./src/hello.ts!
 ```
 
-_See code: [lib/commands/hello.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/hello.js)_
+_See code: [lib/commands/hello.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/hello.js)_
 
 ## `htmlgoddess help [COMMAND]`
 
@@ -134,7 +134,7 @@ EXAMPLE
   hello world wide web from ./src/hello.ts!
 ```
 
-_See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/print/index.js)_
+_See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/print/index.js)_
 
 ## `htmlgoddess print:auto [FILE]`
 
@@ -154,7 +154,7 @@ EXAMPLE
   hello world wide web from ./src/hello.ts!
 ```
 
-_See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/print/auto.js)_
+_See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/print/auto.js)_
 
 ## `htmlgoddess publish [FILE]`
 
@@ -173,7 +173,7 @@ EXAMPLE
   $ htmlgoddess format
 ```
 
-_See code: [lib/commands/publish/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/publish/index.js)_
+_See code: [lib/commands/publish/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/publish/index.js)_
 
 ## `htmlgoddess save [BASEPATH]`
 
@@ -192,7 +192,7 @@ EXAMPLE
   $ htmlgoddess format
 ```
 
-_See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/save/index.js)_
+_See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/save/index.js)_
 
 ## `htmlgoddess serve [BASEPATH]`
 
@@ -211,7 +211,7 @@ EXAMPLE
   $ htmlgoddess serve
 ```
 
-_See code: [lib/commands/serve/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/serve/index.js)_
+_See code: [lib/commands/serve/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/serve/index.js)_
 
 ## `htmlgoddess serve:auto [FILE]`
 
@@ -230,5 +230,5 @@ EXAMPLE
   $ htmlgoddess serve
 ```
 
-_See code: [lib/commands/serve/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.0.0/lib/commands/serve/auto.js)_
+_See code: [lib/commands/serve/auto.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/serve/auto.js)_
 <!-- commandsstop -->

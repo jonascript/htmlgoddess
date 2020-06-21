@@ -1,8 +1,9 @@
 {
-  "name": "htmlgoddess-cli",
+  "name": "htmlgoddess",
   "description": "> TODO: description",
   "version": "0.1.0",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
+  "private": false,
   "bin": {
     "htmlgoddess": "./bin/run"
   },
