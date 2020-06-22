@@ -1,0 +1,3 @@
+[submodule "packages/test"]
+	path = packages/test
+	url = https://github.com/jonascript/htmlgoddess-test

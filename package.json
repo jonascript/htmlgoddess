@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "execa": "4.0.2",
-    "htmlgoddess-webpack-plugin": "file:packages/htmlgoddess-webpack-plugin",
-    "htmlgoddess-cli": "file:packages/htmlgoddess-cli",
+    "@htmlgoddess/webpack-plugin": "file:packages/@htmlgoddess/webpack-plugin",
+    "@htmlgoddess/cli": "file:packages/@htmlgoddess/cli",
     "test": "file:packages/test"
   },
   "config": {
