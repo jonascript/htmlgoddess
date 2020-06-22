@@ -9,18 +9,18 @@ import execa from "execa";
 describe("htmlgoddess Command", () => {
   let result;
   beforeAll(() => {
-    console.log("Changing to test directory");
+    console.log("Changing to test directory foo");
     process.chdir("../../test");
     process.env.CWD_PATH = process.cwd();
   });
 
-  afterAll((done) => {
+  afterAll(() => {
+    process.chdir("../@htmlgoddess/cli");
     console.log(
       `Reseting and stashing changes for test submodule at: ${process.cwd()}`
     );
-    // execa.sync("git", ["reset", "origin/master"]);
-    // execa.sync("git", ["stash"]);
-    done();
+    execa.sync('git', ['submodule', 'foreach', 'git', 'reset', 'origin/master']);
+    execa.sync('git', ['submodule', 'foreach', 'git', 'reset', '--hard']);
   });
 
   beforeEach(() => {
@@ -54,16 +54,15 @@ describe("htmlgoddess Command", () => {
   describe("format", () => {
     beforeEach((done) => {
       fs.writeFileSync(
-        path.join("src/content/can-format.html"),
+        path.join(process.env.CWD_PATH, "src/content/can-format.html"),
         "<p>I <strong>am</strong>        formatted</p>"
       );
       done();
     });
 
-    afterEach((done) => {
-      // execa.sync("git", ["stash"]);
-      done();
-    });
+    // afterEach((done) => {
+    //   done();
+    // });
 
     it("can format", (done) => {
        run(["format"]).then(result => { 
