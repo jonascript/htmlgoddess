@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": false,
+    "target": "es2017",
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*", "__tests__",
+  ],
+  "exclude": [
+    "**/*.test.ts"
+  ]
+}
