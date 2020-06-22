@@ -1,0 +1,95 @@
+{
+  "name": "@htmlgoddess/webpack-plugin",
+  "version": "0.1.0",
+  "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
+  "private": false,
+  "main": "plugin.js",
+  "scripts": {
+    "start": "ntl",
+    "cjstoes6": "cjs-to-es6 --verbose ./index.js",
+    "a11y": "node ./scripts/a11y",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonascript/htmlgoddess.git"
+  },
+  "keywords": [
+    "html"
+  ],
+  "author": "Jonathan Crockett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonascript/htmlgoddess/issues"
+  },
+  "htmlgoddess": {
+    "output": "./docs",
+    "livereload": true
+  },
+  "textlint": {
+    "plugins": [
+      "html"
+    ],
+    "rules": {
+      "@textlint-rule/no-dead-link": {
+        "checkRelative": true,
+        "baseURI": "http://localhost:3000",
+        "severity": "warning"
+      },
+      "textlint-rule-rousseau": {
+        "ignoreTypes": [
+          "sentence:uppercase",
+          "weasel"
+        ],
+        "severity": "warning",
+        "showLevels": [
+          "error"
+        ]
+      },
+      "textlint-rule-spellchecker": true
+    }
+  },
+  "homepage": "https://github.com/jonascript/htmlgoddess#readme",
+  "dependencies": {
+    "@textlint-rule/textlint-rule-no-dead-link": "3.2.0",
+    "@webpack-cli/serve": "0.2.0",
+    "babel-node": "0.0.1-security",
+    "cjs-to-es6": "1.1.1",
+    "clean-webpack-plugin": "3.0.0",
+    "command-line-args": "5.1.1",
+    "copy-webpack-plugin": "6.0.1",
+    "css-loader": "3.5.3",
+    "glob": "7.1.6",
+    "html-beautify-webpack-plugin": "1.0.5",
+    "html-replace-webpack-plugin": "2.5.6",
+    "html-to-text": "5.1.1",
+    "livereload": "0.9.1",
+    "mini-css-extract-plugin": "0.9.0",
+    "ntl": "5.0.0",
+    "onchange": "7.0.2",
+    "pa11y": "5.3.0",
+    "postcss-loader": "3.0.0",
+    "prettier": "2.0.5",
+    "prettier-webpack-plugin": "1.2.0",
+    "pretty": "2.0.0",
+    "serve": "11.3.1",
+    "spellchecker": "3.7.0",
+    "style-loader": "1.2.1",
+    "textlint": "11.6.3",
+    "textlint-plugin-html": "0.2.0",
+    "textlint-rule-ginger": "2.2.1",
+    "textlint-rule-rousseau": "1.4.6",
+    "textlint-rule-spellchecker": "2.2.1",
+    "textlint-rule-terminology": "2.1.4",
+    "wcag-validator": "5.0.0",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.11.0",
+    "webpack-fix-style-only-entries": "0.5.0",
+    "webpack-livereload-plugin": "2.3.0"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  }
+}
