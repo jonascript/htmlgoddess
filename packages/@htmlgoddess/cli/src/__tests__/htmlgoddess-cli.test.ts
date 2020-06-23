@@ -1,15 +1,20 @@
 "use strict";
+import { stdin } from 'mock-stdin'
 
 import fs from "fs";
 import path from "path";
 import { run } from "../index";
+import { test } from '@oclif/test'
 import axios from "axios";
 import execa from "execa";
+import { idText } from "typescript";
+import cli from 'cli-ux';
+
 
 describe("htmlgoddess Command", () => {
-  let result;
+  let result, io = null;
   beforeAll(() => {
-    console.log("Changing to test directory foo");
+    console.log("Changing to test directory.");
     process.chdir("../../test");
     process.env.CWD_PATH = process.cwd();
   });
@@ -23,14 +28,55 @@ describe("htmlgoddess Command", () => {
     execa.sync('git', ['submodule', 'foreach', 'git', 'reset', '--hard']);
   });
 
+  let spy;
+
   beforeEach(() => {
     result = [];
+
+    jest
+      .spyOn(process.stdout, "write")
+      .mockImplementation((val) => result.push(val));
+    
     // jest
-    //   .spyOn(process.stdout, "write")
-    //   .mockImplementation((val) => result.push(val));
+    //   .spyOn(cli, "prompt",'get')
+    //   .mockImplementation((val) => new Promise((resolve, reject) => { 
+    //     resolve('Y');
+    //   }));
+
+    // jest
+    //   .spyOn(cli, 'prompt').mockResolvedValue('Y');
+    // cli['prompt'] = jest.fn();
   });
 
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+
+  describe("create", () => {
+    // it('should stub', () => { 
+    //   test.stub(cli, 'prompt', () => async () => 'Y')
+    //     .stdout()
+    //     .hook('init')
+    //     .do(output => expect(output.stdout).toEqual('no'));
+    // });    
+    const time = Date.now();
+
+    //'What is the name of your site?'
+
+    it("can create", async (done) => {
+      const output = await run(["create"]);
+      expect(result).toEqual(expect.arrayContaining(['What is the name of your site?']));
+      done();
+      
+      // .then(output => { 
+      //    expect(result).toEqual(expect.arrayContaining(['What is the name of your site?']));
+      //    done();
+      //  });
+    });
+  });
+
+
 
   describe("print", () => {
     const time = Date.now();

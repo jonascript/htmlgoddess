@@ -1,24 +1,24 @@
 # htmlgoddess
 A minimalist framework for creating a website like it's 1999. 
 
-## v0.1.0 - Alpha 
+## v0.1.1 - Alpha 
 This is a complete rewrite from the current version currently under development.
 - Moved to lerna monorepo.
 - Using oclif for CLI.
 - Webpack plugin moved to its own package.
+- fix: serve test leaving process open.
+
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
 - npm
 
 ## To Do
-- Do cleanup pass to ensure paths are being constructed properly
-- Migrate this to new branch on existing repo.
+- Setup prompt unit test mocking.
 - add: auto commitizen hook to trigger when commiting.
+- Do cleanup pass to ensure paths are being constructed properly
 - Create print:auto, publish, a11y, proofread commands.
-- Figure out a best practice way to safely call htmlgoddess npm if possible, or good way to expose API interface.
 - Find good spell checker.
-- bug: serve test leaving process open.
 - Create executable
 - Swap CNAME for yaml config for hosting 
 - Coverage
