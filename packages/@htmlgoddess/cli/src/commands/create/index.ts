@@ -35,8 +35,11 @@ hello world wide web from ./src/hello.ts!
      return new Promise(async (resolve, reject) => {
   
 
-      const name = await cli.prompt('What is the name of your site?');
+       const name = await cli.prompt('hey What is the name of your site?');
+       
+       this.log(`Your site will be named:  ${name}`);
 
+       const type = await cli.prompt('Your site is named ' + name + '. What is the type of site you want?');
       // let template: any = await inquirer.prompt([{
       //   name: 'template',
       //   message: 'select a template',

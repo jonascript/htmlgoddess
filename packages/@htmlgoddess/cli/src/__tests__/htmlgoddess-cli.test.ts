@@ -1,6 +1,4 @@
 "use strict";
-import { stdin } from 'mock-stdin'
-
 import fs from "fs";
 import path from "path";
 import { run } from "../index";
@@ -9,10 +7,10 @@ import axios from "axios";
 import execa from "execa";
 import { idText } from "typescript";
 import cli from 'cli-ux';
-
+import readline from 'readline';
 
 describe("htmlgoddess Command", () => {
-  let result, io = null;
+  let stdin, result, io = null;
   beforeAll(() => {
     console.log("Changing to test directory.");
     process.chdir("../../test");
@@ -31,11 +29,20 @@ describe("htmlgoddess Command", () => {
   let spy;
 
   beforeEach(() => {
+    stdin = []
     result = [];
 
-    jest
-      .spyOn(process.stdout, "write")
-      .mockImplementation((val) => result.push(val));
+    // jest
+    //   .spyOn(process.stdout, "write")
+    //   .mockImplementation((val) => result.push(val));
+    
+    
+    
+    //   jest
+    //   .spyOn(process.stdin, "write")
+    //   .mockImplementation((val) => stdin.push(val));
+    
+    
     
     // jest
     //   .spyOn(cli, "prompt",'get')
@@ -65,8 +72,53 @@ describe("htmlgoddess Command", () => {
     //'What is the name of your site?'
 
     it("can create", async (done) => {
-      const output = await run(["create"]);
+
+
+      // @todo
+      // - How does process.stdin work with the stdin inside ux-cli
+      // - Do I need to remove async, or use a spy to interact with 
+      //   the underlying lib
+      // - I should gain a full understanding of stdin and stdout before
+      //   proceeding.
+
+      process.stdin.setEncoding('utf8');
+      process.stdin.setRawMode( true );
+      // process.stdin.on('readable', () => {
+      //   let chunk;
+      //   // Use a loop to make sure we read all available data.
+      //   while ((chunk = process.stdin.read()) !== null) {
+      //     process.stdout.write(`data: ${chunk}`);
+      //   }
+      // });
+
+
+    
+      const output = run(["create"]);
+      
+      process.stdin.write('Super Site');
+      process.stdin.end();
+     console.log('THE OUTPUT', result);
+   
+ 
+     process.stdout.emit('data', '')
+      process.stdout.emit('data', 'answer');
+
+      await output;
+
+      // process.stdin.on('keypress', (c, k) => {
+      //   showResults();
+      // });
+
+
+      // rl.on('line', (input) => {
+      //   console.log(`Received: ${input}`);
+      // });
+
+      // process.stdin.write('YO');
+      // process.stdin.end();
+
       expect(result).toEqual(expect.arrayContaining(['What is the name of your site?']));
+
       done();
       
       // .then(output => { 
