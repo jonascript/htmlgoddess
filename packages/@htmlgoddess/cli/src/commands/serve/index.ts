@@ -81,7 +81,7 @@ export default class Serve extends Command {
           )}`
         );
         this.log("Opening in your browers...");
-        cli.open(`http://localhost:${port}`)
+        cli.open(`http://localhost:${port}`);
         this.log("");
         const liveReloadServer = livereload.createServer();
         this.log(
@@ -94,6 +94,5 @@ export default class Serve extends Command {
 
       resolve(app);
     });
-      
   }
 }

@@ -1,38 +1,35 @@
 "use strict";
-import * as  fs from "fs";
+import * as fs from "fs";
 import * as path from "path";
 import { run } from "../index";
 import Create from "../commands/create/index";
-import { test } from '@oclif/test'
+import { test } from "@oclif/test";
 import axios from "axios";
 import * as execa from "execa";
 import { idText, JsxEmit } from "typescript";
-import cli, { ActionBase } from 'cli-ux';
-import { PassThrough } from 'stream';
-
-// import { ActionBase } from '/Users/Jon/dev/htmlgoddess/packages/@htmlgoddess/cli/node_modules/cli-ux/lib/action/base.js';
-
-import prompt from '../../node_modules/cli-ux/lib/prompt.js';
+import cli, { ActionBase } from "cli-ux";
+import prompt from "../../node_modules/cli-ux/lib/prompt.js";
 
 function mockCLIAnswers(answers) {
-  jest.mock('../../node_modules/cli-ux/lib/prompt.js', () => {
+  jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
     return {
-      ...prompt, confirm: (message) => { 
+      ...prompt,
+      confirm: (message) => {
         return answers.shift();
-      }, prompt: async (prom, icon) => {
+      },
+      prompt: async (prom, icon) => {
         return new Promise((resolve, reject) => {
           resolve(answers.shift());
         });
-      }
+      },
     };
   });
 }
 
-
 describe("htmlgoddess Command", () => {
-  let result, io = null;
+  let result,
+    io = null;
 
-  const pass = new PassThrough();
   beforeAll(() => {
     console.log("Changing to test directory.");
     process.chdir("../../test");
@@ -44,10 +41,15 @@ describe("htmlgoddess Command", () => {
     console.log(
       `Reseting and stashing changes for test submodule at: ${process.cwd()}`
     );
-    execa.sync('git', ['submodule', 'foreach', 'git', 'reset', 'origin/master']);
-    execa.sync('git', ['submodule', 'foreach', 'git', 'reset', '--hard']);
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "git",
+      "reset",
+      "origin/master",
+    ]);
+    execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
   });
-
 
   beforeEach(() => {
     result = [];
@@ -57,26 +59,26 @@ describe("htmlgoddess Command", () => {
     //     result.push(str);
     //     return true;
     //   });
-  
+
     //   jest
     //   .spyOn(process.stdin, "write")
     //   .mockImplementation((val) => stdin.push(val));
   });
 
-  afterEach(() => {
-  });
-  
-  describe('create', () => {
-    it("can create a new site", async (done) => {
-      const mockAnswers = ['My Test Site', 'blog', 'Y'];
-      mockCLIAnswers([...mockAnswers]);
-      Create.run([process.env.CWD_PATH + '/testcreate']).then(results => {
+  afterEach(() => {});
 
+  describe("create", () => {
+    it("can create a new site", async (done) => {
+      const mockAnswers = ["My Test Site", "blog", "Y"];
+      mockCLIAnswers([...mockAnswers]);
+      Create.run([process.env.CWD_PATH + "/testcreate"]).then((results) => {
         // @todo test console messages from stdout
-        expect(results.name).toEqual(mockAnswers[0])
-        expect(results.template).toEqual(mockAnswers[1])
-        expect(results.path).toEqual(process.env.CWD_PATH + '/testcreate');
-        expect(fs.existsSync(results.path + '/src/content/index.html')).toEqual(true)
+        expect(results.name).toEqual(mockAnswers[0]);
+        expect(results.template).toEqual(mockAnswers[1]);
+        expect(results.path).toEqual(process.env.CWD_PATH + "/testcreate");
+        expect(fs.existsSync(results.path + "/src/content/index.html")).toEqual(
+          true
+        );
         done();
       });
     });
@@ -84,19 +86,18 @@ describe("htmlgoddess Command", () => {
 
   describe("print", () => {
     const time = Date.now();
-    it("can print",  (done) => {
+    it("can print", (done) => {
       fs.writeFileSync(
         path.join(process.env.CWD_PATH, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
       run(["print"]).then((result) => {
-         
-          const output = fs.readFileSync(
-            path.join(process.env.CWD_PATH, "docs/can-print.html"),
-            "utf-8"
-          );
-          expect(output).toContain(`<p>I am printed ${time}</p>`);
-          done();
+        const output = fs.readFileSync(
+          path.join(process.env.CWD_PATH, "docs/can-print.html"),
+          "utf-8"
+        );
+        expect(output).toContain(`<p>I am printed ${time}</p>`);
+        done();
       });
     });
   });
@@ -116,30 +117,30 @@ describe("htmlgoddess Command", () => {
     // });
 
     it("can format", (done) => {
-       run(["format"]).then(result => { 
+      run(["format"]).then((result) => {
         const output = fs.readFileSync(
           path.join(process.env.CWD_PATH, "docs/can-format.html"),
           "utf-8"
         );
-         expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
-         done();
+        expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
+        done();
       });
     });
     // it("can format:auto", async () => {});
   });
 
-  // @todo 
+  // @todo
   describe("serve", () => {
     it("can serve", (done) => {
-      run(["serve", process.env.CWD_PATH]).then(process => { 
-        console.log('hello', process);
+      run(["serve", process.env.CWD_PATH]).then((process) => {
+        console.log("hello", process);
         // setTimeout(async () => {
         //   const response = await axios.get("http://127.0.0.1:3000");
         //   expect(response.status).toEqual(200);
         //   done();
         // }, 3000);
         done();
-      })
+      });
     });
     // it("can serve without param passed", (done) => {
     // })
@@ -162,9 +163,9 @@ describe("htmlgoddess Command", () => {
       done();
     });
 
-    it("can save",  (done) => {
+    it("can save", (done) => {
       // @todo make sure this cleans up
-       run(["save", process.env.CWD_PATH]).then(result => { 
+      run(["save", process.env.CWD_PATH]).then((result) => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
@@ -173,9 +174,9 @@ describe("htmlgoddess Command", () => {
   });
 
   // @todo keeping for reference
-  // describe('cli-ux', () => { 
+  // describe('cli-ux', () => {
   //   it("can test cli-ux", async (done) => {
-  
+
   //     const promptPromise = cli.prompt('Require input?')
   //     process.stdin.emit('data', '')
   //     process.stdin.emit('data', 'answer');
