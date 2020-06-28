@@ -1,16 +1,82 @@
 "use strict";
-import fs from "fs";
-import path from "path";
+import * as  fs from "fs";
+import * as path from "path";
 import { run } from "../index";
+import Create from "../commands/create/index";
 import { test } from '@oclif/test'
 import axios from "axios";
-import execa from "execa";
-import { idText } from "typescript";
-import cli from 'cli-ux';
-import readline from 'readline';
+import * as execa from "execa";
+import { idText, JsxEmit } from "typescript";
+import cli, { ActionBase } from 'cli-ux';
+import { PassThrough } from 'stream';
+
+// import { ActionBase } from '/Users/Jon/dev/htmlgoddess/packages/@htmlgoddess/cli/node_modules/cli-ux/lib/action/base.js';
+
+import prompt from '../../node_modules/cli-ux/lib/prompt.js';
+
+function mockCLIAnswers(answers) {
+  jest.mock('../../node_modules/cli-ux/lib/prompt.js', () => {
+    return {
+      ...prompt, confirm: (message) => { 
+        return answers.shift();
+      }, prompt: async (prom, icon) => {
+        return new Promise((resolve, reject) => {
+          resolve(answers.shift());
+        });
+      }
+    };
+  });
+}
+
+
+// const myActionBase: jest.Mocked<ActionBase> = new ActionBase() as any;
+// myActionBase.pauseAsync.mockImplementation(() => new Promise((resolve, reject) => {
+//   resolve('foo');
+// }));
+
+// myActionBase.pauseAsync.mockImplementation(async function (fn, icon) {
+
+//   console.log('fn', fn);
+//   const task = this.task;
+//   const active = task && task.active;
+//   if (task && active) {
+//     this._pause(icon);
+//     this._stdout(false);
+//     task.active = false;
+//   }
+//   const ret = await fn();
+//   if (task && active) {
+//     this._resume();
+//   }
+//   return ret;
+// });
+// jest.mock('cli-ux', () => {
+//   return function () {
+//     return { 
+//       prompt: () => { 
+//         return 'foo';
+//       }
+//   };
+//   };
+// });
+
+// jest.mock('/Users/Jon/dev/htmlgoddess/packages/@htmlgoddess/cli/node_modules/cli-ux/lib/action/base.js');
+
+// const foo = new ActionBase()
+// foo.pauseAsync(() => new Promise((resolve, reject) => {
+//   resolve(true);
+// }), 'hello').then((value) => {
+//   console.log('helllo promise');
+// })
+// @ts-ignore
+// const ActionBaseSpy = jest.spyOn(ActionBase)
+
+
 
 describe("htmlgoddess Command", () => {
-  let stdin, result, io = null;
+  let result, io = null;
+
+  const pass = new PassThrough();
   beforeAll(() => {
     console.log("Changing to test directory.");
     process.chdir("../../test");
@@ -26,109 +92,44 @@ describe("htmlgoddess Command", () => {
     execa.sync('git', ['submodule', 'foreach', 'git', 'reset', '--hard']);
   });
 
-  let spy;
 
   beforeEach(() => {
-    stdin = []
     result = [];
-
     // jest
     //   .spyOn(process.stdout, "write")
-    //   .mockImplementation((val) => result.push(val));
-    
-    
-    
+    //   .mockImplementation((str, encoding, cb) => {
+    //     result.push(str);
+    //     return true;
+    //   });
+  
     //   jest
     //   .spyOn(process.stdin, "write")
     //   .mockImplementation((val) => stdin.push(val));
+ 
     
-    
-    
-    // jest
-    //   .spyOn(cli, "prompt",'get')
-    //   .mockImplementation((val) => new Promise((resolve, reject) => { 
-    //     resolve('Y');
-    //   }));
-
-    // jest
-    //   .spyOn(cli, 'prompt').mockResolvedValue('Y');
-    // cli['prompt'] = jest.fn();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+
   });
 
 
-  describe("create", () => {
-    // it('should stub', () => { 
-    //   test.stub(cli, 'prompt', () => async () => 'Y')
-    //     .stdout()
-    //     .hook('init')
-    //     .do(output => expect(output.stdout).toEqual('no'));
-    // });    
-    const time = Date.now();
+  
+  describe('create', () => {
+    it("can create a new site", async (done) => {
+      const mockAnswers = ['My Test Site', 'blog', 'Y'];
+      mockCLIAnswers([...mockAnswers]);
+      Create.run([process.env.CWD_PATH + '/testcreate']).then(results => {
 
-    //'What is the name of your site?'
-
-    it("can create", async (done) => {
-
-
-      // @todo
-      // - How does process.stdin work with the stdin inside ux-cli
-      // - Do I need to remove async, or use a spy to interact with 
-      //   the underlying lib
-      // - I should gain a full understanding of stdin and stdout before
-      //   proceeding.
-
-      process.stdin.setEncoding('utf8');
-      process.stdin.setRawMode( true );
-      // process.stdin.on('readable', () => {
-      //   let chunk;
-      //   // Use a loop to make sure we read all available data.
-      //   while ((chunk = process.stdin.read()) !== null) {
-      //     process.stdout.write(`data: ${chunk}`);
-      //   }
-      // });
-
-
-    
-      const output = run(["create"]);
-      
-      process.stdin.write('Super Site');
-      process.stdin.end();
-     console.log('THE OUTPUT', result);
-   
- 
-     process.stdout.emit('data', '')
-      process.stdout.emit('data', 'answer');
-
-      await output;
-
-      // process.stdin.on('keypress', (c, k) => {
-      //   showResults();
-      // });
-
-
-      // rl.on('line', (input) => {
-      //   console.log(`Received: ${input}`);
-      // });
-
-      // process.stdin.write('YO');
-      // process.stdin.end();
-
-      expect(result).toEqual(expect.arrayContaining(['What is the name of your site?']));
-
-      done();
-      
-      // .then(output => { 
-      //    expect(result).toEqual(expect.arrayContaining(['What is the name of your site?']));
-      //    done();
-      //  });
+        // @todo test console messages from stdout
+        expect(results.name).toEqual(mockAnswers[0])
+        expect(results.template).toEqual(mockAnswers[1])
+        expect(results.path).toEqual(process.env.CWD_PATH + '/testcreate');
+        expect(fs.existsSync(results.path + '/src/content/index.html')).toEqual(true)
+        done();
+      });
     });
   });
-
-
 
   describe("print", () => {
     const time = Date.now();
@@ -137,7 +138,8 @@ describe("htmlgoddess Command", () => {
         path.join(process.env.CWD_PATH, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
-      run(["print"]).then((result)=> {
+      run(["print"]).then((result) => {
+         
           const output = fs.readFileSync(
             path.join(process.env.CWD_PATH, "docs/can-print.html"),
             "utf-8"
@@ -218,6 +220,21 @@ describe("htmlgoddess Command", () => {
       });
     });
   });
+
+  // @todo keeping for reference
+  // describe('cli-ux', () => { 
+  //   it("can test cli-ux", async (done) => {
+  
+  //     const promptPromise = cli.prompt('Require input?')
+  //     process.stdin.emit('data', '')
+  //     process.stdin.emit('data', 'answer');
+  //     const answer = await promptPromise;
+  //     expect(answer).toEqual('answer');
+  //     await cli.done();
+  //     done();
+  //   })
+  // })
+  // });
 
   //
   // @todo mock origin so that publish can be tested

@@ -13,7 +13,5 @@
   "include": [
     "src/**/*", "__tests__",
   ],
-  "exclude": [
-    "**/*.test.ts"
-  ]
+  "exclude": ["**/*.test.ts"]
 }

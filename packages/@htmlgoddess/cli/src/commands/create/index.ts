@@ -1,14 +1,15 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-
 import path from 'path';
 import cli from "cli-ux";
+// import * as inquirer from 'inquirer'
 import webpack from 'webpack';
 import webpackConfig from "../../webpack.config.js";
 import chalk from 'chalk';
+import * as git from 'isomorphic-git'
 import { CWD_PATH } from "../../index";
-import * as inquirer from 'inquirer'
-
+import http from 'isomorphic-git/http/node';
+import fs from 'fs';
 
 export default class Create extends Command {
   static description = "describe the command here";
@@ -29,28 +30,40 @@ hello world wide web from ./src/hello.ts!
 
   static args = [{ name: "path" }];
 
-  async run() {
+   run(): Promise<any> {
     const { args, flags } = this.parse(Create);
-    const { path } = args;
+
+     const path = args.path ? args.path : CWD_PATH;
+
      return new Promise(async (resolve, reject) => {
-  
+      
+       const name = await cli.prompt('What is the name of your site?');
+      
+       const template = await cli.prompt('What is the name of your template?');
+       // @todo with inquirer when I can figure out how mock prompts
+        // let template: any = await inquirer.prompt([{
+        //   name: 'template',
+        //   message: 'select a template',
+        //   type: 'list',
+        //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
+        // }]);
 
-       const name = await cli.prompt('hey What is the name of your site?');
+
+       const confirm = await cli.confirm(`The name of your site is ${name}. It is a ${template} and it will be installed at ${path}. Please confirm.`);
        
-       this.log(`Your site will be named:  ${name}`);
+       cli.action.start('Installing your site:')
 
-       const type = await cli.prompt('Your site is named ' + name + '. What is the type of site you want?');
-      // let template: any = await inquirer.prompt([{
-      //   name: 'template',
-      //   message: 'select a template',
-      //   type: 'list',
-      //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
-      // }]);
+       const cloneResult = await git.clone({
+         fs, http,
+         corsProxy: 'https://cors.isomorphic-git.org', singleBranch: true,
+         depth: 1, dir: path, url: 'https://github.com/jonascript/htmlgoddess-test'
+       })
+       
+     
+       cli.action.stop('Your site has been created!');
+       
 
-      // this.log(`Your site is named ${name}, and will be a ${template}`);
-
-  //  return true;
-       resolve('done');
+        resolve({ name, template, path });
      });
   }
 }

@@ -29,6 +29,7 @@ hello world wide web from ./src/hello.ts!
   async run() {
     const { args, flags } = this.parse(Print);
     const basePath = args.basePath ? args.basePath : CWD_PATH;
+
     cli.action.start(`Printing your website from ./src to ./docs`);
     return new Promise((resolve, reject) => {
       // @todo this is not compiling properly
