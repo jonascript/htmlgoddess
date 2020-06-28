@@ -31,15 +31,16 @@ hello world wide web from ./src/hello.ts!
   static args = [{ name: "path" }];
 
    run(): Promise<any> {
-    const { args, flags } = this.parse(Create);
+      const { args, flags } = this.parse(Create);
 
-     const path = args.path ? args.path : CWD_PATH;
+      const path = args.path ? args.path : CWD_PATH;
 
      return new Promise(async (resolve, reject) => {
       
-       const name = await cli.prompt('What is the name of your site?');
+        const name = await cli.prompt('What is the name of your site?');
       
-       const template = await cli.prompt('What is the name of your template?');
+        const template = await cli.prompt('What is the name of your template?');
+
        // @todo with inquirer when I can figure out how mock prompts
         // let template: any = await inquirer.prompt([{
         //   name: 'template',
@@ -48,21 +49,18 @@ hello world wide web from ./src/hello.ts!
         //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
         // }]);
 
+        const confirm = await cli.confirm(`The name of your site is ${chalk.keyword("green")(name)}. It is a ${template} and it will be installed at ${path}. Please confirm.`);
+        
+        cli.action.start('Installing your site...');
 
-       const confirm = await cli.confirm(`The name of your site is ${name}. It is a ${template} and it will be installed at ${path}. Please confirm.`);
+        const cloneResult = await git.clone({
+          fs, http,
+          corsProxy: 'https://cors.isomorphic-git.org', singleBranch: true,
+          depth: 1, dir: path, url: 'https://github.com/jonascript/htmlgoddess-test'
+        });
+      
+        cli.action.stop('Your site has been created!');
        
-       cli.action.start('Installing your site:')
-
-       const cloneResult = await git.clone({
-         fs, http,
-         corsProxy: 'https://cors.isomorphic-git.org', singleBranch: true,
-         depth: 1, dir: path, url: 'https://github.com/jonascript/htmlgoddess-test'
-       })
-       
-     
-       cli.action.stop('Your site has been created!');
-       
-
         resolve({ name, template, path });
      });
   }
