@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/@htmlgoddess*"
+    "packages/@htmlgoddess*",
+    "packages/@htmlgoddess/templates/blog"
   ],
   "version": "0.1.1"
 }

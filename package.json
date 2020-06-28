@@ -22,6 +22,7 @@
     "execa": "4.0.2",
     "@htmlgoddess/webpack-plugin": "file:packages/@htmlgoddess/webpack-plugin",
     "@htmlgoddess/cli": "file:packages/@htmlgoddess/cli",
+    "@htmlgoddess/templates/blog": "file:packages/@htmlgoddess/templates/blog",
     "test": "file:packages/test"
   },
   "config": {
