@@ -8,12 +8,11 @@
     "rootDir": "src",
     "strict": false,
     "target": "es2017",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*", "__tests__",
   ],
-  "exclude": [
-    "**/*.test.ts"
-  ]
+  "exclude": ["**/*.test.ts"]
 }

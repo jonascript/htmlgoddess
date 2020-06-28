@@ -30,6 +30,7 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`htmlgoddess create [PATH]`](#htmlgoddess-create-path)
 * [`htmlgoddess format [FILE]`](#htmlgoddess-format-file)
 * [`htmlgoddess format:auto [FILE]`](#htmlgoddess-formatauto-file)
 * [`htmlgoddess hello [FILE]`](#htmlgoddess-hello-file)
@@ -40,6 +41,26 @@ USAGE
 * [`htmlgoddess save [BASEPATH]`](#htmlgoddess-save-basepath)
 * [`htmlgoddess serve [BASEPATH]`](#htmlgoddess-serve-basepath)
 * [`htmlgoddess serve:auto [FILE]`](#htmlgoddess-serveauto-file)
+
+## `htmlgoddess create [PATH]`
+
+describe the command here
+
+```
+USAGE
+  $ htmlgoddess create [PATH]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+
+EXAMPLE
+  $ htmlgoddess create
+  hello world wide web from ./src/hello.ts!
+```
+
+_See code: [lib/commands/create/index.js](https://github.com/jonascript/htmlgoddess-cli/blob/v0.1.0/lib/commands/create/index.js)_
 
 ## `htmlgoddess format [FILE]`
 
