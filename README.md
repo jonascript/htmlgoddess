@@ -7,16 +7,17 @@ This is a complete rewrite from the current version currently under development.
 - Using oclif for CLI.
 - Webpack plugin moved to its own package.
 - fix: serve test leaving process open.
-
+- feat: prompt unit test mocking.
+- feat: create command
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
 - npm
 
 ## To Do
-- Setup prompt unit test mocking.
+- fix: serve testing.
+- Do cleanup pass to ensure paths are being constructed properly.
 - add: auto commitizen hook to trigger when commiting.
-- Do cleanup pass to ensure paths are being constructed properly
 - Create print:auto, publish, a11y, proofread commands.
 - Find good spell checker.
 - Create executable

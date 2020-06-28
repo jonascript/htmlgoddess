@@ -2,7 +2,7 @@ import { Command, flags } from "@oclif/command";
 import execa from "execa";
 import path from "path";
 import cli from "cli-ux";
-// import * as inquirer from 'inquirer'
+import * as inquirer from 'inquirer'
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config.js";
 import chalk from "chalk";
@@ -28,16 +28,16 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "path" }];
+  static args = [{ name: "projectDirectory" }];
 
   run(): Promise<any> {
     const { args, flags } = this.parse(Create);
 
-    const path = args.path ? args.path : CWD_PATH;
+    const projectDirectory = args.projectDirectory ? args.projectDirectory : CWD_PATH;
 
     return new Promise(async (resolve, reject) => {
-      const name = await cli.prompt("What is the name of your site?");
 
+      const name = await cli.prompt("What is the name of your site?");
       const template = await cli.prompt("What is the name of your template?");
 
       // @todo with inquirer when I can figure out how mock prompts
@@ -46,14 +46,16 @@ hello world wide web from ./src/hello.ts!
       //   message: 'select a template',
       //   type: 'list',
       //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
-      // }]);
+      // }])
 
+      this.log("");
       const confirm = await cli.confirm(
         `The name of your site is ${chalk.keyword("green")(
           name
-        )}. It is a ${template} and it will be installed at ${path}. Please confirm.`
+        )}. It is a ${template} and it will be installed at ${path.join(CWD_PATH, projectDirectory)}. Please confirm. (y/n)`
       );
 
+      this.log("");
       cli.action.start("Installing your site...");
 
       const cloneResult = await git.clone({
@@ -62,13 +64,22 @@ hello world wide web from ./src/hello.ts!
         corsProxy: "https://cors.isomorphic-git.org",
         singleBranch: true,
         depth: 1,
-        dir: path,
+        dir: projectDirectory,
         url: "https://github.com/jonascript/htmlgoddess-test",
       });
 
-      cli.action.stop("Your site has been created!");
+      cli.action.stop("done!");
+      this.log("");
+      this.log(`✨  Successfully created project: ${name}`);
+      this.log("");
+      this.log(`👉  Get started with the following commands:`);
+      this.log("");
+      this.log(chalk.green(`cd ${projectDirectory}`));
+      this.log(chalk.green(`htmlgoddess print`));
+      this.log(chalk.green(`htmlgoddess serve`));
+      this.log("");
 
-      resolve({ name, template, path });
+      resolve({ name, template, path: projectDirectory });
     });
   }
 }
