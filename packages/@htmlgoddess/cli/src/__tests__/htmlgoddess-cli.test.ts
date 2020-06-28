@@ -29,50 +29,6 @@ function mockCLIAnswers(answers) {
 }
 
 
-// const myActionBase: jest.Mocked<ActionBase> = new ActionBase() as any;
-// myActionBase.pauseAsync.mockImplementation(() => new Promise((resolve, reject) => {
-//   resolve('foo');
-// }));
-
-// myActionBase.pauseAsync.mockImplementation(async function (fn, icon) {
-
-//   console.log('fn', fn);
-//   const task = this.task;
-//   const active = task && task.active;
-//   if (task && active) {
-//     this._pause(icon);
-//     this._stdout(false);
-//     task.active = false;
-//   }
-//   const ret = await fn();
-//   if (task && active) {
-//     this._resume();
-//   }
-//   return ret;
-// });
-// jest.mock('cli-ux', () => {
-//   return function () {
-//     return { 
-//       prompt: () => { 
-//         return 'foo';
-//       }
-//   };
-//   };
-// });
-
-// jest.mock('/Users/Jon/dev/htmlgoddess/packages/@htmlgoddess/cli/node_modules/cli-ux/lib/action/base.js');
-
-// const foo = new ActionBase()
-// foo.pauseAsync(() => new Promise((resolve, reject) => {
-//   resolve(true);
-// }), 'hello').then((value) => {
-//   console.log('helllo promise');
-// })
-// @ts-ignore
-// const ActionBaseSpy = jest.spyOn(ActionBase)
-
-
-
 describe("htmlgoddess Command", () => {
   let result, io = null;
 
@@ -105,15 +61,10 @@ describe("htmlgoddess Command", () => {
     //   jest
     //   .spyOn(process.stdin, "write")
     //   .mockImplementation((val) => stdin.push(val));
- 
-    
   });
 
   afterEach(() => {
-
   });
-
-
   
   describe('create', () => {
     it("can create a new site", async (done) => {
