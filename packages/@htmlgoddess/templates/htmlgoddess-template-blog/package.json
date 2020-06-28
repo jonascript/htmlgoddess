@@ -1,9 +1,10 @@
 {
   "name": "test",
   "version": "0.0.0",
+  "private": true,
   "description": "> TODO: description",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
-  "homepage": "https://github.com/jonascript/htmlgoddess-mono#readme",
+  "homepage": "https://github.com/jonascript/htmlgoddess#readme",
   "license": "ISC",
   "main": "lib/test.js",
   "directories": {
@@ -16,12 +17,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonascript/htmlgoddess-mono.git"
+    "url": "git+https://github.com/jonascript/htmlgoddess.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/jonascript/htmlgoddess-mono/issues"
+    "url": "https://github.com/jonascript/htmlgoddess/issues"
   }
 }
