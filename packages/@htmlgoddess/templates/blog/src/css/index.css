@@ -1,0 +1,327 @@
+:root {
+  --background-color: black;
+  --color: white;
+  --font-family: "Lucida Console", Monaco, monospace;
+  --font-weight: normal;
+  --font-size: 20px;
+  --line-height: 1.5em;
+  letter-spacing: 0.01px;
+}
+
+a {
+  --color: gold;
+}
+
+p {
+  margin: 3rem 0;
+}
+
+/* I have attempted to list all the pertinent properties to override defaults in the user agent css  */
+body {
+  display: block;
+  position: static;
+  visibility: visible;
+  vertical-align: baseline; /* baseline is the default. Aligns the baseline of the element's text content with the baseline of the parent element. Probably irrelevant in body. */
+  margin: 0;
+  border: 0;
+  padding: 0;
+  height: auto;
+  width: auto;
+
+  background-color: var(--background-color);
+  color: var(--color);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-decoration: none; /* can be underline, overline, line-through */
+
+  text-align: justify;
+  text-justify: auto; /* justification algorithm (auto selected by browser) */
+  text-align-last: left; /* may not be supported in some browsers */
+  text-indent: 0; /* first line of text */
+  overflow: auto; /* what to do when content overflows content area of the element; scroll bars */
+  /* text-overflow: auto; syntax error, auto not valid. */
+  white-space: normal; /*  weird and dangerous; keep at normal, which is the default. */
+  word-wrap: break-word; /* normal is the default, which allows longwords to overflow the element's box; break-word breaks and wraps them  */
+}
+
+div {
+  display: block;
+  /*
+    border-style:solid; /* for testing: divs will not display border without this *.../
+    border-width: 3px;
+    border-color: green;
+    */
+}
+
+div.main-text-area {
+  margin-left: 2em;
+  margin-right: 2em;
+  height: auto;
+}
+
+div.indent {
+  margin-left: 2em;
+  height: auto;
+}
+
+div.item {
+  margin-bottom: 1.5em;
+  /* border-color: red;
+    background-color:  yellow;  */
+}
+
+div.select-group {
+  display: block;
+}
+
+p,
+h1,
+ol,
+ul,
+li {
+  margin: 0;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+ul,
+ol {
+  padding: 0;
+  padding-left: 1em; /* this is the indent created for the list, but may partially be filled with the numbers or bullets (see note below). */
+  padding-right: 1em;
+}
+
+/* The number or bullet appears to be displaced some minimum amount to the left of the li padding, and expands further to the left with more digits in a number. It appears to me that, depending on that minimum displacement amount plus the width of the number/bullet, it falls into the li margin-left and/or the ol/ul padding-left.  */
+
+li {
+  margin-left: 2em; /* number or bullet may partially go in this margin. See not above.*/
+  padding-left: 0px; /* this minimumizes the displacement of the number/bullet to the left of the li */
+}
+
+li.tight-list {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+h1 {
+  margin-top: 1em;
+  font-weight: 800;
+  font-size: 25px;
+  text-align: left;
+}
+
+h1.centered-heading {
+  text-align: center;
+  text-align-last: center;
+}
+
+input,
+textarea {
+  display: block;
+}
+
+input#captchaInput {
+  width: 50px;
+  display: inline;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  box-sizing: border-box; /* without this, the width: 100% will be too big (major hassel) */
+  width: 100%;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  max-width: 300px;
+}
+
+#goddess-email-confirm {
+  margin-top: 3px;
+}
+
+textarea {
+  max-width: 900px;
+}
+
+select {
+  color: magenta;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+  background-color: lightgreen;
+}
+
+input[type="file"],
+button {
+  color: magenta;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+  background-color: lightgreen;
+  width: 400px;
+  height: auto;
+}
+
+option {
+  color: magenta;
+}
+
+/* Careful with these three ::placeholder selectors... it appears they cannot be combined into one statement. */
+
+::-webkit-input-placeholder {
+  /* Edge, Chrome */
+  color: pink;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer */
+  color: pink;
+  opacity: 1;
+}
+
+::placeholder {
+  color: pink;
+  opacity: 1;
+}
+
+img.page-main-photo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  width: 80%;
+}
+
+img.non-photo {
+  width: 60%;
+}
+
+img.thumb-image {
+  /* "thumb-image" is output from js */
+  border: 0;
+  display: block;
+  max-width: 150px;
+  padding: 10px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.video-frame {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80% !important;
+}
+
+p.photo-date {
+  text-align: center;
+  text-align-last: center;
+  font-size: 14px;
+}
+
+p.footer {
+  font-size: 13px;
+}
+
+a {
+  color: var(--color);
+}
+
+a.plain-link {
+  color: rgb(47, 0, 152);
+}
+
+hr {
+  border-top: 1px solid rgb(47, 0, 152);
+  width: 50%;
+}
+
+.red {
+  color: #ff0000;
+}
+
+div.error,
+p.error {
+  font-size: 20px;
+  font-weight: 900;
+  color: rgb(255, 0, 0);
+}
+
+div.success,
+p.success {
+  font-size: 20px;
+  font-weight: 900;
+  color: rgb(0, 135, 0);
+}
+
+@media screen and (max-width: 500px) {
+  /* phones */
+  body {
+    /* background-color:  pink; /* for test purposes */
+    text-align: left;
+  }
+  div.indent {
+    margin-left: 0.5em;
+  }
+  div.main-text-area {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  ul,
+  ol {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  li {
+    margin-left: 15px;
+  }
+  img.page-main-photo {
+    margin-top: 5px;
+    width: 95%;
+  }
+  div.video-frame {
+    width: 100% !important;
+  }
+  input[type="file"],
+  button {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  /* wide screens */
+  body {
+    /* background-color:  lightgreen; /* for test purposes */
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  div.video-frame {
+    width: 60% !important;
+  }
+}

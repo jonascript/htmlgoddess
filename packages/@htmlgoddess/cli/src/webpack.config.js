@@ -13,11 +13,10 @@ const HtmlGoddessPlugin = require("@htmlgoddess/webpack-plugin");
 const htmlLoader = require("html-loader");
 const styleLoader = require("../node_modules/style-loader");
 const path = require("path");
-const CWD_PATH = process.env.CWD_PATH || process.cwd();
 
-function getWebpackConfig() {
+function getWebpackConfig(projectDir) {
   const plugins = [];
-  const htmlFiles = glob.sync(CWD_PATH + "/src/content/**/*+(*.htm|*.html)");
+  const htmlFiles = glob.sync(projectDir + "/src/content/**/*+(*.htm|*.html)");
 
   for (let x = 0; x < htmlFiles.length; x++) {
     const pathObj = path.parse(htmlFiles[x]);
@@ -41,9 +40,9 @@ function getWebpackConfig() {
   }
 
   return {
-    entry: path.join(CWD_PATH, "./src/css/index.css"), // Prevents unnecessary main.js from being included.
+    entry: path.join(projectDir, "src/css/index.css"), // Prevents unnecessary main.js from being included.
     output: {
-      path: path.join(CWD_PATH, "./docs"),
+      path: path.join(projectDir, "docs"),
     },
     mode: "development",
     stats: "errors-warnings",
@@ -95,7 +94,7 @@ function getWebpackConfig() {
           {
             flatten: true,
             toType: "dir",
-            from: CWD_PATH + "/src/css/*.css",
+            from: projectDir + "/src/css/*.css",
             to: "css",
           },
         ],

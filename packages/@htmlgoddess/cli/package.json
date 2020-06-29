@@ -1,7 +1,7 @@
 {
   "name": "@htmlgoddess/cli",
   "description": "> TODO: description",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
   "bin": {
@@ -19,6 +19,7 @@
     "command-line-args": "5.1.1",
     "copy-webpack-plugin": "6.0.1",
     "css-loader": "3.5.3",
+    "fs-extra": "9.0.1",
     "glob": "7.1.6",
     "html-beautify-webpack-plugin": "1.0.5",
     "html-loader": "1.1.0",
@@ -33,6 +34,7 @@
     "postcss-loader": "3.0.0",
     "prettier": "2.0.5",
     "pretty": "2.0.0",
+    "recursive-watch": "1.1.4",
     "serve": "11.3.1",
     "simple-git": "2.6.0",
     "spellchecker": "3.7.0",

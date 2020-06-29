@@ -2,14 +2,14 @@ import { Command, flags } from "@oclif/command";
 import execa from "execa";
 import path from "path";
 import cli from "cli-ux";
-// import * as inquirer from 'inquirer'
+import * as inquirer from "inquirer";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config.js";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
 import { CWD_PATH } from "../../index";
 import http from "isomorphic-git/http/node";
-import fs from "fs";
+import fs from "fs-extra";
 
 export default class Create extends Command {
   static description = "describe the command here";
@@ -28,12 +28,12 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "path" }];
+  static args = [{ name: "projectDir" }];
 
   run(): Promise<any> {
     const { args, flags } = this.parse(Create);
 
-    const path = args.path ? args.path : CWD_PATH;
+    const projectDir = args.projectDir ? args.projectDir : process.cwd();
 
     return new Promise(async (resolve, reject) => {
       const name = await cli.prompt("What is the name of your site?");
@@ -46,29 +46,67 @@ hello world wide web from ./src/hello.ts!
       //   message: 'select a template',
       //   type: 'list',
       //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
-      // }]);
+      // }])
+
+      const templateDir = path.join(
+        __dirname,
+        `../../../../templates/${template}`
+      );
+
+      this.log("");
 
       const confirm = await cli.confirm(
         `The name of your site is ${chalk.keyword("green")(
           name
-        )}. It is a ${template} and it will be installed at ${path}. Please confirm.`
+        )}. It is a ${template} and it will be installed at ${path.join(
+          CWD_PATH,
+          projectDir
+        )}. Please confirm. (y/n)`
       );
+
+      this.log("");
 
       cli.action.start("Installing your site...");
 
-      const cloneResult = await git.clone({
-        fs,
-        http,
-        corsProxy: "https://cors.isomorphic-git.org",
-        singleBranch: true,
-        depth: 1,
-        dir: path,
-        url: "https://github.com/jonascript/htmlgoddess-test",
-      });
+      const templateExists = await fs.existsSync(templateDir);
 
-      cli.action.stop("Your site has been created!");
+      console.log(
+        "Template & project dir Exists",
+        templateDir,
+        templateExists,
+        path.join(projectDir)
+      );
 
-      resolve({ name, template, path });
+      if (templateExists) {
+        fs.copySync(templateDir, projectDir, { errorOnExist: true });
+
+        if (!fs.existsSync(projectDir)) {
+          throw new Error("Something went wrong when creating site files");
+        }
+      }
+
+      // const cloneResult = await git.clone({
+      //   fs,
+      //   http,
+      //   corsProxy: "https://cors.isomorphic-git.org",
+      //   singleBranch: true,
+      //   depth: 1,
+      //   dir: projectDirectory,
+      //   url: `https://github.com/jonascript/htmlgoddess-template-${}`,
+      // });
+
+      cli.action.stop("done!");
+      this.log("");
+      this.log(`✨  Successfully created project: ${name}`);
+      this.log("");
+      this.log(`👉  Get started with the following commands:`);
+      this.log("");
+      this.log(chalk.green(`cd ${projectDir}`));
+      this.log(chalk.green(`htmlgoddess print`));
+      this.log(chalk.green(`htmlgoddess serve`));
+      this.log("");
+
+      resolve({ name, template, path: projectDir });
     });
   }
 }
