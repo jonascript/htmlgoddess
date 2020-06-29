@@ -7,3 +7,4 @@
 /yarn.lock
 /test-create
 node_modules
+.DS_Store

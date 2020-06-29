@@ -3,13 +3,13 @@ import * as fs from "fs";
 import * as path from "path";
 import { run } from "../index";
 import Create from "../commands/create/index";
+import Format from "../commands/format/index";
 import { test } from "@oclif/test";
 import axios from "axios";
 import * as execa from "execa";
 import { idText, JsxEmit } from "typescript";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
-
 
 /**
  * Mocks the "open" function so that a browser doesn't open while unit testing.
@@ -20,14 +20,14 @@ function mockCLIOpen() {
       ...cli,
       open: () => {
         return;
-      }
+      },
     };
   });
 }
 
 /**
  * Mocking for interactive prompts.
- * @param answers 
+ * @param answers
  */
 function mockCLIAnswers(answers: string[]) {
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
@@ -49,18 +49,8 @@ describe("htmlgoddess Command", () => {
   let result,
     io = null;
 
-  beforeAll(() => {
-    console.log("Changing to test directory.");
-    process.chdir("../../test");
-    process.env.CWD_PATH = process.cwd();
-    mockCLIOpen();
-  });
-
-  afterAll(() => {
-    process.chdir("../@htmlgoddess/cli");
-    console.log(
-      `Reseting and stashing changes for test submodule at: ${process.cwd()}`
-    );
+  beforeAll((done) => {
+    console.log("Setting test submodule to clean state");
     execa.sync("git", [
       "submodule",
       "foreach",
@@ -69,12 +59,35 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
+    execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
+
+    console.log("Changing to test directory.");
+    process.chdir("../../test");
+    process.env.CWD_PATH = process.cwd();
+    mockCLIOpen();
+    done();
+  });
+
+  afterAll(() => {
+    process.chdir("../@htmlgoddess/cli");
+    console.log(
+      `Reseting and stashing changes for test submodule at: ${process.cwd()}`
+    );
+
+    // Resets the submodule test repo to orinal state
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "git",
+      "reset",
+      "origin/master",
+    ]);
+    execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
+    execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
   });
 
   beforeEach(() => {
     result = [];
-
-
     // jest
     //   .spyOn(process.stdout, "write")
     //   .mockImplementation((str, encoding, cb) => {
@@ -92,15 +105,17 @@ describe("htmlgoddess Command", () => {
   describe("create", () => {
     it("can create a new site", async (done) => {
       const mockAnswers = ["My Test Site", "blog", "Y"];
+
       mockCLIAnswers([...mockAnswers]);
-      Create.run([process.env.CWD_PATH + "/testcreate"]).then((results) => {
+      Create.run([process.env.CWD_PATH]).then((results) => {
         // @todo test console messages from stdout
         expect(results.name).toEqual(mockAnswers[0]);
         expect(results.template).toEqual(mockAnswers[1]);
-        expect(results.path).toEqual(process.env.CWD_PATH + "/testcreate");
-        expect(fs.existsSync(results.path + "/src/content/index.html")).toEqual(
-          true
-        );
+        expect(results.path).toEqual(process.env.CWD_PATH);
+        expect(
+          fs.existsSync(path.join(results.path, "src/content/index.html"))
+        ).toEqual(true);
+
         done();
       });
     });
@@ -123,10 +138,12 @@ describe("htmlgoddess Command", () => {
       });
     });
   });
+
   // it("can print:auto", async () => {});
 
   describe("format", () => {
     beforeEach((done) => {
+      console.log("CWD", process.cwd());
       fs.writeFileSync(
         path.join(process.env.CWD_PATH, "src/content/can-format.html"),
         "<p>I <strong>am</strong>        formatted</p>"
@@ -139,15 +156,31 @@ describe("htmlgoddess Command", () => {
     // });
 
     it("can format", (done) => {
-      run(["format"]).then((result) => {
+      console.log(process.env.CWD_PATH);
+
+      Format.run([]).then((result) => {
         const output = fs.readFileSync(
-          path.join(process.env.CWD_PATH, "docs/can-format.html"),
+          path.join(process.env.CWD_PATH, "src/content/can-format.html"),
           "utf-8"
         );
         expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
+
         done();
       });
     });
+
+    it("can format with a path", (done) => {
+      Format.run([process.env.CWD_PATH]).then((result) => {
+        const output = fs.readFileSync(
+          path.join(process.env.CWD_PATH, "src/content/can-format.html"),
+          "utf-8"
+        );
+        expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
+
+        done();
+      });
+    });
+
     // it("can format:auto", async () => {});
   });
 

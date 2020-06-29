@@ -2,7 +2,7 @@ import { Command, flags } from "@oclif/command";
 import execa from "execa";
 import path from "path";
 import cli from "cli-ux";
-import * as inquirer from 'inquirer'
+import * as inquirer from "inquirer";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config.js";
 import chalk from "chalk";
@@ -28,16 +28,16 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "projectDirectory" }];
+  static args = [{ name: "projectDir" }];
 
   run(): Promise<any> {
     const { args, flags } = this.parse(Create);
 
-    const projectDirectory = args.projectDirectory ? args.projectDirectory : CWD_PATH;
+    const projectDir = args.projectDir ? args.projectDir : process.cwd();
 
     return new Promise(async (resolve, reject) => {
-
       const name = await cli.prompt("What is the name of your site?");
+
       const template = await cli.prompt("What is the name of your template?");
 
       // @todo with inquirer when I can figure out how mock prompts
@@ -48,24 +48,40 @@ hello world wide web from ./src/hello.ts!
       //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
       // }])
 
-      this.log("");
-      const confirm = await cli.confirm(
-        `The name of your site is ${chalk.keyword("green")(
-          name
-        )}. It is a ${template} and it will be installed at ${path.join(CWD_PATH, projectDirectory)}. Please confirm. (y/n)`
+      const templateDir = path.join(
+        __dirname,
+        `../../../../templates/${template}`
       );
 
       this.log("");
+
+      const confirm = await cli.confirm(
+        `The name of your site is ${chalk.keyword("green")(
+          name
+        )}. It is a ${template} and it will be installed at ${path.join(
+          CWD_PATH,
+          projectDir
+        )}. Please confirm. (y/n)`
+      );
+
+      this.log("");
+
       cli.action.start("Installing your site...");
 
-    
-      const templateExists = await fs.existsSync(`../../../../templates/${template}`);
+      const templateExists = await fs.existsSync(templateDir);
+
+      console.log(
+        "Template & project dir Exists",
+        templateDir,
+        templateExists,
+        path.join(projectDir)
+      );
 
       if (templateExists) {
-        try {
-          const cloneResult = fs.copySync(`../../../../templates/${template}`, path.join(CWD_PATH, projectDirectory), { errorOnExist: true })
-        } catch (err) {
-          this.error(err);
+        fs.copySync(templateDir, projectDir, { errorOnExist: true });
+
+        if (!fs.existsSync(projectDir)) {
+          throw new Error("Something went wrong when creating site files");
         }
       }
 
@@ -85,12 +101,12 @@ hello world wide web from ./src/hello.ts!
       this.log("");
       this.log(`👉  Get started with the following commands:`);
       this.log("");
-      this.log(chalk.green(`cd ${projectDirectory}`));
+      this.log(chalk.green(`cd ${projectDir}`));
       this.log(chalk.green(`htmlgoddess print`));
       this.log(chalk.green(`htmlgoddess serve`));
       this.log("");
 
-      resolve({ name, template, path: projectDirectory });
+      resolve({ name, template, path: projectDir });
     });
   }
 }
