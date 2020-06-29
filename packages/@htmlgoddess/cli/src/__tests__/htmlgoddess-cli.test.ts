@@ -4,10 +4,10 @@ import * as path from "path";
 import { run } from "../index";
 import Create from "../commands/create/index";
 import Format from "../commands/format/index";
+import A11y from "../commands/a11y/index";
 import { test } from "@oclif/test";
 import axios from "axios";
 import * as execa from "execa";
-import { idText, JsxEmit } from "typescript";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
 
@@ -68,7 +68,7 @@ describe("htmlgoddess Command", () => {
     done();
   });
 
-  afterAll(() => {
+  afterAll((done) => {
     process.chdir("../@htmlgoddess/cli");
     console.log(
       `Reseting and stashing changes for test submodule at: ${process.cwd()}`
@@ -84,6 +84,8 @@ describe("htmlgoddess Command", () => {
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
     execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
+
+    done();
   });
 
   beforeEach(() => {
@@ -138,7 +140,7 @@ describe("htmlgoddess Command", () => {
       });
     });
 
-    it("can print:auto", async (done) => { 
+    it("can print:auto", async (done) => {
       run(["print:auto"]).then(() => {
         fs.writeFileSync(
           path.join(process.env.CWD_PATH, "src/content/can-print.html"),
@@ -150,12 +152,12 @@ describe("htmlgoddess Command", () => {
             path.join(process.env.CWD_PATH, "docs/can-print.html"),
             "utf-8"
           );
-          
+
           expect(output).toContain(`<p>I am auto printed ${time}</p>`);
-           done();
+          done();
         }, 1000);
       });
-    });  
+    });
   });
 
   describe("format", () => {
@@ -241,6 +243,55 @@ describe("htmlgoddess Command", () => {
         done();
       });
     });
+  });
+
+  // @todo
+  describe("a11y", () => {
+    const time = Date.now();
+    beforeEach((done) => {
+      run(["print", process.env.CWD_PATH]).then((results) => {
+        done();
+      });
+    });
+
+    it("can validate accesibility", (done) => {
+      A11y.run([]).then((results) => {
+        done();
+      });
+    });
+
+    it("can validate against one url", (done) => {
+      A11y.run([
+        "/Users/Jon/dev/htmlgoddess/packages/test/docs/index.html",
+      ]).then((results) => {
+        console.log("results", results);
+        done();
+      });
+    });
+
+    it("will catch errors", (done) => {
+      fs.writeFileSync(
+        path.join(process.env.CWD_PATH, "src/content/not-a11y.html"),
+        `<p>I am not accessible ${time}. <img src="./bad-image.jpg" /></p>`
+      );
+
+      run(["print", process.env.CWD_PATH]).then((results) => {
+        A11y.run([]).then(
+          (results) => {
+            expect(results.length).toBe(0);
+            done();
+          },
+          (results) => {
+            expect(results.length).toEqual(1);
+            expect(results[0].issues[0].message).toEqual("Img element missing an alt attribute. Use the alt attribute to specify a short text alternative.");
+            done();
+          }
+        );
+      });
+    });
+    // it("can serve without param passed", (done) => {
+    // })
+    // it("can serve:auto", async () => {});
   });
 
   // @todo keeping for reference
