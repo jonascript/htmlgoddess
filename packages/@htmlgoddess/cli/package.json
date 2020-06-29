@@ -19,6 +19,7 @@
     "command-line-args": "5.1.1",
     "copy-webpack-plugin": "6.0.1",
     "css-loader": "3.5.3",
+    "fs-extra": "9.0.1",
     "glob": "7.1.6",
     "html-beautify-webpack-plugin": "1.0.5",
     "html-loader": "1.1.0",

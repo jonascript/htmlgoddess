@@ -9,7 +9,7 @@ import chalk from "chalk";
 import * as git from "isomorphic-git";
 import { CWD_PATH } from "../../index";
 import http from "isomorphic-git/http/node";
-import fs from "fs";
+import fs from "fs-extra";
 
 export default class Create extends Command {
   static description = "describe the command here";
@@ -58,15 +58,26 @@ hello world wide web from ./src/hello.ts!
       this.log("");
       cli.action.start("Installing your site...");
 
-      const cloneResult = await git.clone({
-        fs,
-        http,
-        corsProxy: "https://cors.isomorphic-git.org",
-        singleBranch: true,
-        depth: 1,
-        dir: projectDirectory,
-        url: "https://github.com/jonascript/htmlgoddess-test",
-      });
+    
+      const templateExists = await fs.existsSync(`../../../../templates/${template}`);
+
+      if (templateExists) {
+        try {
+          const cloneResult = fs.copySync(`../../../../templates/${template}`, path.join(CWD_PATH, projectDirectory), { errorOnExist: true })
+        } catch (err) {
+          this.error(err);
+        }
+      }
+
+      // const cloneResult = await git.clone({
+      //   fs,
+      //   http,
+      //   corsProxy: "https://cors.isomorphic-git.org",
+      //   singleBranch: true,
+      //   depth: 1,
+      //   dir: projectDirectory,
+      //   url: `https://github.com/jonascript/htmlgoddess-template-${}`,
+      // });
 
       cli.action.stop("done!");
       this.log("");
