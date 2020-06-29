@@ -1,4 +1,7 @@
 import { Command, flags } from "@oclif/command";
+import Print from '../print';
+import watch from 'recursive-watch';
+import path from 'path';
 
 export default class AutoPrint extends Command {
   static description = "describe the command here";
@@ -17,12 +20,26 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "file" }];
+  static args = [{ name: "projectSrcDir" }];
 
   async run() {
     const { args, flags } = this.parse(AutoPrint);
 
-    this.log(`Printing your website from ./src to ./docs`);
-    // printAuto();
+    const projectSrcDir = args.projectSrcDir ? args.projectSrcDir : path.join(process.cwd(), '/src');
+
+    return new Promise((resolve, reject) => {
+      this.log('Watching: ', projectSrcDir);
+      // ... or a directory
+      
+     const unwatch = watch(projectSrcDir, (filename) => {
+        this.log(filename, 'changed. Reprinting website to docs');
+
+        Print.run([]).then(results => {
+          this.log('Website auto printed.')
+        })
+      });
+
+      resolve(unwatch);
+    });
   }
 }

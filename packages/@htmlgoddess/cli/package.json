@@ -34,6 +34,7 @@
     "postcss-loader": "3.0.0",
     "prettier": "2.0.5",
     "pretty": "2.0.0",
+    "recursive-watch": "1.1.4",
     "serve": "11.3.1",
     "simple-git": "2.6.0",
     "spellchecker": "3.7.0",

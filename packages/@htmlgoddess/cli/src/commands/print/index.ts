@@ -3,7 +3,7 @@ import execa from "execa";
 import path from 'path';
 import cli from "cli-ux";
 import webpack from 'webpack';
-import webpackConfig from "../../webpack.config.js";
+import getWebpackConfig from "../../webpack.config.js";
 import chalk from 'chalk';
 import { CWD_PATH } from "../../index";
 
@@ -29,12 +29,12 @@ hello world wide web from ./src/hello.ts!
   async run() {
     const { args, flags } = this.parse(Print);
 
-    const projectDir = args.projectDir ? args.projectDir : CWD_PATH;
+    const projectDir = args.projectDir ? args.projectDir : process.cwd();
 
     cli.action.start(`Printing your website from ${projectDir} to ./docs`);
     return new Promise((resolve, reject) => {
       // @todo this is not compiling properly
-      const compiler = webpack(webpackConfig(), (err, stats) => {
+      const compiler = webpack(getWebpackConfig(projectDir), (err, stats) => {
         if (err) {
           console.error(err);
           return;

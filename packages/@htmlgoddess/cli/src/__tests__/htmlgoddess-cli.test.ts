@@ -137,9 +137,26 @@ describe("htmlgoddess Command", () => {
         done();
       });
     });
-  });
 
-  // it("can print:auto", async () => {});
+    it("can print:auto", async (done) => { 
+      run(["print:auto"]).then(() => {
+        fs.writeFileSync(
+          path.join(process.env.CWD_PATH, "src/content/can-print.html"),
+          `<p>I am auto printed ${time}</p>`
+        );
+
+        setTimeout(() => {
+          const output = fs.readFileSync(
+            path.join(process.env.CWD_PATH, "docs/can-print.html"),
+            "utf-8"
+          );
+          
+          expect(output).toContain(`<p>I am auto printed ${time}</p>`);
+           done();
+        }, 1000);
+      });
+    });  
+  });
 
   describe("format", () => {
     beforeEach((done) => {
