@@ -15,7 +15,6 @@ This is a complete rewrite from the current version currently under development.
 - npm
 
 ## To Do
-- fix: serve testing.
 - Do cleanup pass to ensure paths are being constructed properly.
 - add: auto commitizen hook to trigger when commiting.
 - Create print:auto, publish, a11y, proofread commands.

@@ -10,7 +10,26 @@ import { idText, JsxEmit } from "typescript";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
 
-function mockCLIAnswers(answers) {
+
+/**
+ * Mocks the "open" function so that a browser doesn't open while unit testing.
+ */
+function mockCLIOpen() {
+  jest.mock("cli-ux", () => {
+    return {
+      ...cli,
+      open: () => {
+        return;
+      }
+    };
+  });
+}
+
+/**
+ * Mocking for interactive prompts.
+ * @param answers 
+ */
+function mockCLIAnswers(answers: string[]) {
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
     return {
       ...prompt,
@@ -34,6 +53,7 @@ describe("htmlgoddess Command", () => {
     console.log("Changing to test directory.");
     process.chdir("../../test");
     process.env.CWD_PATH = process.cwd();
+    mockCLIOpen();
   });
 
   afterAll(() => {
@@ -53,6 +73,8 @@ describe("htmlgoddess Command", () => {
 
   beforeEach(() => {
     result = [];
+
+
     // jest
     //   .spyOn(process.stdout, "write")
     //   .mockImplementation((str, encoding, cb) => {
@@ -133,13 +155,11 @@ describe("htmlgoddess Command", () => {
   describe("serve", () => {
     it("can serve", (done) => {
       run(["serve", process.env.CWD_PATH]).then((process) => {
-        console.log("hello", process);
-        // setTimeout(async () => {
-        //   const response = await axios.get("http://127.0.0.1:3000");
-        //   expect(response.status).toEqual(200);
-        //   done();
-        // }, 3000);
-        done();
+        setTimeout(async () => {
+          const response = await axios.get("http://127.0.0.1:3000");
+          expect(response.status).toEqual(200);
+          done();
+        }, 1000);
       });
     });
     // it("can serve without param passed", (done) => {
