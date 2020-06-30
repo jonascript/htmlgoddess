@@ -36,7 +36,7 @@ USAGE
 * [`htmlgoddess format:auto [FILE]`](#htmlgoddess-formatauto-file)
 * [`htmlgoddess hello [FILE]`](#htmlgoddess-hello-file)
 * [`htmlgoddess help [COMMAND]`](#htmlgoddess-help-command)
-* [`htmlgoddess print [PROJECTDIR]`](#htmlgoddess-print-projectdir)
+* [`htmlgoddess print`](#htmlgoddess-print)
 * [`htmlgoddess print:auto [PROJECTSRCDIR]`](#htmlgoddess-printauto-projectsrcdir)
 * [`htmlgoddess publish [FILE]`](#htmlgoddess-publish-file)
 * [`htmlgoddess save [BASEPATH]`](#htmlgoddess-save-basepath)
@@ -157,15 +157,16 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0/src/commands/help.ts)_
 
-## `htmlgoddess print [PROJECTDIR]`
+## `htmlgoddess print`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess print [PROJECTDIR]
+  $ htmlgoddess print
 
 OPTIONS
+  -a, --[no-]a11y
   -f, --force
   -h, --help       show CLI help
   -n, --name=name  name to print

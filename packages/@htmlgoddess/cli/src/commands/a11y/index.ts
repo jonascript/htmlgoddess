@@ -9,7 +9,7 @@ import cli from "cli-ux";
 
 // Workaround to suppress node event emitter warning
 // @todo queue requests to avoid setting too many listeners at once
-require("events").EventEmitter.defaultMaxListeners = 25;
+require("events").EventEmitter.defaultMaxListeners = 100;
 
 export default class A11y extends Command {
   static description = "describe the command here";

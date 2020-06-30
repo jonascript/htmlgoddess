@@ -10,6 +10,7 @@ This is a complete rewrite from the current version currently under development.
 - feat: prompt unit test mocking.
 - feat: create command
 - feat: print:auto
+- test: intercept and setup testing for CLI output
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
@@ -20,7 +21,7 @@ This is a complete rewrite from the current version currently under development.
 - task: make sure watcher doesn't leak memory.
 - a11y
 - Find good spell checker.
-- test: intercept and setup testing for CLI output
+- bug: cli.action still outputing to console during tests.
 - Do cleanup pass to ensure paths are being constructed properly.
 - add: auto commitizen hook to trigger when committing.
 - Create publish,  proofread commands.

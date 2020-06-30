@@ -10,7 +10,6 @@ import axios from "axios";
 import * as execa from "execa";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
-
 /**
  * Mocks the "open" function so that a browser doesn't open while unit testing.
  */
@@ -46,7 +45,7 @@ function mockCLIAnswers(answers: string[]) {
 }
 
 describe("htmlgoddess Command", () => {
-  let result,
+  let cliOutput = [],
     io = null;
 
   beforeAll((done) => {
@@ -65,6 +64,9 @@ describe("htmlgoddess Command", () => {
     process.chdir("../../test");
     process.env.CWD_PATH = process.cwd();
     mockCLIOpen();
+   
+
+    
     done();
   });
 
@@ -84,25 +86,26 @@ describe("htmlgoddess Command", () => {
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
     execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
-
+    
     done();
   });
 
   beforeEach(() => {
-    result = [];
+    cliOutput = [];
     // jest
-    //   .spyOn(process.stdout, "write")
-    //   .mockImplementation((str, encoding, cb) => {
-    //     result.push(str);
-    //     return true;
-    //   });
-
+    // .spyOn(process.stdout, "write")
+    // .mockImplementation((str, encoding, cb) => {
+    //   cliOutput.push(str);
+    //   return false;
+    // });
     //   jest
     //   .spyOn(process.stdin, "write")
     //   .mockImplementation((val) => stdin.push(val));
   });
 
-  afterEach(() => {});
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   describe("create", () => {
     it("can create a new site", async (done) => {
@@ -141,20 +144,22 @@ describe("htmlgoddess Command", () => {
     });
 
     it("can print:auto", async (done) => {
-      run(["print:auto"]).then(() => {
-        fs.writeFileSync(
-          path.join(process.env.CWD_PATH, "src/content/can-print.html"),
-          `<p>I am auto printed ${time}</p>`
-        );
-
+      run(["print:auto", '--debounce=800']).then(() => {
+        // Gives some time for print:auto debounce
         setTimeout(() => {
-          const output = fs.readFileSync(
-            path.join(process.env.CWD_PATH, "docs/can-print.html"),
-            "utf-8"
+          fs.writeFileSync(
+            path.join(process.env.CWD_PATH, "src/content/can-print.html"),
+            `<p>I am auto printed ${time}</p>`
           );
 
-          expect(output).toContain(`<p>I am auto printed ${time}</p>`);
-          done();
+          setTimeout(() => {
+            const output = fs.readFileSync(
+              path.join(process.env.CWD_PATH, "docs/can-print.html"),
+              "utf-8"
+            );
+            expect(output).toContain(`<p>I am auto printed ${time}</p>`);
+            done();
+          }, 3000);
         }, 1000);
       });
     });
@@ -162,7 +167,6 @@ describe("htmlgoddess Command", () => {
 
   describe("format", () => {
     beforeEach((done) => {
-      console.log("CWD", process.cwd());
       fs.writeFileSync(
         path.join(process.env.CWD_PATH, "src/content/can-format.html"),
         "<p>I <strong>am</strong>        formatted</p>"
@@ -249,7 +253,7 @@ describe("htmlgoddess Command", () => {
   describe("a11y", () => {
     const time = Date.now();
     beforeEach((done) => {
-      run(["print", process.env.CWD_PATH]).then((results) => {
+      run(["print", process.env.CWD_PATH, '--no-a11y']).then((results) => {
         done();
       });
     });
@@ -275,7 +279,7 @@ describe("htmlgoddess Command", () => {
         `<p>I am not accessible ${time}. <img src="./bad-image.jpg" /></p>`
       );
 
-      run(["print", process.env.CWD_PATH]).then((results) => {
+      run(["print", process.env.CWD_PATH, '--no-a11y']).then((results) => {
         A11y.run([]).then(
           (results) => {
             expect(results.length).toBe(0);
