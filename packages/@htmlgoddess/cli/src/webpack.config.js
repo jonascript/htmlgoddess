@@ -11,7 +11,7 @@ const HtmlReplaceWebpackPlugin = require("html-replace-webpack-plugin");
 const HtmlBeautifyPlugin = require("html-beautify-webpack-plugin");
 const HtmlGoddessPlugin = require("@htmlgoddess/webpack-plugin");
 const htmlLoader = require("html-loader");
-const styleLoader = require("../node_modules/style-loader");
+const styleLoader = require("css-loader");
 const path = require("path");
 
 function getWebpackConfig(projectDir) {
@@ -58,19 +58,8 @@ function getWebpackConfig(projectDir) {
           // For Sass/SCSS - /\.((c|sa|sc)ss)$/i,
           // For Less - /\.((c|le)ss)$/i,
           test: /\.((c|sa|sc)ss)$/i,
-          use: [
-            "style-loader",
-            {
-              loader: require.resolve("css-loader"),
-              options: {
-                // Run `postcss-loader` on each CSS `@import`, do not forget that `sass-loader` compile non CSS `@import`'s into a single file
-                // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
-                importLoaders: 1,
-                // Automatically enable css modules for files satisfying `/\.module\.\w+$/i` RegExp.
-                modules: { auto: true },
-              },
-            },
-          ],
+          //  include: paths.appSrc,
+          loaders: [require.resolve("css-loader")],
         },
         {
           test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
@@ -84,11 +73,12 @@ function getWebpackConfig(projectDir) {
     plugins: [
       new HtmlGoddessPlugin(),
       ...plugins,
+      new FixStyleOnlyEntriesPlugin({ silent: true }),
       new CleanWebpackPlugin({
         dry: false,
+        verbose: false,
         cleanOnceBeforeBuildPatterns: ["**/*", "!CNAME"],
       }),
-      new FixStyleOnlyEntriesPlugin({ silent: true }),
       new CopyPlugin({
         patterns: [
           {

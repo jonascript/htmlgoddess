@@ -7,7 +7,6 @@ import A11y from '../a11y';
 import getWebpackConfig from "../../webpack.config.js";
 import chalk from 'chalk';
 import { CWD_PATH } from "../../index";
-import { expect } from 'chai';
 
 export default class Print extends Command {
   static description = "describe the command here";
@@ -45,19 +44,28 @@ hello world wide web from ./src/hello.ts!
           return;
         }
 
-        // console.log(stats.toString({
-        //   chunks: false,  // Makes the build much quieter
-        //   colors: true    // Shows colors in the console
-        // }));
+  
         cli.action.stop(chalk.green('done.'));
 
         if (a11y) {
           A11y.run([]).then(results => { 
+            // this.log(stats.toString({
+            //   chunks: false,  // Makes the build much quieter
+            //   colors: true    // Shows colors in the console
+            // }));
             resolve(stats); 
           }, (results) => {
+            // this.log(stats.toString({
+            //   chunks: false,  // Makes the build much quieter
+            //   colors: true    // Shows colors in the console
+            // }));
             resolve(stats); 
           })
         } else {
+          // this.log(stats.toString({
+          //   chunks: false,  // Makes the build much quieter
+          //   colors: true    // Shows colors in the console
+          // }));
           resolve(stats); 
         }
     

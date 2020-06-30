@@ -187,9 +187,10 @@ USAGE
   $ htmlgoddess print:auto [PROJECTSRCDIR]
 
 OPTIONS
+  -d, --debounce=debounce  [default: 500]
   -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help               show CLI help
+  -n, --name=name          name to print
 
 EXAMPLE
   $ htmlgoddess print
