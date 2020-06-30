@@ -26,6 +26,9 @@
     "output": "./docs",
     "livereload": true
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "textlint": {
     "plugins": [
       "html"

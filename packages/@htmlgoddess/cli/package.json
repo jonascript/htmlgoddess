@@ -7,6 +7,9 @@
   "bin": {
     "htmlgoddess": "./bin/run"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": "https://github.com/jonascript/htmlgoddess-cli/issues",
   "dependencies": {
     "@oclif/command": "1.6.1",
