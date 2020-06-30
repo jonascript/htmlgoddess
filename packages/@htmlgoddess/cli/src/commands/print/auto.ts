@@ -14,6 +14,8 @@ hello world wide web from ./src/hello.ts!
 
   static flags = {
     help: flags.help({ char: "h" }),
+
+    debounce: flags.integer({ char: "d", default: 500 }),
     // flag with a value (-n, --name=VALUE)
     name: flags.string({ char: "n", description: "name to print" }),
     // flag with no value (-f, --force)
@@ -27,19 +29,28 @@ hello world wide web from ./src/hello.ts!
 
     const projectSrcDir = args.projectSrcDir ? args.projectSrcDir : path.join(process.cwd(), '/src');
 
+    const { debounce } = flags;
+
     return new Promise((resolve, reject) => {
       this.log('Watching: ', projectSrcDir);
       // ... or a directory
-      
-     const unwatch = watch(projectSrcDir, (filename) => {
-        this.log(filename, 'changed. Reprinting website to docs');
 
-        Print.run([]).then(results => {
-          this.log('Website auto printed.')
-        })
+     let timestamp = Date.now();
+     
+      const unwatch = watch(projectSrcDir, (filename) => {
+
+        if (Date.now() - timestamp > debounce) {
+
+          timestamp = Date.now();
+          this.log(filename, 'changed. Reprinting website to docs');
+          Print.run(['--no-a11y']).then(results => {
+            this.log('Website auto printed.')
+          })
+        }
       });
 
       resolve(unwatch);
+
     });
   }
 }

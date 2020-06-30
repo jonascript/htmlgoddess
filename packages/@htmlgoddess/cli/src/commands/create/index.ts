@@ -70,13 +70,6 @@ hello world wide web from ./src/hello.ts!
 
       const templateExists = await fs.existsSync(templateDir);
 
-      console.log(
-        "Template & project dir Exists",
-        templateDir,
-        templateExists,
-        path.join(projectDir)
-      );
-
       if (templateExists) {
         fs.copySync(templateDir, projectDir, { errorOnExist: true });
 
