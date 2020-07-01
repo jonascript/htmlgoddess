@@ -9,6 +9,7 @@
   },
   "bugs": "https://github.com/jonascript/htmlgoddess/issues",
   "dependencies": {
+    "@htmlgoddess/webpack-plugin": "0.3.4",
     "@oclif/command": "1.6.1",
     "@oclif/config": "1.15.1",
     "@oclif/plugin-help": "3.1.0",
