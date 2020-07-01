@@ -4,5 +4,5 @@
     "packages/@htmlgoddess/webpack-plugin",
     "packages/@htmlgoddess/templates/blog"
   ],
-  "version": "0.3.3"
+  "version": "0.3.4"
 }
