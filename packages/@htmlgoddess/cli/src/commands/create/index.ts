@@ -3,8 +3,6 @@ import execa from "execa";
 import path from "path";
 import cli from "cli-ux";
 import * as inquirer from "inquirer";
-import webpack from "webpack";
-import webpackConfig from "../../webpack.config.js";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
 import { CWD_PATH } from "../../index";

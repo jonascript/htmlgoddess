@@ -1,20 +1,19 @@
-// const PACKAGE = require('../../../package.json');
-const glob = require("glob");
-const fs = require("fs");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
-const HtmlReplaceWebpackPlugin = require("html-replace-webpack-plugin");
-const HtmlBeautifyPlugin = require("html-beautify-webpack-plugin");
-const HtmlGoddessPlugin = require("@htmlgoddess/webpack-plugin");
-const htmlLoader = require("html-loader");
-const styleLoader = require("css-loader");
-const path = require("path");
+import glob from "glob";
+import fs  from "fs";
+import webpack from "webpack";
+import HtmlWebpackPlugin  from "html-webpack-plugin";
+import MiniCssExtractPlugin  from "mini-css-extract-plugin";
+import FixStyleOnlyEntriesPlugin  from "webpack-fix-style-only-entries";
+import { CleanWebpackPlugin }  from "clean-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+import HtmlReplaceWebpackPlugin  from "html-replace-webpack-plugin";
+import HtmlBeautifyPlugin  from "html-beautify-webpack-plugin";
+import HtmlGoddessPlugin  from "@htmlgoddess/webpack-plugin";
+import htmlLoader  from "html-loader";
+import styleLoader from "css-loader";
+import path from "path";
 
-function getWebpackConfig(projectDir) {
+function getWebpackConfig(projectDir: string): any {
   const plugins = [];
   const htmlFiles = glob.sync(projectDir + "/src/content/**/*+(*.htm|*.html)");
 
@@ -93,4 +92,4 @@ function getWebpackConfig(projectDir) {
   };
 }
 
-module.exports = getWebpackConfig;
+export = getWebpackConfig

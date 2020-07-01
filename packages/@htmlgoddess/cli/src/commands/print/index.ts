@@ -4,10 +4,8 @@ import path from 'path';
 import cli from "cli-ux";
 import webpack from 'webpack';
 import A11y from '../a11y';
-import getWebpackConfig from "../../webpack.config";
+import getWebpackConfig from "../../webpack-config-generator";
 import chalk from 'chalk';
-import { CWD_PATH } from "../../index";
-
 export default class Print extends Command {
   static description = "describe the command here";
 

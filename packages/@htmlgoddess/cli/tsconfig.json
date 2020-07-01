@@ -8,8 +8,10 @@
     "rootDir": "src",
     "strict": false,
     "target": "es2017",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowJs": true,
   },
   "include": [
     "src/**/*", "__tests__",
