@@ -1,6 +1,6 @@
 {
   "name": "@htmlgoddess/webpack-plugin",
-  "version": "0.3.7-alpha.0",
+  "version": "0.3.7-alpha.1",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
   "private": false,
   "main": "plugin.js",
@@ -94,5 +94,6 @@
   "directories": {
     "doc": "docs",
     "test": "tests"
-  }
+  },
+  "gitHead": "3e942098bd27b229c852c1dee419fd215ea52aa6"
 }

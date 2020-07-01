@@ -1,7 +1,7 @@
 {
   "name": "@htmlgoddess/cli",
   "description": "> TODO: description",
-  "version": "0.3.7-alpha.0",
+  "version": "0.3.7-alpha.1",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
   "bin": {
@@ -9,8 +9,8 @@
   },
   "bugs": "https://github.com/jonascript/htmlgoddess/issues",
   "dependencies": {
-    "@htmlgoddess/templates": "^0.3.7-alpha.0",
-    "@htmlgoddess/webpack-plugin": "^0.3.7-alpha.0",
+    "@htmlgoddess/templates": "^0.3.7-alpha.1",
+    "@htmlgoddess/webpack-plugin": "^0.3.7-alpha.1",
     "@oclif/command": "1.6.1",
     "@oclif/config": "1.15.1",
     "@oclif/plugin-help": "3.1.0",
@@ -114,5 +114,6 @@
     "version": "oclif-dev readme && git add README.md",
     "prettier:watch": "onchange 'src/**/*.ts' '__tests__/**/*.ts' -- prettier {{changed}} --write"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "gitHead": "3e942098bd27b229c852c1dee419fd215ea52aa6"
 }
