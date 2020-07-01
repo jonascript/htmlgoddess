@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/@htmlgoddess*",
+    "packages/@htmlgoddess/cli",
+    "packages/@htmlgoddess/webpack-plugin",
     "packages/@htmlgoddess/templates/blog"
   ],
   "version": "0.3.0"
