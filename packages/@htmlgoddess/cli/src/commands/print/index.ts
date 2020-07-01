@@ -4,7 +4,7 @@ import path from 'path';
 import cli from "cli-ux";
 import webpack from 'webpack';
 import A11y from '../a11y';
-import getWebpackConfig from "../../webpack.config.js";
+import getWebpackConfig from "../../webpack.config";
 import chalk from 'chalk';
 import { CWD_PATH } from "../../index";
 
