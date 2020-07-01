@@ -1,7 +1,7 @@
 {
   "name": "@htmlgoddess/cli",
   "description": "> TODO: description",
-  "version": "0.3.5",
+  "version": "0.3.6-alpha.0",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
   "bin": {
@@ -9,7 +9,7 @@
   },
   "bugs": "https://github.com/jonascript/htmlgoddess/issues",
   "dependencies": {
-    "@htmlgoddess/templates": "0.3.5",
+    "@htmlgoddess/templates": "^0.3.6-alpha.0",
     "@htmlgoddess/webpack-plugin": "^0.3.5",
     "@oclif/command": "1.6.1",
     "@oclif/config": "1.15.1",
