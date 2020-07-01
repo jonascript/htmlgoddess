@@ -21,7 +21,7 @@ $ npm install -g @htmlgoddess/cli
 $ htmlgoddess COMMAND
 running command...
 $ htmlgoddess (-v|--version|version)
-@htmlgoddess/cli/0.3.6-alpha.0 darwin-x64 node-v12.18.1
+@htmlgoddess/cli/0.3.7-alpha.0 darwin-x64 node-v12.18.1
 $ htmlgoddess --help [COMMAND]
 USAGE
   $ htmlgoddess COMMAND
