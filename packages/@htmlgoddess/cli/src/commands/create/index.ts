@@ -7,6 +7,7 @@ import chalk from "chalk";
 import * as git from "isomorphic-git";
 import { CWD_PATH } from "../../index";
 import http from "isomorphic-git/http/node";
+import { getTemplatePath } from "@htmlgoddess/templates";
 import fs from "fs-extra";
 
 export default class Create extends Command {
@@ -28,6 +29,13 @@ hello world wide web from ./src/hello.ts!
 
   static args = [{ name: "projectDir" }];
 
+  // async catch(error) {
+  //   this.log("error", "error");
+  //   // do something or
+  //   // re-throw to be handled globally
+  //   throw error;
+  // }
+
   run(): Promise<any> {
     const { args, flags } = this.parse(Create);
 
@@ -46,10 +54,19 @@ hello world wide web from ./src/hello.ts!
       //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
       // }])
 
-      const templateDir = path.join(
-        __dirname,
-        `../../../../templates/${template}`
-      );
+      let templateDir;
+
+      templateDir = getTemplatePath(template);
+
+      if (!templateDir) {
+        this.log(chalk.red(`Template does not exist. ${templateDir}`));
+        return reject(`Template does not exist. ${templateDir}`);
+      }
+
+      // const templateDir = path.join(
+      //   __dirname,
+      //   `../../../../templates/${template}`
+      // );
 
       this.log("");
 
@@ -68,12 +85,14 @@ hello world wide web from ./src/hello.ts!
 
       const templateExists = await fs.existsSync(templateDir);
 
-      if (templateExists) {
-        fs.copySync(templateDir, projectDir, { errorOnExist: true });
+      if (!templateExists) {
+        throw new Error(`Template does not exist. ${templateDir}`);
+      }
 
-        if (!fs.existsSync(projectDir)) {
-          throw new Error("Something went wrong when creating site files");
-        }
+      fs.copySync(templateDir, projectDir, { errorOnExist: true });
+
+      if (!fs.existsSync(projectDir)) {
+        throw new Error("Something went wrong when creating site files");
       }
 
       // const cloneResult = await git.clone({

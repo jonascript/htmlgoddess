@@ -2,7 +2,7 @@
   "packages": [
     "packages/@htmlgoddess/cli",
     "packages/@htmlgoddess/webpack-plugin",
-    "packages/@htmlgoddess/templates/blog"
+    "packages/@htmlgoddess/templates"
   ],
   "version": "0.3.5"
 }

@@ -1,0 +1,24 @@
+{
+  "name": "@htmlgoddess/templates",
+  "version": "0.3.5",
+  "private": false,
+  "description": "Starter templates for HTMLGoddess CLI",
+  "author": "Jonathan Crockett <joncrockett@gmail.com>",
+  "homepage": "https://github.com/jonascript/htmlgoddess#readme",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonascript/htmlgoddess.git",
+    "directory": "packages/@htmlgoddess/templates"
+  },
+  "bugs": {
+    "url": "https://github.com/jonascript/htmlgoddess/issues"
+  },
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

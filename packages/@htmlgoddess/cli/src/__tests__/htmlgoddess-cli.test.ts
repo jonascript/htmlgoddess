@@ -5,7 +5,6 @@ import { run } from "../index";
 import Create from "../commands/create/index";
 import Format from "../commands/format/index";
 import A11y from "../commands/a11y/index";
-import { test } from "@oclif/test";
 import axios from "axios";
 import * as execa from "execa";
 import cli, { ActionBase } from "cli-ux";
@@ -64,9 +63,7 @@ describe("htmlgoddess Command", () => {
     process.chdir("../../test");
     process.env.CWD_PATH = process.cwd();
     mockCLIOpen();
-   
 
-    
     done();
   });
 
@@ -86,7 +83,7 @@ describe("htmlgoddess Command", () => {
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
     execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
-    
+
     done();
   });
 
@@ -124,6 +121,17 @@ describe("htmlgoddess Command", () => {
         done();
       });
     });
+
+    it("will throw error when non existent template is given", (done) => {
+      const mockAnswers = ["My Test Site", "clog", "Y"];
+      Create.run([process.env.CWD_PATH]).then(
+        () => {},
+        (error) => {
+          expect(error).toBeTruthy();
+          done();
+        }
+      );
+    });
   });
 
   describe("print", () => {
@@ -144,7 +152,7 @@ describe("htmlgoddess Command", () => {
     });
 
     it("can print:auto", async (done) => {
-      run(["print:auto", '--debounce=800']).then(() => {
+      run(["print:auto", "--debounce=800"]).then(() => {
         // Gives some time for print:auto debounce
         setTimeout(() => {
           fs.writeFileSync(
@@ -253,7 +261,7 @@ describe("htmlgoddess Command", () => {
   describe("a11y", () => {
     const time = Date.now();
     beforeEach((done) => {
-      run(["print", process.env.CWD_PATH, '--no-a11y']).then((results) => {
+      run(["print", process.env.CWD_PATH, "--no-a11y"]).then((results) => {
         done();
       });
     });
@@ -279,7 +287,7 @@ describe("htmlgoddess Command", () => {
         `<p>I am not accessible ${time}. <img src="./bad-image.jpg" /></p>`
       );
 
-      run(["print", process.env.CWD_PATH, '--no-a11y']).then((results) => {
+      run(["print", process.env.CWD_PATH, "--no-a11y"]).then((results) => {
         A11y.run([]).then(
           (results) => {
             expect(results.length).toBe(0);
@@ -287,7 +295,9 @@ describe("htmlgoddess Command", () => {
           },
           (results) => {
             expect(results.length).toEqual(1);
-            expect(results[0].issues[0].message).toEqual("Img element missing an alt attribute. Use the alt attribute to specify a short text alternative.");
+            expect(results[0].issues[0].message).toEqual(
+              "Img element missing an alt attribute. Use the alt attribute to specify a short text alternative."
+            );
             done();
           }
         );

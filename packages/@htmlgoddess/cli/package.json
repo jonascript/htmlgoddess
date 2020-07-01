@@ -9,6 +9,7 @@
   },
   "bugs": "https://github.com/jonascript/htmlgoddess/issues",
   "dependencies": {
+    "@htmlgoddess/templates": "0.3.5",
     "@htmlgoddess/webpack-plugin": "^0.3.5",
     "@oclif/command": "1.6.1",
     "@oclif/config": "1.15.1",
@@ -90,7 +91,6 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
-    "@oclif/test": "1.2.6",
     "@types/jest": "26.0.0",
     "axios": "0.19.2",
     "git-http-mock-server": "1.2.1",

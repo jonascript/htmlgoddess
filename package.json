@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@htmlgoddess/cli": "file:packages/@htmlgoddess/cli",
-    "@htmlgoddess/templates/blog": "file:packages/@htmlgoddess/templates/blog",
+    "@htmlgoddess/templates": "file:packages/@htmlgoddess/templates",
     "@htmlgoddess/webpack-plugin": "file:packages/@htmlgoddess/webpack-plugin",
     "execa": "4.0.2",
     "g": "2.0.1",
