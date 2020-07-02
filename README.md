@@ -13,36 +13,35 @@ This is a complete rewrite from the current version currently under development.
 - test: intercept and setup testing for CLI output
 - fix: print:auto double printing.
 - task: Cleaned up paths
+- task: standardize param name to projectDir.
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
 - npm
 
+## Getting Started
+1. Open terminal
+1. ``` npm install -g @htmlgoddess/cli ```  
+This will install the command line utility. 
+1. ``` htmlgoddess create path/to/your/new/site ``` 
+1. follow the prompts and you should be up and running in no time.
+
+
 ## To Do
-- task: clean up docs pass.
 - add: style chooser on create.
 - add: warning message for user if they try to print when docs has been edited manually.
 - add: "host" command.
-- task: standardize param names.
-- task: make sure watcher doesn't leak memory.
 - task: Find good spell checker.
 - bug: cli.action still outputing to console during tests.
 - add: auto commitizen hook to trigger when committing.
-- add: publish, proofread commands.
+- add: proofread commands.
+- add: "domain" command.
 - add: executable.
 - refactor: Swap CNAME for yaml config for hosting/
-- add: "domain" command.
 - task: coverage
 - add: GUI
 - convert "docs" to configurable variables
-
-## Getting Started
-- Open terminal
-- ``` git clone https://github.com/jonascript/htmlgoddess path/to/site ```
-- ``` cd path/to/site ```
-- ``` npm install ```
-- ``` npm start ```
-- The menu will give you options which should be self explanatory
+- task: make sure watcher doesn't leak memory.
 
 # I don't know any HTML
 That's ok. Check out [this video](https://www.youtube.com/watch?v=3RXlQPkJzCM) to get started.
@@ -92,3 +91,12 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 ## Frequent issues
 - Dependancies acting weird:  
   Lerna does somethings under the hood to cross-link Dependancies. If you install a new module and things stop working try ```lerna boostrap``` from the root.
+
+## Contributing
+1. run tests in packages/cli to make sure everything's up to snuff
+```npm run test``` 
+1. Commit changes to the mono repo
+``` npm run commit ``` and follow the prompts
+1. lerna publish --force-publish
+This will publish to NPM as well as push a tag to git
+
