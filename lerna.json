@@ -4,5 +4,5 @@
     "packages/@htmlgoddess/webpack-plugin",
     "packages/@htmlgoddess/templates"
   ],
-  "version": "0.3.11-alpha.0"
+  "version": "0.3.12-alpha.0"
 }
