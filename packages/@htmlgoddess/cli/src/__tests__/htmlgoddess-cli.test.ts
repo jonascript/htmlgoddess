@@ -5,6 +5,10 @@ import { run } from "../index";
 import Create from "../commands/create/index";
 import Format from "../commands/format/index";
 import A11y from "../commands/a11y/index";
+import Print from "../commands/Print/index";
+import PrintAuto from "../commands/Print/auto";
+import Serve from "../commands/Serve/index";
+import Save from "../commands/Save/index";
 import axios from "axios";
 import * as execa from "execa";
 import cli, { ActionBase } from "cli-ux";
@@ -30,7 +34,16 @@ function mockCLIOpen() {
  * @param answers
  */
 function mockCLIAnswers(answers: any[]) {
-  console.log("MOCK INQUIRER", inquirer);
+  // Mocking inquirier answer for create
+  // @todo this only works for one question
+  inquirer.prompt = (questions) => {
+    return Promise.resolve({ template: "blog" });
+  };
+  // Promise.resolve({
+  //   template: () => {
+  //     return answers.shift();
+  //   },
+  // });
 
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
     return {
@@ -70,21 +83,6 @@ describe("htmlgoddess Command", () => {
     TEST_DIR = process.cwd();
     TEST_PROJECT_DIR = path.join(TEST_DIR, "testproject");
     mockCLIOpen();
-
-    inquirer.prompt = (questions) => Promise.resolve({ template: "blog" });
-
-    // jest.mock("inquirer", () => {
-    //   return {
-    //     ...inquirer,
-    //     prompt: (options) => {
-    //       console.log("PROMPTY PROMPTY");
-    //       return new Promise((resolve, reject) => {
-    //         console.log("resolve", options);
-    //         resolve({ [`template`]: "blog" });
-    //       });
-    //     },
-    //   };
-    // });
 
     done();
   });
@@ -135,7 +133,7 @@ describe("htmlgoddess Command", () => {
         // @todo test console messages from stdout
         expect(results.name).toEqual(mockAnswers[0]);
         expect(results.template).toEqual(mockAnswers[1]);
-        expect(results.path).toEqual(TEST_DIR);
+        expect(results.path).toEqual(TEST_PROJECT_DIR);
         expect(
           fs.existsSync(path.join(results.path, "src/content/index.html"))
         ).toEqual(true);
@@ -157,15 +155,23 @@ describe("htmlgoddess Command", () => {
   });
 
   describe("print", () => {
+    let TEST_PRINT_DIR;
+    beforeAll((done) => {
+      TEST_PRINT_DIR = path.join(TEST_DIR, "testprint");
+      Create.run([TEST_PRINT_DIR]).then((results) => {
+        done();
+      });
+    });
     const time = Date.now();
     it("can print", (done) => {
       fs.writeFileSync(
-        path.join(TEST_PROJECT_DIR, "src/content/can-print.html"),
+        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
-      run(["print"]).then((result) => {
+
+      Print.run([TEST_PRINT_DIR]).then((result) => {
         const output = fs.readFileSync(
-          path.join(TEST_DIR, "docs/can-print.html"),
+          path.join(TEST_PRINT_DIR, "docs/can-print.html"),
           "utf-8"
         );
         expect(output).toContain(`<p>I am printed ${time}</p>`);
@@ -174,7 +180,7 @@ describe("htmlgoddess Command", () => {
     });
 
     it("can print:auto", async (done) => {
-      run(["print:auto", "--debounce=800"]).then(() => {
+      PrintAuto.run([TEST_PROJECT_DIR, "--debounce=800"]).then(() => {
         // Gives some time for print:auto debounce
         setTimeout(() => {
           fs.writeFileSync(
@@ -209,9 +215,7 @@ describe("htmlgoddess Command", () => {
     // });
 
     it("can format", (done) => {
-      console.log(TEST_DIR);
-
-      Format.run([]).then((result) => {
+      Format.run([TEST_PROJECT_DIR]).then((result) => {
         const output = fs.readFileSync(
           path.join(TEST_PROJECT_DIR, "src/content/can-format.html"),
           "utf-8"
@@ -225,7 +229,7 @@ describe("htmlgoddess Command", () => {
     it("can format with a path", (done) => {
       Format.run([path.join(TEST_PROJECT_DIR)]).then((result) => {
         const output = fs.readFileSync(
-          path.join(TEST_DIR, "src/content/can-format.html"),
+          path.join(TEST_PROJECT_DIR, "src/content/can-format.html"),
           "utf-8"
         );
         expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
@@ -240,7 +244,7 @@ describe("htmlgoddess Command", () => {
   // @todo
   describe("serve", () => {
     it("can serve", (done) => {
-      run(["serve", path.join(TEST_PROJECT_DIR)]).then((process) => {
+      Serve.run([TEST_PROJECT_DIR]).then((process) => {
         setTimeout(async () => {
           const response = await axios.get("http://127.0.0.1:3000");
           expect(response.status).toEqual(200);
@@ -271,7 +275,7 @@ describe("htmlgoddess Command", () => {
 
     it("can save", (done) => {
       // @todo make sure this cleans up
-      run(["save", TEST_PROJECT_DIR]).then((result) => {
+      Save.run([TEST_PROJECT_DIR]).then((result) => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
@@ -283,22 +287,22 @@ describe("htmlgoddess Command", () => {
   describe("a11y", () => {
     const time = Date.now();
     beforeEach((done) => {
-      run(["print", TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
+      Print.run([TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
         done();
       });
     });
 
     it("can validate accesibility", (done) => {
-      A11y.run([]).then((results) => {
+      A11y.run([TEST_PROJECT_DIR]).then((results) => {
         done();
       });
     });
 
     it("can validate against one url", (done) => {
       A11y.run([
-        "/Users/Jon/dev/htmlgoddess/packages/test/docs/index.html",
+        TEST_PROJECT_DIR,
+        `--url=${path.join(TEST_PROJECT_DIR, "/docs/index.html")}`,
       ]).then((results) => {
-        console.log("results", results);
         done();
       });
     });
@@ -310,7 +314,7 @@ describe("htmlgoddess Command", () => {
       );
 
       run(["print", TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
-        A11y.run([]).then(
+        A11y.run([TEST_PROJECT_DIR]).then(
           (results) => {
             expect(results.length).toBe(0);
             done();

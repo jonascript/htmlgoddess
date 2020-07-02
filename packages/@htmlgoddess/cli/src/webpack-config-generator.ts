@@ -1,15 +1,15 @@
 import glob from "glob";
-import fs  from "fs";
+import fs from "fs";
 import webpack from "webpack";
-import HtmlWebpackPlugin  from "html-webpack-plugin";
-import MiniCssExtractPlugin  from "mini-css-extract-plugin";
-import FixStyleOnlyEntriesPlugin  from "webpack-fix-style-only-entries";
-import { CleanWebpackPlugin }  from "clean-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import FixStyleOnlyEntriesPlugin from "webpack-fix-style-only-entries";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
-import HtmlReplaceWebpackPlugin  from "html-replace-webpack-plugin";
-import HtmlBeautifyPlugin  from "html-beautify-webpack-plugin";
-import HtmlGoddessPlugin  from "@htmlgoddess/webpack-plugin";
-import htmlLoader  from "html-loader";
+import HtmlReplaceWebpackPlugin from "html-replace-webpack-plugin";
+import HtmlBeautifyPlugin from "html-beautify-webpack-plugin";
+import HtmlGoddessPlugin from "@htmlgoddess/webpack-plugin";
+import htmlLoader from "html-loader";
 import styleLoader from "css-loader";
 import path from "path";
 
@@ -19,21 +19,39 @@ function getWebpackConfig(projectDir: string): any {
 
   for (let x = 0; x < htmlFiles.length; x++) {
     const pathObj = path.parse(htmlFiles[x]);
-    let templatePath = htmlFiles[x].replace(/.+src\/content\//, "");
-    let templateName = "index.html";
+    let templateRelPath = htmlFiles[x].replace(
+      /.+src\/content\//,
+      "src/templates/"
+    );
+    let relOutputPath = htmlFiles[x].replace(/.+src\/content\//, "");
+    let templateFilename = "index.html";
+    let templateAbsolutePath;
+
+    // If the file is not in a directory, make it the name of the timeplate
     if (
-      fs.existsSync("src/templates/" + path.dirname(templatePath) + ".html")
+      fs.existsSync(
+        path.join(projectDir, path.dirname(templateRelPath) + ".html")
+      )
     ) {
-      templateName = path.dirname(templatePath) + ".html";
+      templateAbsolutePath = path.join(
+        projectDir,
+        path.dirname(templateRelPath) + ".html"
+      );
+    } else {
+      templateAbsolutePath = path.join(
+        projectDir,
+        path.dirname(templateRelPath),
+        "index.html"
+      );
     }
 
     plugins.push(
       new HtmlWebpackPlugin({
-        filename: templatePath,
+        filename: relOutputPath,
         templateParameters: {
           contentPath: htmlFiles[x],
         },
-        template: "src/templates/" + templateName,
+        template: templateAbsolutePath,
       })
     );
   }
@@ -43,6 +61,7 @@ function getWebpackConfig(projectDir: string): any {
     output: {
       path: path.join(projectDir, "docs"),
     },
+    context: projectDir,
     mode: "development",
     stats: "errors-warnings",
     module: {
@@ -70,7 +89,7 @@ function getWebpackConfig(projectDir: string): any {
       ],
     },
     plugins: [
-      new HtmlGoddessPlugin(),
+      new HtmlGoddessPlugin({ projectDir }),
       ...plugins,
       new FixStyleOnlyEntriesPlugin({ silent: true }),
       new CleanWebpackPlugin({
@@ -92,4 +111,4 @@ function getWebpackConfig(projectDir: string): any {
   };
 }
 
-export = getWebpackConfig
+export = getWebpackConfig;

@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
-import Print from '../print';
-import watch from 'recursive-watch';
-import path from 'path';
+import Print from "../print";
+import watch from "recursive-watch";
+import path from "path";
 
 export default class AutoPrint extends Command {
   static description = "describe the command here";
@@ -22,35 +22,36 @@ hello world wide web from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "projectSrcDir" }];
+  static args = [{ name: "projectDir" }];
 
   async run() {
     const { args, flags } = this.parse(AutoPrint);
 
-    const projectSrcDir = args.projectSrcDir ? args.projectSrcDir : path.join(process.cwd(), '/src');
+    const projectDir = args.projectDir
+      ? args.projectDir
+      : path.join(process.cwd());
+
+    const projectSrcDir = path.join(projectDir, "/src");
 
     const { debounce } = flags;
 
     return new Promise((resolve, reject) => {
-      this.log('Watching: ', projectSrcDir);
+      this.log("Watching: ", projectSrcDir);
       // ... or a directory
 
-     let timestamp = Date.now();
-     
+      let timestamp = Date.now();
+
       const unwatch = watch(projectSrcDir, (filename) => {
-
         if (Date.now() - timestamp > debounce) {
-
           timestamp = Date.now();
-          this.log(filename, 'changed. Reprinting website to docs');
-          Print.run(['--no-a11y']).then(results => {
-            this.log('Website auto printed.')
-          })
+          this.log(filename, "changed. Reprinting website to docs");
+          Print.run([projectDir, "--no-a11y"]).then((results) => {
+            this.log("Website auto printed.");
+          });
         }
       });
 
       resolve(unwatch);
-
     });
   }
 }

@@ -58,7 +58,6 @@ export default class Create extends Command {
         },
       ]);
 
-      this.log("BLOG", template);
       const templateDir = getTemplatePath(template);
 
       if (!templateDir) {

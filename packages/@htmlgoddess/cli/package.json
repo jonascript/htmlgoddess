@@ -108,9 +108,10 @@
     "postpack": "rm -f oclif.manifest.json",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test": "jest --runInBand --detectOpenHandles --forceExit --bail",
     "test:watch": "jest -w",
     "version": "oclif-dev readme && git add README.md",
+    "prettier": "prettier 'src/**/*.ts' '__tests__/**/*.ts' --write",
     "prettier:watch": "onchange 'src/**/*.ts' '__tests__/**/*.ts' -- prettier {{changed}} --write"
   },
   "types": "lib/index.d.ts",

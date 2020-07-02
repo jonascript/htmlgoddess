@@ -7,7 +7,7 @@ const htmlToText = require('html-to-text');
 
 // If your plugin is using html-webpack-plugin as an optional dependency
 // you can use https://github.com/tallesl/node-safe-require instead:
-const compileTemplate = (html, basePath = '') => {
+const compileTemplate = (html, basePath = '', projectDir = '') => {
   let output = html;
   const regex = /<([^\/>]+)\/>/gi;
   const matches = html.match(regex);
@@ -23,19 +23,29 @@ const compileTemplate = (html, basePath = '') => {
     try {
       if (
         fs.existsSync(
-          'src/templates/' +
-            path.join(basePath, templateFilename) +
+          path.join(
+            projectDir,
+            'src/templates/',
+            basePath,
+            templateFilename,
             '/index.html'
+          )
         )
       ) {
         output = output.replace(
           matches[x],
           compileTemplate(
             fs.readFileSync(
-              'src/templates/' + templateFilename + '/index.html',
+              path.join(
+                projectDir,
+                'src/templates/',
+                templateFilename,
+                '/index.html'
+              ),
               'utf-8'
             ),
-            path.join(basePath, templateFilename)
+            path.join(basePath, templateFilename),
+            projectDir
           )
         );
       } else if (
@@ -52,7 +62,8 @@ const compileTemplate = (html, basePath = '') => {
                 '.html',
               'utf-8'
             ),
-            path.join(basePath, templateFilename)
+            path.join(basePath, templateFilename),
+            projectDir
           )
         );
       }
@@ -65,6 +76,9 @@ const compileTemplate = (html, basePath = '') => {
 };
 
 class HtmlGoddessPlugin {
+  constructor(options = {}) {
+    this.options = options;
+  }
   apply(compiler) {
     compiler.hooks.compilation.tap('HtmlGoddessPlugin', (compilation) => {
       // Gets an existing instance of the plugin.
@@ -79,7 +93,8 @@ class HtmlGoddessPlugin {
         'HtmlGoddessPlugin',
         async (data, cb) => {
           const { contentPath } = data.plugin.options.templateParameters;
-          data.html = compileTemplate(data.html);
+
+          data.html = compileTemplate(data.html, '', this.options.projectDir);
           let mainRegExp = /<(content+) \/>/i;
           data.html = data.html.replace(
             mainRegExp,

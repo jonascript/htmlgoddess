@@ -22,6 +22,11 @@ export default class A11y extends Command {
 
   static flags = {
     help: flags.help({ char: "h" }),
+    url: flags.string({
+      char: "u",
+      description: "Run on individual URL",
+      default: "",
+    }),
     // flag with a value (-n, --name=VALUE)
     standard: flags.string({
       char: "s",
@@ -31,13 +36,13 @@ export default class A11y extends Command {
     }),
   };
 
-  static args = [{ name: "url" }];
+  static args = [{ name: "projectDir" }];
 
   async run() {
     const { args, flags } = this.parse(A11y);
 
     const projectDir = args.projectDir ? args.projectDir : process.cwd();
-    const { standard, url } = args;
+    const { standard, url } = flags;
 
     cli.action.start(`Validating site to Accessibility standard: ${standard}`);
 

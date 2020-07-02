@@ -3,6 +3,7 @@ import execa from "execa";
 import { CWD_PATH } from "../../index";
 import * as git from "isomorphic-git";
 import fs from "fs";
+import cli from "cli-ux";
 
 export default class Save extends Command {
   static description = "formats your HTML.";
@@ -20,11 +21,14 @@ export default class Save extends Command {
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "basePath" }];
+  static args = [{ name: "projectDir" }];
 
   async run() {
     const { args, flags } = this.parse(Save);
-    this.log("Saving work", args.basePath);
+
+    const projectDir = args.projectDir ? args.projectDir : process.cwd();
+
+    this.log("Saving work", projectDir);
 
     // const repo = {
     //   fs,
@@ -47,7 +51,8 @@ export default class Save extends Command {
     //   dir: args.basePath,
     //   message: "Saving content edit.",
     // });
-    await execa("git", ["add", "src"]).stdout.pipe(process.stdout);
+    await execa("git", ["add", projectDir]).stdout.pipe(process.stdout);
+    await cli.wait(200);
     await execa("git", ["commit", "-m", "Saving content edit."]);
   }
 }

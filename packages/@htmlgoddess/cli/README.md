@@ -30,41 +30,42 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`htmlgoddess a11y [URL] [STANDARD]`](#htmlgoddess-a11y-url-standard)
+* [`htmlgoddess a11y [URL]`](#htmlgoddess-a11y-url)
 * [`htmlgoddess create [PROJECTDIR]`](#htmlgoddess-create-projectdir)
 * [`htmlgoddess format [PROJECTDIR]`](#htmlgoddess-format-projectdir)
 * [`htmlgoddess format:auto [FILE]`](#htmlgoddess-formatauto-file)
 * [`htmlgoddess hello [FILE]`](#htmlgoddess-hello-file)
 * [`htmlgoddess help [COMMAND]`](#htmlgoddess-help-command)
-* [`htmlgoddess print`](#htmlgoddess-print)
-* [`htmlgoddess print:auto [PROJECTSRCDIR]`](#htmlgoddess-printauto-projectsrcdir)
+* [`htmlgoddess print [PROJECTDIR]`](#htmlgoddess-print-projectdir)
+* [`htmlgoddess print:auto [PROJECTDIR]`](#htmlgoddess-printauto-projectdir)
 * [`htmlgoddess publish [FILE]`](#htmlgoddess-publish-file)
 * [`htmlgoddess save [BASEPATH]`](#htmlgoddess-save-basepath)
 * [`htmlgoddess serve [BASEPATH]`](#htmlgoddess-serve-basepath)
 * [`htmlgoddess serve:auto [FILE]`](#htmlgoddess-serveauto-file)
 
-## `htmlgoddess a11y [URL] [STANDARD]`
+## `htmlgoddess a11y [URL]`
 
-describe the command here
+runs accessibility validation
 
 ```
 USAGE
-  $ htmlgoddess a11y [URL] [STANDARD]
+  $ htmlgoddess a11y [URL]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                                         show CLI help
+  -s, --standard=Section508|WCAG2A|WCAG2AA|WCAG2AAA  [default: WCAG2AA] Web Accessibility Guideline standard
 
-EXAMPLE
+EXAMPLES
   $ htmlgoddess a11y
+  $ htmlgoddess a11y http://localhost:3000/index.html
+  $ htmlgoddess a11y ./path/to/your/file.html
 ```
 
 _See code: [lib/commands/a11y/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.8-alpha.0/lib/commands/a11y/index.js)_
 
 ## `htmlgoddess create [PROJECTDIR]`
 
-describe the command here
+creates a new website project under the grace of the HTML Goddess
 
 ```
 USAGE
@@ -72,12 +73,11 @@ USAGE
 
 OPTIONS
   -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help   show CLI help
 
-EXAMPLE
+EXAMPLES
+  $ htmlgoddess create ./path/to/directory
   $ htmlgoddess create
-  hello world wide web from ./src/hello.ts!
 ```
 
 _See code: [lib/commands/create/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.8-alpha.0/lib/commands/create/index.js)_
@@ -157,13 +157,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0/src/commands/help.ts)_
 
-## `htmlgoddess print`
+## `htmlgoddess print [PROJECTDIR]`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess print
+  $ htmlgoddess print [PROJECTDIR]
 
 OPTIONS
   -a, --[no-]a11y
@@ -178,13 +178,13 @@ EXAMPLE
 
 _See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.8-alpha.0/lib/commands/print/index.js)_
 
-## `htmlgoddess print:auto [PROJECTSRCDIR]`
+## `htmlgoddess print:auto [PROJECTDIR]`
 
 describe the command here
 
 ```
 USAGE
-  $ htmlgoddess print:auto [PROJECTSRCDIR]
+  $ htmlgoddess print:auto [PROJECTDIR]
 
 OPTIONS
   -d, --debounce=debounce  [default: 500]

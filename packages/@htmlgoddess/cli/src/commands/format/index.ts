@@ -24,6 +24,8 @@ export default class Format extends Command {
     force: flags.boolean({ char: "f" }),
   };
 
+  static strict = false;
+
   static args = [{ name: "projectDir", required: false }];
 
   async run() {
