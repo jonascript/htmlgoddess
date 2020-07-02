@@ -9,7 +9,7 @@ import cli from "cli-ux";
 import chalk from "chalk";
 
 export default class Format extends Command {
-  static description = "formats your HTML.";
+  static description = "formats your HTML";
 
   static examples = [
     `$ htmlgoddess format

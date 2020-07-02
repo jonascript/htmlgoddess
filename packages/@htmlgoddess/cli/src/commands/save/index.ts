@@ -6,7 +6,7 @@ import fs from "fs";
 import cli from "cli-ux";
 
 export default class Save extends Command {
-  static description = "formats your HTML.";
+  static description = "saves your changes by commiting to git";
 
   static examples = [
     `$ htmlgoddess format
@@ -15,10 +15,6 @@ export default class Save extends Command {
 
   static flags = {
     help: flags.help({ char: "h" }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: "n", description: "name to print" }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: "f" }),
   };
 
   static args = [{ name: "projectDir" }];

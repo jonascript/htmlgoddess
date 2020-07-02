@@ -76,8 +76,7 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
-
+    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
     console.log("Changing to test directory.");
     process.chdir("../../test");
     TEST_DIR = process.cwd();
@@ -102,8 +101,7 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "git", "clean", "-fxd"]);
-
+    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
     done();
   });
 

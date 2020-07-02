@@ -7,12 +7,11 @@ import A11y from "../a11y";
 import getWebpackConfig from "../../webpack-config-generator";
 import chalk from "chalk";
 export default class Print extends Command {
-  static description = "describe the command here";
+  static description = "compiles source html/css files from src and prints to docs folder";
 
   static examples = [
-    `$ htmlgoddess print
-hello world wide web from ./src/hello.ts!
-`,
+    `$ htmlgoddess print`,
+    `$ htmlgoddess print ./path/to/your/project`,
   ];
 
   static flags = {
@@ -31,13 +30,12 @@ hello world wide web from ./src/hello.ts!
 
   async run() {
     const { args, flags } = this.parse(Print);
-    this.log("PROJECT DIR", args);
     const projectDir = args.projectDir ? args.projectDir : process.cwd();
 
     const { a11y } = flags;
 
     cli.action.start(
-      `Printing your website from ${projectDir}/src to ${projectDir}//docs`
+      `Printing your website from ${projectDir}/src to ${projectDir}/docs`
     );
     return new Promise((resolve, reject) => {
       const compiler = webpack(getWebpackConfig(projectDir), (err, stats) => {
