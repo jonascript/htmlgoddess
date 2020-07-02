@@ -21,7 +21,7 @@ $ npm install -g @htmlgoddess/cli
 $ htmlgoddess COMMAND
 running command...
 $ htmlgoddess (-v|--version|version)
-@htmlgoddess/cli/0.3.15-alpha.0 darwin-x64 node-v12.18.1
+@htmlgoddess/cli/0.3.16-alpha.0 darwin-x64 node-v12.18.1
 $ htmlgoddess --help [COMMAND]
 USAGE
   $ htmlgoddess COMMAND
@@ -33,14 +33,13 @@ USAGE
 * [`htmlgoddess a11y [PROJECTDIR]`](#htmlgoddess-a11y-projectdir)
 * [`htmlgoddess create [PROJECTDIR]`](#htmlgoddess-create-projectdir)
 * [`htmlgoddess format [PROJECTDIR]`](#htmlgoddess-format-projectdir)
-* [`htmlgoddess format:auto [FILE]`](#htmlgoddess-formatauto-file)
-* [`htmlgoddess hello [FILE]`](#htmlgoddess-hello-file)
+* [`htmlgoddess format:auto [PROJECTDIR]`](#htmlgoddess-formatauto-projectdir)
 * [`htmlgoddess help [COMMAND]`](#htmlgoddess-help-command)
 * [`htmlgoddess print [PROJECTDIR]`](#htmlgoddess-print-projectdir)
 * [`htmlgoddess print:auto [PROJECTDIR]`](#htmlgoddess-printauto-projectdir)
 * [`htmlgoddess publish [FILE]`](#htmlgoddess-publish-file)
 * [`htmlgoddess save [PROJECTDIR]`](#htmlgoddess-save-projectdir)
-* [`htmlgoddess serve [BASEPATH]`](#htmlgoddess-serve-basepath)
+* [`htmlgoddess serve [PROJECTPATH]`](#htmlgoddess-serve-projectpath)
 * [`htmlgoddess serve:auto [FILE]`](#htmlgoddess-serveauto-file)
 
 ## `htmlgoddess a11y [PROJECTDIR]`
@@ -62,7 +61,7 @@ EXAMPLES
   $ htmlgoddess a11y ./path/to/your/file.html
 ```
 
-_See code: [lib/commands/a11y/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/a11y/index.js)_
+_See code: [lib/commands/a11y/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/a11y/index.js)_
 
 ## `htmlgoddess create [PROJECTDIR]`
 
@@ -81,11 +80,11 @@ EXAMPLES
   $ htmlgoddess create
 ```
 
-_See code: [lib/commands/create/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/create/index.js)_
+_See code: [lib/commands/create/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/create/index.js)_
 
 ## `htmlgoddess format [PROJECTDIR]`
 
-formats your HTML.
+formats your HTML
 
 ```
 USAGE
@@ -100,46 +99,24 @@ EXAMPLE
   $ htmlgoddess format
 ```
 
-_See code: [lib/commands/format/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/format/index.js)_
+_See code: [lib/commands/format/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/format/index.js)_
 
-## `htmlgoddess format:auto [FILE]`
+## `htmlgoddess format:auto [PROJECTDIR]`
 
-formats your HTML.
+watches for changes and formats your HTML
 
 ```
 USAGE
-  $ htmlgoddess format:auto [FILE]
+  $ htmlgoddess format:auto [PROJECTDIR]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 
 EXAMPLE
   $ htmlgoddess format:auto
 ```
 
-_See code: [lib/commands/format/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/format/auto.js)_
-
-## `htmlgoddess hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ htmlgoddess hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ htmlgoddess hello
-  hello world wide web from ./src/hello.ts!
-```
-
-_See code: [lib/commands/hello.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/hello.js)_
+_See code: [lib/commands/format/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/format/auto.js)_
 
 ## `htmlgoddess help [COMMAND]`
 
@@ -160,7 +137,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0
 
 ## `htmlgoddess print [PROJECTDIR]`
 
-describe the command here
+compiles source html/css files from src and prints to docs folder
 
 ```
 USAGE
@@ -172,12 +149,12 @@ OPTIONS
   -h, --help       show CLI help
   -n, --name=name  name to print
 
-EXAMPLE
+EXAMPLES
   $ htmlgoddess print
-  hello world wide web from ./src/hello.ts!
+  $ htmlgoddess print ./path/to/your/project
 ```
 
-_See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/print/index.js)_
+_See code: [lib/commands/print/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/print/index.js)_
 
 ## `htmlgoddess print:auto [PROJECTDIR]`
 
@@ -198,11 +175,11 @@ EXAMPLE
   hello world wide web from ./src/hello.ts!
 ```
 
-_See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/print/auto.js)_
+_See code: [lib/commands/print/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/print/auto.js)_
 
 ## `htmlgoddess publish [FILE]`
 
-formats your HTML.
+publishes your saved changes to git
 
 ```
 USAGE
@@ -210,41 +187,38 @@ USAGE
 
 OPTIONS
   -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help   show CLI help
 
 EXAMPLE
-  $ htmlgoddess format
+  $ htmlgoddess publish
 ```
 
-_See code: [lib/commands/publish/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/publish/index.js)_
+_See code: [lib/commands/publish/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/publish/index.js)_
 
 ## `htmlgoddess save [PROJECTDIR]`
 
-formats your HTML.
+saves your changes by commiting to git
 
 ```
 USAGE
   $ htmlgoddess save [PROJECTDIR]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 
 EXAMPLE
   $ htmlgoddess format
 ```
 
-_See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/save/index.js)_
+_See code: [lib/commands/save/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/save/index.js)_
 
-## `htmlgoddess serve [BASEPATH]`
+## `htmlgoddess serve [PROJECTPATH]`
 
-serves your website and auto-reloads when changed.
+serves your website on a local webserver
 
 ```
 USAGE
-  $ htmlgoddess serve [BASEPATH]
+  $ htmlgoddess serve [PROJECTPATH]
 
 OPTIONS
   -f, --force
@@ -255,7 +229,7 @@ EXAMPLE
   $ htmlgoddess serve
 ```
 
-_See code: [lib/commands/serve/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/serve/index.js)_
+_See code: [lib/commands/serve/index.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/serve/index.js)_
 
 ## `htmlgoddess serve:auto [FILE]`
 
@@ -274,5 +248,5 @@ EXAMPLE
   $ htmlgoddess serve
 ```
 
-_See code: [lib/commands/serve/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.15-alpha.0/lib/commands/serve/auto.js)_
+_See code: [lib/commands/serve/auto.js](https://github.com/jonascript/htmlgoddess/blob/v0.3.16-alpha.0/lib/commands/serve/auto.js)_
 <!-- commandsstop -->
