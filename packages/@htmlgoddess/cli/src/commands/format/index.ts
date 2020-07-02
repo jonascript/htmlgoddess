@@ -1,6 +1,5 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import { __await } from "tslib";
 import prettier from "prettier";
 import fs from "fs";
 import glob from "glob";

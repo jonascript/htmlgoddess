@@ -6,8 +6,9 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
 import http from "isomorphic-git/http/node";
-import { getTemplatePath } from "@htmlgoddess/templates";
+import { getTemplatePath, getAllTemplateNames } from "@htmlgoddess/templates";
 import fs from "fs-extra";
+
 
 export default class Create extends Command {
   static description =
@@ -53,7 +54,7 @@ export default class Create extends Command {
           name: "template",
           message: "select a template",
           type: "list",
-          choices: ["blog"],
+          choices: getAllTemplateNames(),
         },
       ]);
 
