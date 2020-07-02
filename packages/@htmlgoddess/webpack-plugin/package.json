@@ -1,6 +1,6 @@
 {
   "name": "@htmlgoddess/webpack-plugin",
-  "version": "0.3.10-alpha.0",
+  "version": "0.3.11-alpha.0",
   "description": "## This is Alpha. Use at your own risk. Feedback/PRs Welcome",
   "private": false,
   "main": "plugin.js",
