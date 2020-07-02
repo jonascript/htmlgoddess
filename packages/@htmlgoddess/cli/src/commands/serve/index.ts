@@ -1,6 +1,5 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import { CWD_PATH } from "../../index";
 import path from "path";
 import express from "express";
 import livereload from "livereload";

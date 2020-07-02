@@ -1,15 +1,14 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import { CWD_PATH } from "../../index";
 import * as git from "isomorphic-git";
 import fs from "fs";
 import cli from "cli-ux";
 
 export default class Save extends Command {
-  static description = "saves your changes by commiting to git";
+  static description = "saves all changes in your project";
 
   static examples = [
-    `$ htmlgoddess format
+    `$ htmlgoddess save
 `,
   ];
 

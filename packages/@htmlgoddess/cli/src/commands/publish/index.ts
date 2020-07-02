@@ -1,7 +1,5 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import { CWD_PATH } from "../../index";
-
 export default class Publish extends Command {
   static description = "publishes your saved changes to git";
 

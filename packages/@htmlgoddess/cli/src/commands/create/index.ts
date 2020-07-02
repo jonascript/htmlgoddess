@@ -5,7 +5,6 @@ import cli from "cli-ux";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
-import { CWD_PATH } from "../../index";
 import http from "isomorphic-git/http/node";
 import { getTemplatePath } from "@htmlgoddess/templates";
 import fs from "fs-extra";
@@ -70,10 +69,7 @@ export default class Create extends Command {
       const confirm = await cli.confirm(
         `The name of your site is ${chalk.keyword("orange")(
           name
-        )}. It is a ${template} and it will be installed at ${path.join(
-          CWD_PATH,
-          projectDir
-        )}. Please confirm. (y/n)`
+        )}. It is a ${template} and it will be installed at ${projectDir}. Please confirm. (y/n)`
       );
 
       this.log("");

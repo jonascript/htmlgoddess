@@ -1,6 +1,5 @@
 import { Command, flags } from "@oclif/command";
 import execa from "execa";
-import { CWD_PATH } from "../../index";
 
 export default class FormatAuto extends Command {
   static description = "watches for changes and formats your HTML";
