@@ -102,9 +102,10 @@ export default class Create extends Command {
 
         return reject("Something went wrong when creating site files");
       }
-      await execa("git", ["init", projectDir]);
-      await execa("git", ["add", projectDir]).stdout.pipe(process.stdout);
-      await execa("git", ["commit", "-m", "Saving content edit."]);
+
+      await execa("git", ["init", projectDir]).stdout.pipe(process.stdout);
+      await execa("git", ["add", projectDir]);
+      await execa("git", ["commit", "-m", "Saving content edit."]).stdout.pipe(process.stdout);
 
       cli.action.stop("done!");
       this.log("");
