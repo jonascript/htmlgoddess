@@ -64,7 +64,7 @@ describe("htmlgoddess Command", () => {
   let cliOutput = [],
     io = null,
     TEST_DIR,
-    TEST_PROJECT_DIR;
+    TEST_PROJECT_DIR, TEST_PRINT_DIR;
 
   beforeAll((done) => {
     console.log("Setting test submodule to clean state");
@@ -81,16 +81,25 @@ describe("htmlgoddess Command", () => {
     process.chdir("../../test");
     TEST_DIR = process.cwd();
     TEST_PROJECT_DIR = path.join(TEST_DIR, "testproject");
+    TEST_PRINT_DIR = path.join(TEST_DIR, "testprint");
     mockCLIOpen();
 
     done();
   });
 
   afterAll((done) => {
+
     process.chdir("../@htmlgoddess/cli");
     console.log(
-      `Reseting and stashing changes for test submodule at: ${process.cwd()}`
+      `Resetting and stashing changes for test submodule at: ${process.cwd()}`
     );
+
+    // Renames newly created .git folders so when reset command
+    // is run on submodules it will automatically remove them.
+    execa.sync("mv", [path.join(TEST_PRINT_DIR, ".git"), path.join(TEST_PRINT_DIR, "git-remove")])
+
+
+    execa.sync("mv", [path.join(TEST_PROJECT_DIR, ".git"), path.join(TEST_PROJECT_DIR, "git-remove")])
 
     // Resets the submodule test repo to orinal state
     execa.sync("git", [
@@ -153,9 +162,10 @@ describe("htmlgoddess Command", () => {
   });
 
   describe("print", () => {
-    let TEST_PRINT_DIR;
+    jest.setTimeout(10000);
+
     beforeAll((done) => {
-      TEST_PRINT_DIR = path.join(TEST_DIR, "testprint");
+ 
       Create.run([TEST_PRINT_DIR]).then((results) => {
         done();
       });

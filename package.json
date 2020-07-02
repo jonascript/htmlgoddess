@@ -16,7 +16,8 @@
     "typescript": "3.9.5"
   },
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "reset-test-dir": "git submodule foreach git reset origin/master && git submodule foreach git reset --hard && git submodule foreach git clean -d -f -x"
   },
   "dependencies": {
     "@htmlgoddess/cli": "file:packages/@htmlgoddess/cli",
