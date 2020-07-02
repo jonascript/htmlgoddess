@@ -2,7 +2,7 @@ import { Command, flags } from "@oclif/command";
 import execa from "execa";
 import path from "path";
 import cli from "cli-ux";
-import * as inquirer from "inquirer";
+import inquirer from "inquirer";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
 import { CWD_PATH } from "../../index";
@@ -11,18 +11,16 @@ import { getTemplatePath } from "@htmlgoddess/templates";
 import fs from "fs-extra";
 
 export default class Create extends Command {
-  static description = "describe the command here";
+  static description =
+    "creates a new website project under the grace of the HTML Goddess";
 
   static examples = [
-    `$ htmlgoddess create
-hello world wide web from ./src/hello.ts!
-`,
+    `$ htmlgoddess create ./path/to/directory`,
+    `$ htmlgoddess create`,
   ];
 
   static flags = {
     help: flags.help({ char: "h" }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: "n", description: "name to print" }),
     // flag with no value (-f, --force)
     force: flags.boolean({ char: "f" }),
   };
@@ -42,36 +40,36 @@ hello world wide web from ./src/hello.ts!
     const projectDir = args.projectDir ? args.projectDir : process.cwd();
 
     return new Promise(async (resolve, reject) => {
+      this.log("");
+      this.log(chalk.green("HTML Goddess CLI"));
+      this.log("");
       const name = await cli.prompt("What is the name of your site?");
-
-      const template = await cli.prompt("What is the name of your template?");
+      this.log("");
+      // const template = await cli.prompt("What is the name of your template?");
+      // this.log("");
 
       // @todo with inquirer when I can figure out how mock prompts
-      // let template: any = await inquirer.prompt([{
-      //   name: 'template',
-      //   message: 'select a template',
-      //   type: 'list',
-      //   choices: [{ name: 'blog' }, { name: 'gallery' }, { name: 'barebones' }],
-      // }])
+      const { template } = await inquirer.prompt([
+        {
+          name: "template",
+          message: "select a template",
+          type: "list",
+          choices: ["blog"],
+        },
+      ]);
 
-      let templateDir;
-
-      templateDir = getTemplatePath(template);
+      this.log("BLOG", template);
+      const templateDir = getTemplatePath(template);
 
       if (!templateDir) {
         this.log(chalk.red(`Template does not exist. ${templateDir}`));
         return reject(`Template does not exist. ${templateDir}`);
       }
 
-      // const templateDir = path.join(
-      //   __dirname,
-      //   `../../../../templates/${template}`
-      // );
-
       this.log("");
 
       const confirm = await cli.confirm(
-        `The name of your site is ${chalk.keyword("green")(
+        `The name of your site is ${chalk.keyword("orange")(
           name
         )}. It is a ${template} and it will be installed at ${path.join(
           CWD_PATH,
@@ -83,27 +81,31 @@ hello world wide web from ./src/hello.ts!
 
       cli.action.start("Installing your site...");
 
-      const templateExists = await fs.existsSync(templateDir);
+      try {
+        fs.copySync(templateDir, projectDir, {
+          errorOnExist: true,
+          overwrite: false,
+        });
+      } catch (error) {
+        cli.action.stop(chalk.red("error"));
+        this.log("");
+        this.log(chalk.red(error));
+        this.log("");
 
-      if (!templateExists) {
-        throw new Error(`Template does not exist. ${templateDir}`);
+        return reject("Destination directory already exists");
       }
 
-      fs.copySync(templateDir, projectDir, { errorOnExist: true });
+      if (!fs.existsSync(path.join(projectDir, "src/content/index.html"))) {
+        cli.action.stop(chalk.red("error"));
+        this.log("");
+        this.log(chalk.red("Something went wrong when creating site files"));
+        this.log("");
 
-      if (!fs.existsSync(projectDir)) {
-        throw new Error("Something went wrong when creating site files");
+        return reject("Something went wrong when creating site files");
       }
 
-      // const cloneResult = await git.clone({
-      //   fs,
-      //   http,
-      //   corsProxy: "https://cors.isomorphic-git.org",
-      //   singleBranch: true,
-      //   depth: 1,
-      //   dir: projectDirectory,
-      //   url: `https://github.com/jonascript/htmlgoddess-template-${}`,
-      // });
+      await execa("git", ["add", projectDir]).stdout.pipe(process.stdout);
+      await execa("git", ["commit", "-m", "Saving content edit."]);
 
       cli.action.stop("done!");
       this.log("");

@@ -1,7 +1,7 @@
 # htmlgoddess
 A minimalist framework for creating a website like it's 1999. 
 
-## v0.1.1 - Alpha 
+## v0.3.8 - Alpha 
 This is a complete rewrite from the current version currently under development.
 - Moved to lerna monorepo.
 - Using oclif for CLI.
@@ -12,24 +12,28 @@ This is a complete rewrite from the current version currently under development.
 - feat: print:auto
 - test: intercept and setup testing for CLI output
 - fix: print:auto double printing.
-- feat
+- task: Cleaned up paths
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
 - npm
 
-## To docs
+## To Do
+- task: clean up docs pass.
+- add: style chooser on create.
+- add: warning message for user if they try to print when docs has been edited manually.
+- add: "host" command.
+- task: standardize param names.
 - task: make sure watcher doesn't leak memory.
-- Find good spell checker.
+- task: Find good spell checker.
 - bug: cli.action still outputing to console during tests.
-- Do cleanup pass to ensure paths are being constructed properly.
 - add: auto commitizen hook to trigger when committing.
-- Create publish, proofread commands.
-- Create executable
-- Swap CNAME for yaml config for hosting 
-- Coverage
-- GUI
-- Check if user has edited files in output folder and show a warning.
+- add: publish, proofread commands.
+- add: executable.
+- refactor: Swap CNAME for yaml config for hosting/
+- add: "domain" command.
+- task: coverage
+- add: GUI
 - convert "docs" to configurable variables
 
 ## Getting Started

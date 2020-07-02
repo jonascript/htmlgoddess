@@ -9,6 +9,8 @@ import axios from "axios";
 import * as execa from "execa";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
+import inquirer from "inquirer";
+
 /**
  * Mocks the "open" function so that a browser doesn't open while unit testing.
  */
@@ -27,7 +29,9 @@ function mockCLIOpen() {
  * Mocking for interactive prompts.
  * @param answers
  */
-function mockCLIAnswers(answers: string[]) {
+function mockCLIAnswers(answers: any[]) {
+  console.log("MOCK INQUIRER", inquirer);
+
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
     return {
       ...prompt,
@@ -45,7 +49,9 @@ function mockCLIAnswers(answers: string[]) {
 
 describe("htmlgoddess Command", () => {
   let cliOutput = [],
-    io = null;
+    io = null,
+    TEST_DIR,
+    TEST_PROJECT_DIR;
 
   beforeAll((done) => {
     console.log("Setting test submodule to clean state");
@@ -61,8 +67,24 @@ describe("htmlgoddess Command", () => {
 
     console.log("Changing to test directory.");
     process.chdir("../../test");
-    process.env.CWD_PATH = process.cwd();
+    TEST_DIR = process.cwd();
+    TEST_PROJECT_DIR = path.join(TEST_DIR, "testproject");
     mockCLIOpen();
+
+    inquirer.prompt = (questions) => Promise.resolve({ template: "blog" });
+
+    // jest.mock("inquirer", () => {
+    //   return {
+    //     ...inquirer,
+    //     prompt: (options) => {
+    //       console.log("PROMPTY PROMPTY");
+    //       return new Promise((resolve, reject) => {
+    //         console.log("resolve", options);
+    //         resolve({ [`template`]: "blog" });
+    //       });
+    //     },
+    //   };
+    // });
 
     done();
   });
@@ -109,11 +131,11 @@ describe("htmlgoddess Command", () => {
       const mockAnswers = ["My Test Site", "blog", "Y"];
 
       mockCLIAnswers([...mockAnswers]);
-      Create.run([process.env.CWD_PATH]).then((results) => {
+      Create.run([TEST_PROJECT_DIR]).then((results) => {
         // @todo test console messages from stdout
         expect(results.name).toEqual(mockAnswers[0]);
         expect(results.template).toEqual(mockAnswers[1]);
-        expect(results.path).toEqual(process.env.CWD_PATH);
+        expect(results.path).toEqual(TEST_DIR);
         expect(
           fs.existsSync(path.join(results.path, "src/content/index.html"))
         ).toEqual(true);
@@ -124,7 +146,7 @@ describe("htmlgoddess Command", () => {
 
     it("will throw error when non existent template is given", (done) => {
       const mockAnswers = ["My Test Site", "clog", "Y"];
-      Create.run([process.env.CWD_PATH]).then(
+      Create.run([TEST_PROJECT_DIR]).then(
         () => {},
         (error) => {
           expect(error).toBeTruthy();
@@ -138,12 +160,12 @@ describe("htmlgoddess Command", () => {
     const time = Date.now();
     it("can print", (done) => {
       fs.writeFileSync(
-        path.join(process.env.CWD_PATH, "src/content/can-print.html"),
+        path.join(TEST_PROJECT_DIR, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
       run(["print"]).then((result) => {
         const output = fs.readFileSync(
-          path.join(process.env.CWD_PATH, "docs/can-print.html"),
+          path.join(TEST_DIR, "docs/can-print.html"),
           "utf-8"
         );
         expect(output).toContain(`<p>I am printed ${time}</p>`);
@@ -156,13 +178,13 @@ describe("htmlgoddess Command", () => {
         // Gives some time for print:auto debounce
         setTimeout(() => {
           fs.writeFileSync(
-            path.join(process.env.CWD_PATH, "src/content/can-print.html"),
+            path.join(TEST_PROJECT_DIR, "src/content/can-print.html"),
             `<p>I am auto printed ${time}</p>`
           );
 
           setTimeout(() => {
             const output = fs.readFileSync(
-              path.join(process.env.CWD_PATH, "docs/can-print.html"),
+              path.join(TEST_PROJECT_DIR, "docs/can-print.html"),
               "utf-8"
             );
             expect(output).toContain(`<p>I am auto printed ${time}</p>`);
@@ -176,7 +198,7 @@ describe("htmlgoddess Command", () => {
   describe("format", () => {
     beforeEach((done) => {
       fs.writeFileSync(
-        path.join(process.env.CWD_PATH, "src/content/can-format.html"),
+        path.join(TEST_PROJECT_DIR, "src/content/can-format.html"),
         "<p>I <strong>am</strong>        formatted</p>"
       );
       done();
@@ -187,11 +209,11 @@ describe("htmlgoddess Command", () => {
     // });
 
     it("can format", (done) => {
-      console.log(process.env.CWD_PATH);
+      console.log(TEST_DIR);
 
       Format.run([]).then((result) => {
         const output = fs.readFileSync(
-          path.join(process.env.CWD_PATH, "src/content/can-format.html"),
+          path.join(TEST_PROJECT_DIR, "src/content/can-format.html"),
           "utf-8"
         );
         expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
@@ -201,9 +223,9 @@ describe("htmlgoddess Command", () => {
     });
 
     it("can format with a path", (done) => {
-      Format.run([process.env.CWD_PATH]).then((result) => {
+      Format.run([path.join(TEST_PROJECT_DIR)]).then((result) => {
         const output = fs.readFileSync(
-          path.join(process.env.CWD_PATH, "src/content/can-format.html"),
+          path.join(TEST_DIR, "src/content/can-format.html"),
           "utf-8"
         );
         expect(output).toContain("<p>I <strong>am</strong> formatted</p>");
@@ -218,7 +240,7 @@ describe("htmlgoddess Command", () => {
   // @todo
   describe("serve", () => {
     it("can serve", (done) => {
-      run(["serve", process.env.CWD_PATH]).then((process) => {
+      run(["serve", path.join(TEST_PROJECT_DIR)]).then((process) => {
         setTimeout(async () => {
           const response = await axios.get("http://127.0.0.1:3000");
           expect(response.status).toEqual(200);
@@ -235,7 +257,7 @@ describe("htmlgoddess Command", () => {
     const time = Date.now();
     beforeEach((done) => {
       fs.writeFileSync(
-        path.join(process.env.CWD_PATH, "src/content/can-save.html"),
+        path.join(TEST_PROJECT_DIR, "src/content/can-save.html"),
         `<p>I am saved at ${time}</p>`
       );
       done();
@@ -249,7 +271,7 @@ describe("htmlgoddess Command", () => {
 
     it("can save", (done) => {
       // @todo make sure this cleans up
-      run(["save", process.env.CWD_PATH]).then((result) => {
+      run(["save", TEST_PROJECT_DIR]).then((result) => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
@@ -261,7 +283,7 @@ describe("htmlgoddess Command", () => {
   describe("a11y", () => {
     const time = Date.now();
     beforeEach((done) => {
-      run(["print", process.env.CWD_PATH, "--no-a11y"]).then((results) => {
+      run(["print", TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
         done();
       });
     });
@@ -283,11 +305,11 @@ describe("htmlgoddess Command", () => {
 
     it("will catch errors", (done) => {
       fs.writeFileSync(
-        path.join(process.env.CWD_PATH, "src/content/not-a11y.html"),
+        path.join(TEST_PROJECT_DIR, "src/content/not-a11y.html"),
         `<p>I am not accessible ${time}. <img src="./bad-image.jpg" /></p>`
       );
 
-      run(["print", process.env.CWD_PATH, "--no-a11y"]).then((results) => {
+      run(["print", TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
         A11y.run([]).then(
           (results) => {
             expect(results.length).toBe(0);

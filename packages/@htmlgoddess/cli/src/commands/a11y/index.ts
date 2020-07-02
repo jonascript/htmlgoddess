@@ -12,28 +12,26 @@ import cli from "cli-ux";
 require("events").EventEmitter.defaultMaxListeners = 100;
 
 export default class A11y extends Command {
-  static description = "describe the command here";
+  static description = "runs accessibility validation";
 
   static examples = [
-    `$ htmlgoddess a11y
-`,
+    `$ htmlgoddess a11y`,
+    `$ htmlgoddess a11y http://localhost:3000/index.html`,
+    `$ htmlgoddess a11y ./path/to/your/file.html`,
   ];
 
   static flags = {
     help: flags.help({ char: "h" }),
     // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: "n", description: "name to print" }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: "f" }),
+    standard: flags.string({
+      char: "s",
+      description: "Web Accessibility Guideline standard",
+      default: "WCAG2AA",
+      options: ["Section508", "WCAG2A", "WCAG2AA", "WCAG2AAA"],
+    }),
   };
 
-  static args = [
-    { name: "url" },
-    {
-      name: "standard",
-      default: "WCAG2AA",
-    },
-  ];
+  static args = [{ name: "url" }];
 
   async run() {
     const { args, flags } = this.parse(A11y);
