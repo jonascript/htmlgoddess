@@ -9,7 +9,7 @@ import cli from "cli-ux";
 import chalk from "chalk";
 
 export default class Serve extends Command {
-  static description = "serves your website and auto-reloads when changed.";
+  static description = "serves your website on a local webserver";
 
   static examples = [
     `$ htmlgoddess serve
@@ -26,15 +26,15 @@ export default class Serve extends Command {
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "basePath" }];
+  static args = [{ name: "projectPath" }];
 
   run() {
     const { args, flags } = this.parse(Serve);
 
-    const basePath = args.basePath ? args.basePath : CWD_PATH;
+    const projectPath = args.projectPath ? args.projectPath : process.cwd();
 
     return new Promise((resolve, reject) => {
-      cli.action.start(`Starting server from ${basePath}/docs`);
+      cli.action.start(`Starting server from ${projectPath}/docs`);
       const app = express();
       const port = 3000;
       const liveReloadScript = `
@@ -52,7 +52,7 @@ export default class Serve extends Command {
       app.get("*(.html|.htm|/)", (req, res, next) => {
         res.format({
           html: function () {
-            let filename = path.join(basePath, "/docs", req.url);
+            let filename = path.join(projectPath, "/docs", req.url);
             if (filename.charAt(filename.length - 1) === "/") {
               filename += "index.html";
             }
@@ -91,7 +91,7 @@ export default class Serve extends Command {
             `http://localhost:${liveReloadServer.config.port}`
           )}`
         );
-        liveReloadServer.watch(basePath + "/docs");
+        liveReloadServer.watch(projectPath + "/docs");
       });
 
       resolve(app);

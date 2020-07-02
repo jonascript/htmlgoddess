@@ -1,6 +1,6 @@
 {
   "name": "@htmlgoddess/cli",
-  "description": "> TODO: description",
+  "description": " HTMLGoddess command line utility",
   "version": "0.3.15-alpha.0",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
