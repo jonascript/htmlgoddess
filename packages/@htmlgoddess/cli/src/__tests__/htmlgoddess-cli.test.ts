@@ -64,7 +64,8 @@ describe("htmlgoddess Command", () => {
   let cliOutput = [],
     io = null,
     TEST_DIR,
-    TEST_PROJECT_DIR, TEST_PRINT_DIR;
+    TEST_PROJECT_DIR,
+    TEST_PRINT_DIR;
 
   beforeAll((done) => {
     console.log("Setting test submodule to clean state");
@@ -76,7 +77,16 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "--recursive",
+      "git",
+      "clean",
+      "-d",
+      "-x",
+      "-f",
+    ]);
     console.log("Changing to test directory.");
     process.chdir("../../test");
     TEST_DIR = process.cwd();
@@ -88,7 +98,6 @@ describe("htmlgoddess Command", () => {
   });
 
   afterAll((done) => {
-
     process.chdir("../@htmlgoddess/cli");
     console.log(
       `Resetting and stashing changes for test submodule at: ${process.cwd()}`
@@ -96,10 +105,15 @@ describe("htmlgoddess Command", () => {
 
     // Renames newly created .git folders so when reset command
     // is run on submodules it will automatically remove them.
-    execa.sync("mv", [path.join(TEST_PRINT_DIR, ".git"), path.join(TEST_PRINT_DIR, "git-remove")])
+    execa.sync("mv", [
+      path.join(TEST_PRINT_DIR, ".git"),
+      path.join(TEST_PRINT_DIR, "git-remove"),
+    ]);
 
-
-    execa.sync("mv", [path.join(TEST_PROJECT_DIR, ".git"), path.join(TEST_PROJECT_DIR, "git-remove")])
+    execa.sync("mv", [
+      path.join(TEST_PROJECT_DIR, ".git"),
+      path.join(TEST_PROJECT_DIR, "git-remove"),
+    ]);
 
     // Resets the submodule test repo to orinal state
     execa.sync("git", [
@@ -110,7 +124,16 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "--recursive",
+      "git",
+      "clean",
+      "-d",
+      "-x",
+      "-f",
+    ]);
     done();
   });
 
@@ -165,7 +188,6 @@ describe("htmlgoddess Command", () => {
     jest.setTimeout(10000);
 
     beforeAll((done) => {
- 
       Create.run([TEST_PRINT_DIR]).then((results) => {
         done();
       });
@@ -205,6 +227,42 @@ describe("htmlgoddess Command", () => {
             done();
           }, 3000);
         }, 1000);
+      });
+    });
+
+    it("will give a warning when the output dir files have been modified", (done) => {
+      fs.writeFileSync(
+        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
+        `<p>I am printed ${time}</p>`
+      );
+
+      Print.run([TEST_PRINT_DIR]).then((output) => {
+        fs.writeFileSync(
+          path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+          `<p>I am dangerously editing the output content ${time}</p>`
+        );
+
+        /** 
+         *  @todo
+         *  @nextsteps 
+         *  - Look for plugin that will already detect if output folder has been modified
+         *  - If there is none check the clean-webpack-plugin for ideas
+         *  - Implement function that will indicate if output folder has been modified
+         * 
+         * /
+      
+
+        mockCLIAnswers(["n"]);
+        Print.run([TEST_PRINT_DIR]).then((output) => {
+          const fileContent = fs.readFileSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+            "utf-8"
+          );
+          expect(fileContent).toContain(
+            `<p>I am dangerously editing the output content ${time}</p>`
+          );
+          done();
+        });
       });
     });
   });
