@@ -30,6 +30,7 @@ function mockCLIOpen() {
 }
 
 /**
+ * @todo this function does not work as expected. When it's called multiple times it doesnt' keep scope.
  * Mocking for interactive prompts.
  * @param answers
  */
@@ -49,6 +50,8 @@ function mockCLIAnswers(answers: any[]) {
     return {
       ...prompt,
       confirm: (message) => {
+        console.log(message);
+        console.log("Mocking answer:", answers);
         return answers.shift();
       },
       prompt: async (prom, icon) => {
@@ -185,6 +188,7 @@ describe("htmlgoddess Command", () => {
   });
 
   describe("print", () => {
+    const time = Date.now();
     jest.setTimeout(10000);
 
     beforeAll((done) => {
@@ -192,7 +196,7 @@ describe("htmlgoddess Command", () => {
         done();
       });
     });
-    const time = Date.now();
+    
     it("can print", (done) => {
       fs.writeFileSync(
         path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
@@ -230,39 +234,80 @@ describe("htmlgoddess Command", () => {
       });
     });
 
-    it("will give a warning when the output dir files have been modified", (done) => {
+    it("will ask the user to confirm when docs html file has been modified", (done) => {
       fs.writeFileSync(
         path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
         `<p>I am printed ${time}</p>`
       );
 
-      Print.run([TEST_PRINT_DIR]).then((output) => {
-        fs.writeFileSync(
-          path.join(TEST_PRINT_DIR, "docs/can-print.html"),
-          `<p>I am dangerously editing the output content ${time}</p>`
-        );
-
-        /** 
-         *  @todo
-         *  @nextsteps 
-         *  - Look for plugin that will already detect if output folder has been modified
-         *  - If there is none check the clean-webpack-plugin for ideas
-         *  - Implement function that will indicate if output folder has been modified
-         * 
-         * /
-      
-
+      Print.run([TEST_PRINT_DIR]).then(async (output) => {
         mockCLIAnswers(["n"]);
-        Print.run([TEST_PRINT_DIR]).then((output) => {
-          const fileContent = fs.readFileSync(
+        setTimeout(() => {
+          fs.appendFileSync(
             path.join(TEST_PRINT_DIR, "docs/can-print.html"),
-            "utf-8"
+            `<!-- I am edited outside of print ${time} --!>`,
+            { flag: "a", encoding: "utf8" }
           );
-          expect(fileContent).toContain(
-            `<p>I am dangerously editing the output content ${time}</p>`
+
+          const stats = fs.statSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html")
           );
-          done();
-        });
+
+          Print.run([TEST_PRINT_DIR]).then(
+            (output) => {
+              done();
+            },
+            (err) => {
+              const fileContent = fs.readFileSync(
+                path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+                "utf-8"
+              );
+              expect(fileContent).toContain(
+                `<!-- I am edited outside of print ${time} --!>`
+              );
+              done();
+            }
+          );
+        }, 3000);
+      });
+    });
+
+    it("lets the user confirm to overwrite changes to the docs folder", (done) => {
+      fs.writeFileSync(
+        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
+        `<p>I am printed ${time}</p>`
+      );
+
+      Print.run([TEST_PRINT_DIR]).then(async (output) => {
+        setTimeout(() => {
+          fs.appendFileSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+            `<!-- I am edited outside of print ${time} --!>`,
+            { flag: "a", encoding: "utf8" }
+          );
+
+          const stats = fs.statSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html")
+          );
+
+          mockCLIAnswers(["yes"]);
+
+          Print.run([TEST_PRINT_DIR]).then(
+            (output) => {
+              const fileContent = fs.readFileSync(
+                path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+                "utf-8"
+              );
+              expect(fileContent).not.toContain(
+                `<!-- I am edited outside of print ${time} --!>`
+              );
+              done();
+            },
+            (err) => {
+              done();
+            }
+          );
+        }, 3000);
       });
     });
   });
