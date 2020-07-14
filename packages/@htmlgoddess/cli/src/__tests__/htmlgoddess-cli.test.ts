@@ -29,11 +29,14 @@ function mockCLIOpen() {
   });
 }
 
+let cliAnswerQueue = [];
+
 /**
+ * @todo this function does not work as expected. When it's called multiple times it doesnt' keep scope.
  * Mocking for interactive prompts.
  * @param answers
  */
-function mockCLIAnswers(answers: any[]) {
+function mockCLIAnswers() {
   // Mocking inquirier answer for create
   // @todo this only works for one question
   inquirer.prompt = (questions) => {
@@ -49,11 +52,13 @@ function mockCLIAnswers(answers: any[]) {
     return {
       ...prompt,
       confirm: (message) => {
-        return answers.shift();
+        console.log(message);
+        return cliAnswerQueue.shift();
       },
-      prompt: async (prom, icon) => {
+      prompt: async (prompt, icon) => {
+        console.log(prompt);
         return new Promise((resolve, reject) => {
-          resolve(answers.shift());
+          resolve(cliAnswerQueue.shift());
         });
       },
     };
@@ -64,9 +69,11 @@ describe("htmlgoddess Command", () => {
   let cliOutput = [],
     io = null,
     TEST_DIR,
-    TEST_PROJECT_DIR, TEST_PRINT_DIR;
+    TEST_PROJECT_DIR,
+    TEST_PRINT_DIR;
 
   beforeAll((done) => {
+    mockCLIAnswers();
     console.log("Setting test submodule to clean state");
     execa.sync("git", [
       "submodule",
@@ -76,7 +83,16 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "--recursive",
+      "git",
+      "clean",
+      "-d",
+      "-x",
+      "-f",
+    ]);
     console.log("Changing to test directory.");
     process.chdir("../../test");
     TEST_DIR = process.cwd();
@@ -88,7 +104,6 @@ describe("htmlgoddess Command", () => {
   });
 
   afterAll((done) => {
-
     process.chdir("../@htmlgoddess/cli");
     console.log(
       `Resetting and stashing changes for test submodule at: ${process.cwd()}`
@@ -96,10 +111,15 @@ describe("htmlgoddess Command", () => {
 
     // Renames newly created .git folders so when reset command
     // is run on submodules it will automatically remove them.
-    execa.sync("mv", [path.join(TEST_PRINT_DIR, ".git"), path.join(TEST_PRINT_DIR, "git-remove")])
+    execa.sync("mv", [
+      path.join(TEST_PRINT_DIR, ".git"),
+      path.join(TEST_PRINT_DIR, "git-remove"),
+    ]);
 
-
-    execa.sync("mv", [path.join(TEST_PROJECT_DIR, ".git"), path.join(TEST_PROJECT_DIR, "git-remove")])
+    execa.sync("mv", [
+      path.join(TEST_PROJECT_DIR, ".git"),
+      path.join(TEST_PROJECT_DIR, "git-remove"),
+    ]);
 
     // Resets the submodule test repo to orinal state
     execa.sync("git", [
@@ -110,11 +130,21 @@ describe("htmlgoddess Command", () => {
       "origin/master",
     ]);
     execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", ["submodule", "foreach", "--recursive", "git", "clean", "-d", "-x", "-f"]);
+    execa.sync("git", [
+      "submodule",
+      "foreach",
+      "--recursive",
+      "git",
+      "clean",
+      "-d",
+      "-x",
+      "-f",
+    ]);
     done();
   });
 
   beforeEach(() => {
+    cliAnswerQueue = [];
     cliOutput = [];
     // jest
     // .spyOn(process.stdout, "write")
@@ -133,9 +163,11 @@ describe("htmlgoddess Command", () => {
 
   describe("create", () => {
     it("can create a new site", async (done) => {
-      const mockAnswers = ["My Test Site", "blog", "Y"];
 
-      mockCLIAnswers([...mockAnswers]);
+      const mockAnswers = ["My Test Site", "blog", "Y"]
+
+      cliAnswerQueue.push(...mockAnswers);
+
       Create.run([TEST_PROJECT_DIR]).then((results) => {
         // @todo test console messages from stdout
         expect(results.name).toEqual(mockAnswers[0]);
@@ -151,6 +183,7 @@ describe("htmlgoddess Command", () => {
 
     it("will throw error when non existent template is given", (done) => {
       const mockAnswers = ["My Test Site", "clog", "Y"];
+      cliAnswerQueue.push(...mockAnswers)
       Create.run([TEST_PROJECT_DIR]).then(
         () => {},
         (error) => {
@@ -162,15 +195,15 @@ describe("htmlgoddess Command", () => {
   });
 
   describe("print", () => {
+    const time = Date.now();
     jest.setTimeout(10000);
 
     beforeAll((done) => {
- 
       Create.run([TEST_PRINT_DIR]).then((results) => {
         done();
       });
     });
-    const time = Date.now();
+    
     it("can print", (done) => {
       fs.writeFileSync(
         path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
@@ -205,6 +238,82 @@ describe("htmlgoddess Command", () => {
             done();
           }, 3000);
         }, 1000);
+      });
+    });
+
+    it("will ask the user to confirm when docs html file has been modified", (done) => {
+      fs.writeFileSync(
+        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
+        `<p>I am printed ${time}</p>`
+      );
+
+      Print.run([TEST_PRINT_DIR]).then(async (output) => {
+        cliAnswerQueue.push('n')
+        setTimeout(() => {
+          fs.appendFileSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+            `<!-- I am edited outside of print ${time} --!>`,
+            { flag: "a", encoding: "utf8" }
+          );
+
+          const stats = fs.statSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html")
+          );
+
+          Print.run([TEST_PRINT_DIR]).then(
+            (output) => {
+              done();
+            },
+            (err) => {
+              const fileContent = fs.readFileSync(
+                path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+                "utf-8"
+              );
+              expect(fileContent).toContain(
+                `<!-- I am edited outside of print ${time} --!>`
+              );
+              done();
+            }
+          );
+        }, 3000);
+      });
+    });
+
+    it("lets the user confirm to overwrite changes to the docs folder", (done) => {
+      fs.writeFileSync(
+        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
+        `<p>I am printed ${time}</p>`
+      );
+
+      Print.run([TEST_PRINT_DIR]).then(async (output) => {
+        setTimeout(() => {
+          fs.appendFileSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+            `<!-- I am edited outside of print ${time} --!>`,
+            { flag: "a", encoding: "utf8" }
+          );
+
+          const stats = fs.statSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html")
+          );
+
+          cliAnswerQueue.push("yes");
+          Print.run([TEST_PRINT_DIR]).then(
+            (output) => {
+              const fileContent = fs.readFileSync(
+                path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+                "utf-8"
+              );
+              expect(fileContent).not.toContain(
+                `<!-- I am edited outside of print ${time} --!>`
+              );
+              done();
+            },
+            (err) => {
+              done();
+            }
+          );
+        }, 3000);
       });
     });
   });

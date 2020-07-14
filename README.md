@@ -14,6 +14,8 @@ This is a complete rewrite from the current version currently under development.
 - fix: print:auto double printing.
 - task: Cleaned up paths
 - task: standardize param name to projectDir.
+- add: warning message for user if they try to print when docs has been edited manually.
+- fix: mockCLIAnswers not working properly.
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
@@ -29,7 +31,6 @@ This will install the command line utility.
 
 ## To Do
 - add: style chooser on create.
-- add: warning message for user if they try to print when docs has been edited manually.
 - add: "host" command.
 - task: Find good spell checker.
 - bug: cli.action still outputing to console during tests.
