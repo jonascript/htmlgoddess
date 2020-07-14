@@ -29,12 +29,14 @@ function mockCLIOpen() {
   });
 }
 
+let cliAnswerQueue = [];
+
 /**
  * @todo this function does not work as expected. When it's called multiple times it doesnt' keep scope.
  * Mocking for interactive prompts.
  * @param answers
  */
-function mockCLIAnswers(answers: any[]) {
+function mockCLIAnswers() {
   // Mocking inquirier answer for create
   // @todo this only works for one question
   inquirer.prompt = (questions) => {
@@ -51,12 +53,12 @@ function mockCLIAnswers(answers: any[]) {
       ...prompt,
       confirm: (message) => {
         console.log(message);
-        console.log("Mocking answer:", answers);
-        return answers.shift();
+        return cliAnswerQueue.shift();
       },
-      prompt: async (prom, icon) => {
+      prompt: async (prompt, icon) => {
+        console.log(prompt);
         return new Promise((resolve, reject) => {
-          resolve(answers.shift());
+          resolve(cliAnswerQueue.shift());
         });
       },
     };
@@ -71,6 +73,7 @@ describe("htmlgoddess Command", () => {
     TEST_PRINT_DIR;
 
   beforeAll((done) => {
+    mockCLIAnswers();
     console.log("Setting test submodule to clean state");
     execa.sync("git", [
       "submodule",
@@ -141,6 +144,7 @@ describe("htmlgoddess Command", () => {
   });
 
   beforeEach(() => {
+    cliAnswerQueue = [];
     cliOutput = [];
     // jest
     // .spyOn(process.stdout, "write")
@@ -159,9 +163,11 @@ describe("htmlgoddess Command", () => {
 
   describe("create", () => {
     it("can create a new site", async (done) => {
-      const mockAnswers = ["My Test Site", "blog", "Y"];
 
-      mockCLIAnswers([...mockAnswers]);
+      const mockAnswers = ["My Test Site", "blog", "Y"]
+
+      cliAnswerQueue.push(...mockAnswers);
+
       Create.run([TEST_PROJECT_DIR]).then((results) => {
         // @todo test console messages from stdout
         expect(results.name).toEqual(mockAnswers[0]);
@@ -177,6 +183,7 @@ describe("htmlgoddess Command", () => {
 
     it("will throw error when non existent template is given", (done) => {
       const mockAnswers = ["My Test Site", "clog", "Y"];
+      cliAnswerQueue.push(...mockAnswers)
       Create.run([TEST_PROJECT_DIR]).then(
         () => {},
         (error) => {
@@ -241,7 +248,7 @@ describe("htmlgoddess Command", () => {
       );
 
       Print.run([TEST_PRINT_DIR]).then(async (output) => {
-        mockCLIAnswers(["n"]);
+        cliAnswerQueue.push('n')
         setTimeout(() => {
           fs.appendFileSync(
             path.join(TEST_PRINT_DIR, "docs/can-print.html"),
@@ -290,8 +297,7 @@ describe("htmlgoddess Command", () => {
             path.join(TEST_PRINT_DIR, "docs/can-print.html")
           );
 
-          mockCLIAnswers(["yes"]);
-
+          cliAnswerQueue.push("yes");
           Print.run([TEST_PRINT_DIR]).then(
             (output) => {
               const fileContent = fs.readFileSync(
