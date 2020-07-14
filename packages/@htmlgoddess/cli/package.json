@@ -1,7 +1,7 @@
 {
   "name": "@htmlgoddess/cli",
   "description": " HTMLGoddess command line utility",
-  "version": "0.3.18-alpha.0",
+  "version": "0.3.19-alpha.0",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
   "bin": {
