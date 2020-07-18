@@ -6,7 +6,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import * as git from "isomorphic-git";
 import http from "isomorphic-git/http/node";
-import { getTemplatePath, getAllTemplateNames } from "@htmlgoddess/templates";
+import { getTemplatePath, getAllTemplateNames, getAllStyleSheets } from "@htmlgoddess/templates";
 import fs from "fs-extra";
 
 
@@ -60,6 +60,15 @@ export default class Create extends Command {
 
       const basicTemplateDir = getTemplatePath('basic');
       const templateDir = getTemplatePath(template);
+
+      const { stylesheet } = await inquirer.prompt([
+        {
+          name: "stylesheet",
+          message: "select a stylesheet",
+          type: "list",
+          choices: getAllStyleSheets(),
+        },
+      ]);
 
       if (!templateDir) {
         this.log(chalk.red(`Template does not exist. ${templateDir}`));

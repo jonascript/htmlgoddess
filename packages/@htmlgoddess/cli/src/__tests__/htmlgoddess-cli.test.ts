@@ -159,7 +159,7 @@ describe("htmlgoddess Command", () => {
   describe("create", () => {
     it("can create a new site", async (done) => {
 
-      const mockAnswers = ["My Test Site", "blog", "Y"]
+      const mockAnswers = ["My Test Site", "blog", "latex.css", "Y"]
 
       cliAnswerQueue.push(...mockAnswers);
 
@@ -181,7 +181,7 @@ describe("htmlgoddess Command", () => {
     });
 
     it("will throw error when non existent template is given", (done) => {
-      const mockAnswers = ["My Test Site", "clog", "Y"];
+      const mockAnswers = ["My Test Site", "clog", "latex.css", "Y"];
       cliAnswerQueue.push(...mockAnswers)
       Create.run([TEST_PROJECT_DIR]).then(
         () => {},
@@ -198,7 +198,7 @@ describe("htmlgoddess Command", () => {
     jest.setTimeout(10000);
 
     beforeAll((done) => {
-      const mockAnswers = ["My Test Site", "blog", "Y"];
+      const mockAnswers = ["My Test Site", "blog","latex.css", "Y"];
       cliAnswerQueue.push(...mockAnswers)
       Create.run([TEST_PRINT_DIR]).then((results) => {
         done();

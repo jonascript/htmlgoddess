@@ -14,3 +14,9 @@ module.exports.getAllTemplateNames = function () {
     return path.basename(directory);
   });
 };
+
+module.exports.getAllStyleSheets = function () {
+  return glob.sync(__dirname + '/basic/src/css/*.css').map((stylesheet) => {
+    return path.basename(stylesheet);
+  });
+};
