@@ -1,0 +1,214 @@
+body {
+  display: block;
+  position: static;
+  visibility: visible;
+  vertical-align: baseline;
+  margin: 0 auto;
+  border: 0;
+  padding: 0;
+  height: auto;
+  width: 1000px;
+
+  background-color: rgb(225, 242, 251);
+  color: rgb(47, 0, 152); /* text color */
+  font-family: arial, verdana, helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.2;
+  text-decoration: normal;
+  font-weight: normal;
+
+  text-align: justify;
+  text-justify: auto;
+  text-align-last: left;
+  text-indent: 0;
+  overflow: auto;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+div {
+  display: block;
+}
+
+p,
+h1,
+ol,
+ul,
+li {
+  margin: 0;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+ul,
+ol {
+  padding: 0;
+  padding-left: 1em; /* this is the indent created for the list, but may partially be filled with the numbers or bullets (see note below). */
+  padding-right: 1em;
+}
+
+/* The number or bullet appears to be displaced some minimum amount to the left of the li padding, and expands further to the left with more digits in a number. It appears to me that, depending on that minimum displacement amount plus the width of the number/bullet, it falls into the li margin-left and/or the ol/ul padding-left.  */
+
+li {
+  margin-left: 2em; /* number or bullet may partially go in this margin. See not above.*/
+  padding-left: 0px; /* this minimumizes the displacement of the number/bullet to the left of the li */
+}
+
+h1 {
+  margin-top: 1em;
+  font-weight: 800;
+  font-size: 25px;
+  text-align: left;
+}
+
+input,
+textarea {
+  display: block;
+}
+
+input#captchaInput {
+  width: 50px;
+  display: inline;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  box-sizing: border-box; /* without this, the width: 100% will be too big (major hassel) */
+  width: 100%;
+  color: magenta;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  max-width: 300px;
+}
+
+#goddess-email-confirm {
+  margin-top: 3px;
+}
+
+textarea {
+  max-width: 900px;
+}
+
+select {
+  color: magenta;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+  background-color: lightgreen;
+}
+
+input[type="file"],
+button {
+  color: magenta;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: arial, verdana, helvetica, sans-serif; /* avoid user-agent overwrite of body */
+  text-align: left;
+  padding: 5px;
+  border-width: 3px;
+  border-color: #8896d1;
+  border-style: solid;
+  background-color: lightgreen;
+  width: 400px;
+  height: auto;
+}
+
+option {
+  color: magenta;
+}
+
+/* Careful with these three ::placeholder selectors... it appears they cannot be combined into one statement. */
+
+::-webkit-input-placeholder {
+  /* Edge, Chrome */
+  color: pink;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer */
+  color: pink;
+  opacity: 1;
+}
+
+::placeholder {
+  color: pink;
+  opacity: 1;
+}
+
+a {
+  color: magenta;
+  font-weight: 600;
+}
+
+hr {
+  border-top: 1px solid rgb(47, 0, 152);
+  width: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  /* wide screens */
+  body {
+    /* background-color:  lightgreen; /* for test purposes */
+    padding: 0 5%;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    /* background-color:  lightgreen; /* for test purposes */
+    padding: 0 5%;
+    width: 90%;
+  }
+  /* phones */
+  ul,
+  ol {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  li {
+    margin-left: 15px;
+  }
+  input[type="file"],
+  button {
+    width: 90%;
+  }
+}
+
+nav {
+  display: block;
+  width: 100%;
+}
+
+nav ul {
+  display: inline-flex;
+  width: 100%;
+}
+
+nav li {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  margin: 0;
+  text-transform: lowercase;
+}
