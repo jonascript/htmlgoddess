@@ -17,6 +17,7 @@ This is a complete rewrite from the current version currently under development.
 - add: warning message for user if they try to print when docs has been edited manually.
 - fix: mockCLIAnswers not working properly.
 - refactor: consolidated template generation code.
+- feat: style chooser on create.
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
@@ -30,8 +31,8 @@ This will install the command line utility.
 1. follow the prompts and you should be up and running in no time.
 
 ## To Do
-- add: style chooser on create.
 - add: "host" command.
+- add: style choose command to allow user to change theme after creation.
 - task: Find good spell checker.
 - bug: cli.action still outputing to console during tests.
 - add: auto commitizen hook to trigger when committing.

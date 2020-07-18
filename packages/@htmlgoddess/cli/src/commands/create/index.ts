@@ -8,7 +8,7 @@ import * as git from "isomorphic-git";
 import http from "isomorphic-git/http/node";
 import { getTemplatePath, getAllTemplateNames, getAllStyleSheets } from "@htmlgoddess/templates";
 import fs from "fs-extra";
-
+import glob from 'glob';
 
 export default class Create extends Command {
   static description =
@@ -98,6 +98,24 @@ export default class Create extends Command {
           errorOnExist: false,
           overwrite: true,
         });
+
+        const htmlTemplateFiles = await glob.sync(
+          `${projectDir}/src/templates/**/*+(*.htm|*.html)`
+        );
+
+        // Goes through all the templates and sets them to the 
+        // selected css file.
+        // @todo move this to its own function.
+        for (let x = 0; x < htmlTemplateFiles.length; x++) {
+          let templateContent = fs.readFileSync(htmlTemplateFiles[x], 'utf8');
+
+          const outputTemplateContent = templateContent.replace(/(<link[\S\s]*?rel=['"]stylesheet['"][\S\s]*?href=['"]\/css\/)(.+?)(['"][^>]*?>)/ig, `$1${stylesheet}$3`);
+
+          if (templateContent !== outputTemplateContent) {
+            fs.writeFileSync(htmlTemplateFiles[x], outputTemplateContent);
+          }
+        }
+
       } catch (error) {
         cli.action.stop(chalk.red("error"));
         this.log("");

@@ -38,9 +38,11 @@ let cliAnswerQueue = [];
  */
 function mockCLIAnswers() {
   // Mocking inquirier answer for create
-  // @todo this only works for one question
+  // @todo questions come in as arrays. Currently only using one 
+  // question at a time but should make this handle all cases.
   inquirer.prompt = (questions) => {
-    return Promise.resolve({ template: cliAnswerQueue.shift() });
+    const answer = cliAnswerQueue.shift();
+    return Promise.resolve({ [`${questions[0].name}`]: answer });
   };
 
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
@@ -153,6 +155,7 @@ describe("htmlgoddess Command", () => {
   });
 
   afterEach(() => {
+    cliAnswerQueue = [];
     jest.restoreAllMocks();
   });
 
@@ -175,6 +178,15 @@ describe("htmlgoddess Command", () => {
         expect(
           fs.existsSync(path.join(results.path, "src/content/blog/post/hello-world.html"))
         ).toEqual(true);
+
+
+        expect(
+          fs.readFileSync(
+            path.join(results.path, "src/templates/head/index.html"),
+            "utf-8"
+          )
+        ).toContain('latex.css');
+
 
         done();
       });
