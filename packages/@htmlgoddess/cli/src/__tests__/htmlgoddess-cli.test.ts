@@ -40,13 +40,8 @@ function mockCLIAnswers() {
   // Mocking inquirier answer for create
   // @todo this only works for one question
   inquirer.prompt = (questions) => {
-    return Promise.resolve({ template: "blog" });
+    return Promise.resolve({ template: cliAnswerQueue.shift() });
   };
-  // Promise.resolve({
-  //   template: () => {
-  //     return answers.shift();
-  //   },
-  // });
 
   jest.mock("../../node_modules/cli-ux/lib/prompt.js", () => {
     return {
@@ -177,6 +172,10 @@ describe("htmlgoddess Command", () => {
           fs.existsSync(path.join(results.path, "src/content/index.html"))
         ).toEqual(true);
 
+        expect(
+          fs.existsSync(path.join(results.path, "src/content/blog/post/hello-world.html"))
+        ).toEqual(true);
+
         done();
       });
     });
@@ -199,6 +198,8 @@ describe("htmlgoddess Command", () => {
     jest.setTimeout(10000);
 
     beforeAll((done) => {
+      const mockAnswers = ["My Test Site", "blog", "Y"];
+      cliAnswerQueue.push(...mockAnswers)
       Create.run([TEST_PRINT_DIR]).then((results) => {
         done();
       });

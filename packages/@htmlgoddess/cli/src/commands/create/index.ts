@@ -58,6 +58,7 @@ export default class Create extends Command {
         },
       ]);
 
+      const basicTemplateDir = getTemplatePath('basic');
       const templateDir = getTemplatePath(template);
 
       if (!templateDir) {
@@ -78,9 +79,15 @@ export default class Create extends Command {
       cli.action.start("Installing your site...");
 
       try {
-        fs.copySync(templateDir, projectDir, {
+        // Basic template is used as base and merged with 
+        // selected template
+        fs.copySync(basicTemplateDir, projectDir, {
           errorOnExist: true,
           overwrite: false,
+        });
+        fs.copySync(templateDir, projectDir, {
+          errorOnExist: false,
+          overwrite: true,
         });
       } catch (error) {
         cli.action.stop(chalk.red("error"));

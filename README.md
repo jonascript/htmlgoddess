@@ -16,6 +16,7 @@ This is a complete rewrite from the current version currently under development.
 - task: standardize param name to projectDir.
 - add: warning message for user if they try to print when docs has been edited manually.
 - fix: mockCLIAnswers not working properly.
+- refactor: consolidated template generation code.
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
@@ -28,7 +29,6 @@ This will install the command line utility.
 1. ``` htmlgoddess create path/to/your/new/site ``` 
 1. follow the prompts and you should be up and running in no time.
 
-
 ## To Do
 - add: style chooser on create.
 - add: "host" command.
@@ -37,7 +37,7 @@ This will install the command line utility.
 - add: auto commitizen hook to trigger when committing.
 - add: proofread commands.
 - add: "domain" command.
-- add: executable.
+- add: downloadable executable.
 - refactor: Swap CNAME for yaml config for hosting/
 - task: coverage
 - add: GUI
