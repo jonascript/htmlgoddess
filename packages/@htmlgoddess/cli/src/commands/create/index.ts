@@ -59,6 +59,7 @@ export default class Create extends Command {
       ]);
 
       const basicTemplateDir = getTemplatePath('basic');
+
       const templateDir = getTemplatePath(template);
 
       const { stylesheet } = await inquirer.prompt([
@@ -133,9 +134,10 @@ export default class Create extends Command {
 
         return reject("Something went wrong when creating site files");
       }
-
-      await execa("git", ["init", '--quiet', projectDir]);
-      await execa("git", ["add", projectDir]);
+      this.log('git init time', projectDir)
+      await execa("cd", [projectDir]);
+      await execa("git", ["init", '.']);
+      await execa("git", ["add", '.']);
       await execa("git", ["commit", "-m", "Saving content edit."]);
 
       cli.action.stop("done!");

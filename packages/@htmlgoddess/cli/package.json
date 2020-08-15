@@ -96,6 +96,7 @@
     "html-loader": "1.1.0",
     "jest": "26.0.1",
     "mock-stdin": "1.0.0",
+    "rimraf": "3.0.2",
     "supertest": "4.0.2",
     "ts-jest": "26.1.0"
   },
@@ -108,7 +109,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test": "jest --runInBand --detectOpenHandles --verbose --forceExit",
     "test:watch": "jest -w",
     "version": "oclif-dev readme && git add README.md",
     "prettier": "prettier 'src/**/*.ts' '__tests__/**/*.ts' --write",
