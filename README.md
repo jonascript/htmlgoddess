@@ -1,23 +1,9 @@
 # htmlgoddess
 A minimalist framework for creating a website like it's 1999. 
 
-## v0.3.8 - Alpha 
-This is a complete rewrite from the current version currently under development.
-- Moved to lerna monorepo.
-- Using oclif for CLI.
-- Webpack plugin moved to its own package.
-- fix: serve test leaving process open.
-- feat: prompt unit test mocking.
-- feat: create command
-- feat: print:auto
-- test: intercept and setup testing for CLI output
-- fix: print:auto double printing.
-- task: Cleaned up paths
-- task: standardize param name to projectDir.
-- add: warning message for user if they try to print when docs has been edited manually.
-- fix: mockCLIAnswers not working properly.
-- refactor: consolidated template generation code.
-- feat: style chooser on create.
+## v0.4.1 - Alpha 
+- Fix create command issue.
+- Move tests to use .gitignore instead of submodules. 
 
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
