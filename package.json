@@ -17,7 +17,7 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "reset-test-dir": "git submodule foreach git reset origin/master && git submodule foreach git reset --hard && git submodule foreach git clean -d -f -x"
+    "clean-test-dir": "rm -rf ./packages/test"
   },
   "dependencies": {
     "@htmlgoddess/cli": "file:packages/@htmlgoddess/cli",

@@ -93,6 +93,7 @@ HTML was designed to be simple, and for ordinary people to create and consume th
 ## Frequent issues
 - Dependancies acting weird:  
   Lerna does somethings under the hood to cross-link Dependancies. If you install a new module and things stop working try ```lerna boostrap``` from the root.
+- Test directory not cleaning up. If a test fails it might prevent the test directory from cleaning up. In that case run ``` npm run clean-test-dir ``` which will remove it manually.
 
 ## Contributing
 1. run tests in packages/cli to make sure everything's up to snuff

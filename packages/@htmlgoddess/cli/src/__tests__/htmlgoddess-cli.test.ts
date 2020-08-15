@@ -1,6 +1,7 @@
 "use strict";
 import * as fs from "fs";
 import * as path from "path";
+import rimraf from "rimraf";
 import { run } from "../index";
 import Create from "../commands/create/index";
 import Format from "../commands/format/index";
@@ -14,6 +15,9 @@ import * as execa from "execa";
 import cli, { ActionBase } from "cli-ux";
 import prompt from "../../node_modules/cli-ux/lib/prompt.js";
 import inquirer from "inquirer";
+import { isExportDeclaration } from "typescript";
+
+const TEST_DIR_RELATIVE_PATH = './packages/test';
 
 /**
  * Mocks the "open" function so that a browser doesn't open while unit testing.
@@ -71,72 +75,46 @@ describe("htmlgoddess Command", () => {
 
   beforeAll((done) => {
     mockCLIAnswers();
-    console.log("Setting test submodule to clean state");
-    execa.sync("git", [
-      "submodule",
-      "foreach",
-      "git",
-      "reset",
-      "origin/master",
-    ]);
-    execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", [
-      "submodule",
-      "foreach",
-      "--recursive",
-      "git",
-      "clean",
-      "-d",
-      "-x",
-      "-f",
-    ]);
+    // console.log("Setting test submodule to clean state");
+    // execa.sync("git", [
+    //   "submodule",
+    //   "foreach",
+    //   "git",
+    //   "reset",
+    //   "origin/master",
+    // ]);
+    // execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
+    // execa.sync("git", [
+    //   "submodule",
+    //   "foreach",
+    //   "--recursive",
+    //   "git",
+    //   "clean",
+    //   "-d",
+    //   "-x",
+    //   "-f",
+    // ]);
     console.log("Changing to test directory.");
-    process.chdir("../../test");
+    process.chdir("../..");
+    fs.mkdirSync('test');
+    process.chdir("test");
     TEST_DIR = process.cwd();
+
+    console.log('CREATED TEST_DIR', TEST_DIR)
     TEST_PROJECT_DIR = path.join(TEST_DIR, "testproject");
     TEST_PRINT_DIR = path.join(TEST_DIR, "testprint");
     mockCLIOpen();
-
     done();
   });
 
   afterAll((done) => {
-    process.chdir("../@htmlgoddess/cli");
-    console.log(
-      `Resetting and stashing changes for test submodule at: ${process.cwd()}`
-    );
-
-    // Renames newly created .git folders so when reset command
-    // is run on submodules it will automatically remove them.
-    execa.sync("mv", [
-      path.join(TEST_PRINT_DIR, ".git"),
-      path.join(TEST_PRINT_DIR, "git-remove"),
-    ]);
-
-    execa.sync("mv", [
-      path.join(TEST_PROJECT_DIR, ".git"),
-      path.join(TEST_PROJECT_DIR, "git-remove"),
-    ]);
-
-    // Resets the submodule test repo to orinal state
-    execa.sync("git", [
-      "submodule",
-      "foreach",
-      "git",
-      "reset",
-      "origin/master",
-    ]);
-    execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    execa.sync("git", [
-      "submodule",
-      "foreach",
-      "--recursive",
-      "git",
-      "clean",
-      "-d",
-      "-x",
-      "-f",
-    ]);
+    jest.restoreAllMocks();
+    // Make sure it's the right dir before deleting the directory.
+    if (/packages\/test/.test(TEST_DIR)) {
+      rimraf.sync(TEST_DIR)
+    } else {
+      throw new Error('@htmlgoddess/cli test directory does match test. aborting delete. Please delete your test direcory manually')
+    }
     done();
   });
 
@@ -232,9 +210,14 @@ describe("htmlgoddess Command", () => {
         done();
       });
     });
+    describe('print:auto', () => {
+      beforeAll((done) => {
+        PrintAuto.run([TEST_PROJECT_DIR, "--debounce=800"]).then(() => {
+          done();
+        })
+      });
 
-    it("can print:auto", async (done) => {
-      PrintAuto.run([TEST_PROJECT_DIR, "--debounce=800"]).then(() => {
+      it("can print:auto",  async (done) => {
         // Gives some time for print:auto debounce
         setTimeout(() => {
           fs.writeFileSync(
@@ -252,6 +235,8 @@ describe("htmlgoddess Command", () => {
           }, 3000);
         }, 1000);
       });
+
+    
     });
 
     it("will ask the user to confirm when docs html file has been modified", (done) => {
@@ -437,27 +422,25 @@ describe("htmlgoddess Command", () => {
       });
     });
 
-    it("will catch errors", (done) => {
+    it("will catch errors", async () => {
       fs.writeFileSync(
         path.join(TEST_PROJECT_DIR, "src/content/not-a11y.html"),
         `<p>I am not accessible ${time}. <img src="./bad-image.jpg" /></p>`
       );
 
-      run(["print", TEST_PROJECT_DIR, "--no-a11y"]).then((results) => {
-        A11y.run([TEST_PROJECT_DIR]).then(
-          (results) => {
-            expect(results.length).toBe(0);
-            done();
-          },
-          (results) => {
-            expect(results.length).toEqual(1);
-            expect(results[0].issues[0].message).toEqual(
-              "Img element missing an alt attribute. Use the alt attribute to specify a short text alternative."
-            );
-            done();
-          }
+      await run(["print", TEST_PROJECT_DIR, "--no-a11y"]);
+      let results;
+      try {
+        results = await A11y.run([TEST_PROJECT_DIR]);
+      } catch (error) {
+        results = error;
+      }
+  
+      expect(results.length).toEqual(1);
+      expect(results[0].issues[0].message).toEqual(
+           "Img element missing an alt attribute. Use the alt attribute to specify a short text alternative."
         );
-      });
+      
     });
     // it("can serve without param passed", (done) => {
     // })
