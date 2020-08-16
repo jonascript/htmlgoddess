@@ -17,19 +17,20 @@ This will install the command line utility.
 1. follow the prompts and you should be up and running in no time.
 
 ## To Do
+- refacactor: isolate tests.
 - add: "host" command.
 - add: style choose command to allow user to change theme after creation.
-- task: Find good spell checker.
-- bug: cli.action still outputing to console during tests.
-- add: auto commitizen hook to trigger when committing.
-- add: proofread commands.
-- add: "domain" command.
-- add: downloadable executable.
-- refactor: Swap CNAME for yaml config for hosting/
+- feat: Spell checker.
+- feat: auto commitizen hook to trigger when committing.
+- feat: proofread commands.
+- feat: "domain" command.
+- feat: downloadable executable.
+- refactor: Swap CNAME for yaml config for hosting.
 - task: coverage
-- add: GUI
 - convert "docs" to configurable variables
 - task: make sure watcher doesn't leak memory.
+- bug: cli.action still outputting to console during tests.
+- feat: GUI
 
 # I don't know any HTML
 That's ok. Check out [this video](https://www.youtube.com/watch?v=3RXlQPkJzCM) to get started.
