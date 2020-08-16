@@ -135,21 +135,24 @@ export default class Create extends Command {
         return reject("Something went wrong when creating site files");
       }
       this.log('git init time', projectDir)
-      await execa("cd", [projectDir]);
-      await execa("git", ["init", '.']);
+
+      process.chdir(projectDir);
+      await execa("git", ["init", "--quiet"]);
       await execa("git", ["add", '.']);
       await execa("git", ["commit", "-m", "Saving content edit."]);
 
       cli.action.stop("done!");
+  
       this.log("");
       this.log(`✨  Successfully created project: ${name}`);
       this.log("");
       this.log(`👉  Get started with the following commands:`);
       this.log("");
-      this.log(chalk.green(`cd ${projectDir}`));
-      this.log(chalk.green(`htmlgoddess print`));
-      this.log(chalk.green(`htmlgoddess serve`));
+      this.log(chalk.green(`1) cd ${projectDir}`));
+      this.log(chalk.green(`2) htmlgoddess print`));
+      this.log(chalk.green(`3) htmlgoddess serve`));
       this.log("");
+      this.log(chalk.green(`run htmlgoddess --help for a full list of commands.`));
 
       resolve({ name, template, path: projectDir });
     });

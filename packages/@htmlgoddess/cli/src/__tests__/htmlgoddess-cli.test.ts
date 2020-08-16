@@ -71,38 +71,22 @@ describe("htmlgoddess Command", () => {
     io = null,
     TEST_DIR,
     TEST_PROJECT_DIR,
-    TEST_PRINT_DIR;
+    TEST_PRINT_DIR,
+    TEST_SAVE_DIR,
+    TEST_SERVE_DIR;
 
   beforeAll((done) => {
     mockCLIAnswers();
-    // console.log("Setting test submodule to clean state");
-    // execa.sync("git", [
-    //   "submodule",
-    //   "foreach",
-    //   "git",
-    //   "reset",
-    //   "origin/master",
-    // ]);
-    // execa.sync("git", ["submodule", "foreach", "git", "reset", "--hard"]);
-    // execa.sync("git", [
-    //   "submodule",
-    //   "foreach",
-    //   "--recursive",
-    //   "git",
-    //   "clean",
-    //   "-d",
-    //   "-x",
-    //   "-f",
-    // ]);
     console.log("Changing to test directory.");
     process.chdir("../..");
     fs.mkdirSync('test');
     process.chdir("test");
     TEST_DIR = process.cwd();
 
-    console.log('CREATED TEST_DIR', TEST_DIR)
     TEST_PROJECT_DIR = path.join(TEST_DIR, "testproject");
     TEST_PRINT_DIR = path.join(TEST_DIR, "testprint");
+    TEST_SAVE_DIR = path.join(TEST_DIR, "testsave");
+    TEST_SERVE_DIR = path.join(TEST_DIR, 'testserve');
     mockCLIOpen();
     done();
   });
@@ -195,39 +179,54 @@ describe("htmlgoddess Command", () => {
       });
     });
     
-    it("can print", (done) => {
-      fs.writeFileSync(
-        path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
-        `<p>I am printed ${time}</p>`
-      );
-
-      Print.run([TEST_PRINT_DIR]).then((result) => {
-        const output = fs.readFileSync(
-          path.join(TEST_PRINT_DIR, "docs/can-print.html"),
-          "utf-8"
+    describe("can print", () => {
+      beforeEach(() => {
+        fs.writeFileSync(
+          path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
+          `<p>I am printed ${time}</p>`
         );
-        expect(output).toContain(`<p>I am printed ${time}</p>`);
-        done();
+      })
+
+      afterEach(() => {
+        fs.unlinkSync(
+          path.join(TEST_PRINT_DIR, "src/content/can-print.html")
+        )
+        fs.unlinkSync(
+          path.join(TEST_PRINT_DIR, "docs/can-print.html")
+        )
+      });
+
+      it("can print", (done) => {
+        Print.run([TEST_PRINT_DIR]).then((result) => {
+          const output = fs.readFileSync(
+            path.join(TEST_PRINT_DIR, "docs/can-print.html"),
+            "utf-8"
+          );
+          expect(output).toContain(`<p>I am printed ${time}</p>`);
+          done();
+        });
       });
     });
     describe('print:auto', () => {
-      beforeAll((done) => {
-        PrintAuto.run([TEST_PROJECT_DIR, "--debounce=800"]).then(() => {
+      beforeEach((done) => {
+        PrintAuto.run([TEST_PRINT_DIR, "--debounce=800"]).then(() => {
           done();
         })
       });
-
+      afterEach(() => {
+        rimraf.sync(path.join(TEST_PRINT_DIR, 'docs'));
+      });
       it("can print:auto",  async (done) => {
         // Gives some time for print:auto debounce
         setTimeout(() => {
           fs.writeFileSync(
-            path.join(TEST_PROJECT_DIR, "src/content/can-print.html"),
+            path.join(TEST_PRINT_DIR, "src/content/can-print.html"),
             `<p>I am auto printed ${time}</p>`
           );
 
           setTimeout(() => {
             const output = fs.readFileSync(
-              path.join(TEST_PROJECT_DIR, "docs/can-print.html"),
+              path.join(TEST_PRINT_DIR, "docs/can-print.html"),
               "utf-8"
             );
             expect(output).toContain(`<p>I am auto printed ${time}</p>`);
@@ -358,13 +357,20 @@ describe("htmlgoddess Command", () => {
 
   // @todo
   describe("serve", () => {
+    beforeEach(async () => {
+      const mockAnswers = ["My Test Site", "blog", "latex.css", "Y"]
+      cliAnswerQueue.push(...mockAnswers);
+      await Create.run([TEST_SERVE_DIR]);
+      await Print.run([TEST_SERVE_DIR])
+    })
     it("can serve", (done) => {
-      Serve.run([TEST_PROJECT_DIR]).then((process) => {
+      Serve.run([TEST_SERVE_DIR]).then((process) => {
+        console.log('serving', TEST_SERVE_DIR)
         setTimeout(async () => {
           const response = await axios.get("http://127.0.0.1:3000");
           expect(response.status).toEqual(200);
           done();
-        }, 1000);
+        }, 2000);
       });
     });
     // it("can serve without param passed", (done) => {
@@ -374,23 +380,23 @@ describe("htmlgoddess Command", () => {
 
   describe("save", () => {
     const time = Date.now();
-    beforeEach((done) => {
+    beforeEach(async () => {
+      const mockAnswers = ["My Test Site", "blog", "latex.css", "Y"]
+      cliAnswerQueue.push(...mockAnswers);
+      await Create.run([TEST_SAVE_DIR]);
       fs.writeFileSync(
-        path.join(TEST_PROJECT_DIR, "src/content/can-save.html"),
+        path.join(TEST_SAVE_DIR, "src/content/can-save.html"),
         `<p>I am saved at ${time}</p>`
       );
-      done();
     });
 
     afterEach((done) => {
-      // execa.sync("git", ["reset", "origin/master"]);
-      // execa.sync("git", ["stash"]);
       done();
     });
 
     it("can save", (done) => {
       // @todo make sure this cleans up
-      Save.run([TEST_PROJECT_DIR]).then((result) => {
+      Save.run([TEST_SAVE_DIR]).then((result) => {
         const output = execa.sync("git", ["diff", "HEAD~1", "HEAD"]);
         expect(output.stdout).toContain(`+<p>I am saved at ${time}</p>`);
         done();
