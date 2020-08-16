@@ -1,7 +1,7 @@
 # htmlgoddess
 A minimalist framework for creating a website like it's 1999. 
 
-## v0.4.1 - Alpha 
+## v0.4.2
 - Fix create command issue.
 - Move tests to use .gitignore instead of submodules. 
 
