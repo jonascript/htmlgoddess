@@ -1,7 +1,7 @@
 {
   "name": "@htmlgoddess/cli",
   "description": " HTMLGoddess command line utility",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Jonathan Crockett <joncrockett@gmail.com>",
   "private": false,
   "bin": {
@@ -9,8 +9,8 @@
   },
   "bugs": "https://github.com/jonascript/htmlgoddess/issues",
   "dependencies": {
-    "@htmlgoddess/templates": "^0.4.1-alpha.0",
-    "@htmlgoddess/webpack-plugin": "^0.4.0-alpha.0",
+    "@htmlgoddess/templates": "^0.4.2",
+    "@htmlgoddess/webpack-plugin": "^0.4.2",
     "@oclif/command": "1.6.1",
     "@oclif/config": "1.15.1",
     "@oclif/plugin-help": "3.1.0",
