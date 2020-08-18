@@ -1,9 +1,7 @@
 htmlgoddess-cli
 ===============
 
-&gt; TODO: description
-## - Figure out safe way to run npm modules from adjacent pacakges
-
+Cli tool for the HTMLGoddess static site generator.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/htmlgoddess-cli.svg)](https://npmjs.org/package/htmlgoddess-cli)

@@ -1,10 +1,13 @@
-# HTMLGoddess Site Templates
+# @htmlgoddess/template
 
-This is a package of starter templates for HTML Goddess sites
+A package of starter templates used in HTML Goddess CLI. 
+
+All templates work any vanilla (reset) css files that target plain HTML elements. 
 
 ## Templates
-- Blog
+- Basic - The barebones template.
+- Blog - A starter blog template.
 
 ## Todo
-- Gallery
-- Barebones
+- Gallery Template
+- Emergency Site Template
