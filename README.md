@@ -1,10 +1,6 @@
 # htmlgoddess
 A minimalist framework for creating a website like it's 1999. 
 
-## v0.4.2
-- Fix create command issue.
-- Move tests to use .gitignore instead of submodules. 
-
 ## Requirements
 - A computer with the internet, a text editor, and a web browser
 - npm

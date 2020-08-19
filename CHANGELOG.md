@@ -1,4 +1,8 @@
 
+## v0.4.4
+- Fix create command issue.
+- Move tests to use .gitignore instead of submodules. 
+
 ## v0.3.8 - Alpha 
 This is a complete rewrite from the current version currently under development.
 - Moved to lerna monorepo.
