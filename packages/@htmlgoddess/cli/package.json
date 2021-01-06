@@ -91,7 +91,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@types/jest": "26.0.0",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "git-http-mock-server": "1.2.1",
     "html-loader": "1.1.0",
     "jest": "26.0.1",
