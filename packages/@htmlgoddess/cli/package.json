@@ -42,7 +42,7 @@
     "pretty": "2.0.0",
     "recursive-watch": "1.1.4",
     "serve": "11.3.1",
-    "simple-git": "2.6.0",
+    "simple-git": "3.5.0",
     "style-loader": "1.2.1",
     "textlint": "11.6.3",
     "textlint-plugin-html": "0.2.0",
